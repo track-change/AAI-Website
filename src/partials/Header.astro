@@ -1,0 +1,81 @@
+<header>
+  <div class="menu">
+    <div class="menu-title">
+      <a href="/"><h1 id="title">asian arts initiative</h1></a>
+    </div>
+    <div class="menu-icons">
+      <div class="search-icon">
+        <svg
+          width="25"
+          height="25"
+          viewBox="0 0 25 25"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M20.3044 10.3192C20.3044 15.6041 16.0201 19.8884 10.7352 19.8884C5.45029 19.8884 1.16602 15.6041 1.16602 10.3192C1.16602 5.03427 5.45029 0.75 10.7352 0.75C16.0201 0.75 20.3044 5.03427 20.3044 10.3192Z"
+            stroke="black"
+            stroke-width="1.5"></path>
+          <line
+            x1="17.1807"
+            y1="18.1193"
+            x2="23.531"
+            y2="24.4696"
+            stroke="black"
+            stroke-width="1.5"></line>
+        </svg>
+      </div>
+      <div class="hamburger-icon">
+        <svg
+          width="25"
+          height="20"
+          viewBox="0 0 25 20"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <line y1="0.75" x2="25" y2="0.75" stroke="black" stroke-width="1.5"
+          ></line>
+          <line y1="9.75" x2="25" y2="9.75" stroke="black" stroke-width="1.5"
+          ></line>
+          <line y1="18.75" x2="25" y2="18.75" stroke="black" stroke-width="1.5"
+          ></line>
+        </svg>
+      </div>
+    </div>
+  </div>
+</header>
+
+<style type="scss">
+  header {
+    width: 100%;
+    background-color: var(--white, #fff);
+
+    .menu {
+      display: flex;
+      padding-inline: 22px;
+      justify-content: space-between;
+      height: 45px;
+      background-color: whitesmoke;
+
+      .menu-title {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        font-weight: 600;
+        color: var(--black, #000);
+      }
+
+      #title {
+        font-size: 22px;
+      }
+
+      .menu-icons {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 20px;
+      }
+    }
+  }
+</style>
