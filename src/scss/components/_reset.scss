@@ -5,6 +5,8 @@
 *::before,
 *::after {
   box-sizing: border-box;
+  // -webkit-transition: all 1s var(--ease);
+  // transition: all 1s var(--ease);
 }
 
 /* Remove default padding */
@@ -74,4 +76,8 @@ select {
     transition-duration: 0.01s !important;
     scroll-behavior: auto !important;
   }
+}
+
+[hidden] {
+  display: none !important;
 }
