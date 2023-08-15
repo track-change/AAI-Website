@@ -1,5 +1,5 @@
 {
-  "name": "",
+  "name": "aai-website",
   "type": "module",
   "version": "0.0.1",
   "scripts": {
@@ -10,7 +10,20 @@
     "astro": "astro"
   },
   "dependencies": {
-    "astro": "^2.10.7",
+    "astro": "^2.10.8",
     "sass": "^1.65.1"
-  }
+  },
+  "description": "``` npm create astro@latest -- --template basics ```",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/track-change/AAI-Website.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/track-change/AAI-Website/issues"
+  },
+  "homepage": "https://github.com/track-change/AAI-Website#readme"
 }

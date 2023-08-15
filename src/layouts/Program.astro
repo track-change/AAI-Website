@@ -3,6 +3,7 @@ import "../scss/main.scss";
 import Meta from "../partials/Meta.astro";
 import Header from "../partials/Header.astro";
 import Footer from "../partials/Footer.astro"
+import Banner from "../partials/Banner.astro";
 
 interface Props {
   title: string;
@@ -17,6 +18,8 @@ const { title } = Astro.props;
 
   <body>
     <Header />
+    <h1>{title}</h1>
+    <Banner />
     <slot />
     <style lang="scss" is:global>
       html {

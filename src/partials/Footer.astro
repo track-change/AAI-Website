@@ -1,0 +1,183 @@
+<footer>
+  <div class="about">
+    <!-- Logo SVG // mw: I don't know how to import this thing from /public properly, so putting here temp-->
+    <div class="about-blurb">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="45"
+        height="46"
+        viewBox="0 0 45 46"
+        fill="none"
+      >
+        <path
+          d="M0 0.5C0 8.77103 6.72897 15.5 15 15.5H30V30.5V45.5H45V0.5H0Z"
+          fill="white"></path>
+        <path
+          d="M15 15.5C6.72897 15.5 0 22.229 0 30.5C0 38.771 6.72897 45.5 15 45.5C23.271 45.5 30 38.771 30 30.5H15V15.5Z"
+          fill="white"></path>
+      </svg>
+      <h4>
+        asian arts initiative is a multidisciplinary arts center in
+        Philadelphia.
+      </h4>
+    </div>
+    <a class="small-caption" href="/about">About us</a>
+  </div>
+
+  <div class="info-group">
+    <div class="info-item">
+      <div class="h4-wrapper">
+        <h4>Open from 2–6 PM today</h4>
+      </div>
+      <div class="info-links">
+        <a class="small-caption left">Visit us</a>
+        <span class="small-caption middle"
+          >1219 Vine Street Philadelphia, PA 19107</span
+        >
+        <a class="small-caption right">What’s On</a>
+      </div>
+    </div>
+    <div class="info-item">
+      <div class="h4-wrapper">
+        <h4>(215)-557-0455</h4>
+      </div>
+      <div class="info-links">
+        <a class="small-caption left">Contact Us</a>
+        <a class="small-caption middle">Sign-up for Newsletter</a>
+        <a class="small-caption right">Accessibility</a>
+      </div>
+    </div>
+    <div class="info-item">
+      <div class="h4-wrapper">
+        <h4>
+          AAI is a 501(c)3 non-profit organization.
+          <a href="/donate"><h4>Make a Donation</h4></a>
+        </h4>
+      </div>
+      <div class="info-links">
+        <a class="small-caption left">Colophon</a>
+        <a class="small-caption">Term of Use</a>
+        <span class="small-caption right"
+          >© 1993–2023 Asian Arts Initiative All Rights Reserved</span
+        >
+      </div>
+    </div>
+  </div>
+</footer>
+
+<style type="scss">
+  footer {
+    /* 1920 footer */
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    background: var(--black);
+    color: var(--white);
+
+    .about {
+      display: flex;
+    //   height: 108px;
+      padding: 30px 40px;
+      justify-content: space-between;
+      align-items: flex-start;
+      align-self: stretch;
+
+      @media screen and (max-width: 1024px ) {
+        padding: 24px 32px;
+      }
+      @media screen and (max-width: 768px) {
+        padding: 24px;
+      }
+
+      .about-blurb {
+        display: flex;
+        width: 80%;
+        align-items: center;
+        gap: 20px;
+      }
+    }
+
+    .info-group {
+      display: flex;
+      padding: 0px 40px;
+      align-items: flex-start;
+      gap: 40px;
+      align-self: stretch;
+
+      @media screen and (max-width: 1024px) {
+        gap: 32px;
+        padding: 0 32px;
+      }
+
+      @media screen and (max-width: 768px) {
+        flex-direction: column;
+        gap: 16px;
+        padding: 24px;
+      }
+
+      .info-item {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+        flex: 1 0 0;
+        align-self: stretch;
+
+        border-top: 1px solid var(--white, #fff);
+
+        .h4-wrapper {
+          text-align: center;
+
+          display: flex;
+          height: 290px;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+          gap: 19.621px;
+          align-self: stretch;
+
+          @media screen and (max-width: 768px) {
+            height: 240px;
+          }
+
+
+          @media screen and (max-width: 768px) {
+            height: 150px;
+          }
+
+          h4 > a {
+            display: inline-block;
+          }
+        }
+
+        .info-links {
+            height: 31px;
+          display: flex;
+          padding-bottom: 20px;
+          justify-content: space-between;
+          align-items: flex-end;
+          align-self: stretch;
+          @media screen and (max-width: 768px) {
+            padding-bottom: 0;
+          }
+          .left {
+            width: 33%;
+          }
+          .right {
+            text-align: right;
+            width: 33%;
+          }
+          .middle {
+            text-align: center;
+            width: 33%;
+          }
+        }
+      }
+    }
+  }
+
+  a {
+    text-decoration: underline;
+    line-height: 90%; /* 43.2px */
+  }
+</style>
