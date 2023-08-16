@@ -1,10 +1,46 @@
 ---
-import Layout from "../layouts/Program.astro";
+import ProgramLayout from "../layouts/ProgramLayout.astro";
+import bannerImage from "../assets/img/image-1.png";
+import CTAOutstanding from "../components/CTA.astro";
 ---
 
-<Layout title="Erotic Project">
+<ProgramLayout title="The Erotic Project" bannerSrc={bannerImage}>
   <main>
+    <p>
+      The Storefront will be open Tuesdays, Thursdays, and Saturdays, 2-6pm.
+      Based on the explicit content in this exhibit we require guests to be 18
+      or older to enter. We recommend reserving a ticket in advance to verify
+      your age.
+    </p>
+    <p>
+      THE EROTIC PROJECT is an ongoing collaborative multimedia art project
+      created in Philadelphia in early 2020 during quarantine inside the bedroom
+      of artist Aubrié Costello. The project explores inclusive, accessible
+      eroticism as mutual care for our holistic healing, and has grown into a
+      collective of 40+ artists from Philadelphia, Los Angeles, Portland, +
+      Mexico City.
+    </p>
+    <p>
+      THE EROTIC PROJECT approaches eroticism through the exploration of a vast,
+      varied, & nuanced spectrum of where it can be found & experienced– within
+      art, food, travel, work, self care rituals, personal practice, passions,
+      identity, sex, sexuality, and in any moment which inspires & offers peace,
+      pleasure, catharsis, joy, rest, space, freedom, and a deeper understanding
+      of self & of the human experience.
+    </p>
   </main>
-</Layout>
 
+  <CTAOutstanding
+    ctas={[
+      {
+        text: "Get AAI’s newsletter",
+        action: "Sign up",
+      },
+      {
+        text: "Open today 2–6PM",
+        action: "Get directions",
+      },
+    ]}
+  />
+</ProgramLayout>
 <style lang="scss"></style>
