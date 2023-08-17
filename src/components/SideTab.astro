@@ -9,9 +9,9 @@ const { collection } = Astro.props;
 <style type="scss">
   /* 1920 side tab */
   .side-tab {
-    position: fixed;
+    position: sticky;
     top: 0;
-    left: 0;
+    // left: 0;
     height: 100vh;
     width: 4rem;
     background: var(--black);
@@ -21,20 +21,18 @@ const { collection } = Astro.props;
     justify-content: center;
 
     @media screen and (max-width: 64rem) {
-        width: 3rem;
+      padding: 2rem 0;
+      width: 3rem;
     }
 
     @media screen and (max-width: 48rem) {
+      padding: 1rem 0;
       width: 2.4rem;
     }
-
     .name {
       writing-mode: vertical-rl;
       text-orientation: mixed;
-      margin-left: -.2em;
-
-    //   leading-trim: both;
-    //   text-edge: cap alphabetic;
+      // margin-left: -.2em;
     }
   }
 </style>

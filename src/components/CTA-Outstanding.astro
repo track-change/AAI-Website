@@ -45,11 +45,16 @@ const { ctas = [] } = Astro.props;
       margin: 16px;
     }
   }
+  .CTA-outstanding:hover {
+    background-color: var(--orange);
+    border-top: 2px solid var(--orange);
 
+    }
   .CTA-outstanding {
+    transition: all 600ms;
+
     border-top: 2px solid var(--black, #000);
     padding: 0 40px;
-
     display: flex;
     width: 100%;
     max-width: 800px;
@@ -76,11 +81,8 @@ const { ctas = [] } = Astro.props;
       padding: 0 16px;
       height: 200px;
     }
-    .CTA-link:hover {
-      color: var(--orange);
-    }
+
     .CTA-link {
-      transition: color 60ms;
       display: inline;
       align-items: flex-start;
       gap: 0.625rem;

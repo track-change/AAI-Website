@@ -10,7 +10,7 @@
     "astro": "astro"
   },
   "dependencies": {
-    "astro": "^2.10.8",
+    "astro": "^2.10.9",
     "sass": "^1.65.1"
   },
   "description": "``` npm create astro@latest -- --template basics ```",

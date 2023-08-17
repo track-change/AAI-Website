@@ -1,7 +1,7 @@
 <header>
   <div class="menu">
     <div class="menu-title">
-      <a href="/"><h1 id="title">asian arts initiative</h1></a>
+      <a href="/"><span id="title">asian arts initiative</span></a>
     </div>
     <div class="menu-right">
       <div class="links" id="toggle-links" data-close="true" hidden>
@@ -108,11 +108,13 @@
 
 <style type="scss">
   header {
+    position: sticky;
+    z-index: 99;
     width: 100%;
     background-color: var(--white, #fff);
-
+    top: 0;
     .menu {
-      padding-block: 18px;
+      padding-block: 8px;
       &.active {
         padding-block: 21px;
         align-items: start;
@@ -124,7 +126,8 @@
       display: flex;
       padding-inline: 22px;
       justify-content: space-between;
-      //       height: 45px;
+      align-items: center;
+      // height: 45px;
       border-top: 1px solid var(--black, #000);
       border-bottom: 1px solid var(--black, #000);
 
@@ -139,6 +142,10 @@
 
       #title {
         font-size: 22px;
+        margin-top: -.1em;
+        display: block;
+        height: fit-content;
+        line-height: 1;
       }
 
       .menu-right {
@@ -182,6 +189,10 @@
           .icon {
             cursor: pointer;
             background-color: transparent;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
             border: none;
 
             .hamburger {

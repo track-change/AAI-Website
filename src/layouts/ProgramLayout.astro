@@ -3,6 +3,7 @@ import BasicLayout from "../layouts/Layout.astro";
 import "../scss/main.scss";
 import CTADefault from "../components/CTA-Button.astro";
 import SideTab from "../components/SideTab.astro";
+import FrontCaption from "../components/FrontCaption.astro";
 
 interface Props {
   title: string;
@@ -14,56 +15,35 @@ const { bannerSrc } = Astro.props;
 ---
 
 <BasicLayout title={title}>
-  <SideTab collection="Programs" />
+  <main>
+    <SideTab collection="Programs" />
 
-  <div class="top">
-    <h1 class="title">{title}</h1>
-    <div class="banner">
-      <img src={bannerSrc} alt="Banner image" />
+    <div class="top">
+      <h1 class="title">{title}</h1>
+      <div class="banner">
+        <img src={bannerSrc} alt="Banner image" />
 
-      <CTADefault
-        ctas={[
-          {
-            text: "Get tickets",
-            href: "/tickets",
-          },
-          {
-            text: "RSVP",
-            href: "https://www.eventbrite.com/",
-          },
-          {
-            text: "Download press kit",
-            href: "/press.pdf",
-          },
-        ]}
-      />
+        <CTADefault
+          ctas={[
+            {
+              text: "Get tickets",
+              href: "/tickets",
+            },
+            {
+              text: "RSVP",
+              href: "https://www.eventbrite.com/",
+            },
+            {
+              text: "Download press kit",
+              href: "/press.pdf",
+            },
+          ]}
+        />
+      </div>
+      <FrontCaption />
+      <slot />
     </div>
-    <div class="front-caption">
-      <ul class="caption">
-        <li>{title}</li>
-        <li>Exhibition, Explicit, Arts in Philadelphia, Social Practice</li>
-      </ul>
-      <ul class="caption">
-        <li>Dates</li>
-        <li>April 14–May 30, 2023</li>
-      </ul>
-      <ul class="caption">
-        <li>Curator</li>
-        <li>Aubrié Costello</li>
-      </ul>
-      <ul class="caption">
-        <li>Artists</li>
-        <li>Aura Rosenberg</li>
-        <li>Jaishri Abichandani</li>
-        <li>Lanica Angpak</li>
-        <li>Elia Alba</li>
-        <li>Mequitta Ahuja</li>
-        <li>Elia Alba</li>
-        <li>Aura Rosenberg</li>
-      </ul>
-    </div>
-    <slot />
-  </div>
+  </main>
 </BasicLayout>
 
 <style lang="scss" is:global>
@@ -76,37 +56,35 @@ const { bannerSrc } = Astro.props;
     font-family: Menlo, Monaco, Lucida Console, Liberation Mono,
       DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace;
   }
-  body {
+
+  // Side Tab Area
+  main {
     display: flex;
   }
   .top {
-    // Side Tab Area
     flex: 1;
-    width: calc(100vw - 4rem);
-    left: 4rem;
-
-    @media screen and (max-width: 64rem) {
-      width: calc(100vw - 3rem);
-      left: 3rem;
-    }
-    @media screen and (max-width: 48rem) {
-      width: calc(100vw - 2.4rem);
-      left: 2.4rem;
-    }
-    @media screen and (max-width: 24.375rem) {
-    }
   }
+
   .banner,
-  main,
+  .body-copy,
   .front-caption {
     width: 100%;
     max-width: 800px;
 
     @media screen and (max-width: 64rem) {
-      max-width: 640px;
+      max-width: 40rem;
     }
     @media screen and (max-width: 48rem) {
-      max-width: 480px;
+      max-width: 30rem;
+      margin: 0 16px;
+
+    }
+
+    @media screen and (max-width: 35.5rem) {
+      background-color: red;
+      width: calc(100% - 4.4rem);
+      margin: 0 16px;
+
     }
     @media screen and (max-width: 24.375rem) {
       width: calc(100% - 32px);
@@ -122,7 +100,7 @@ const { bannerSrc } = Astro.props;
       margin: 32px;
     }
     @media screen and (max-width: 48rem) {
-      margin: 24px;
+      margin: 16px;
     }
     @media screen and (max-width: 24.375rem) {
       margin: 16px;
@@ -152,7 +130,7 @@ const { bannerSrc } = Astro.props;
     }
   }
 
-  main {
+  .body-copy {
     margin: 6.25rem auto;
     display: flex;
     flex-direction: column;
