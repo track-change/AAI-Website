@@ -1,0 +1,120 @@
+---
+interface CTA {
+  text: string;
+  action: string;
+}
+
+const { ctas = [] } = Astro.props;
+---
+
+<div class="CTA-wrapper">
+  {
+    ctas.map((cta: CTA) => (
+      <div class="CTA-outstanding">
+        <h2>{cta.text}</h2>
+        <a class="CTA-link">
+          <h2 class="action-text">{cta.action}</h2>
+        </a>
+      </div>
+    ))
+  }
+</div>
+
+<style type="scss">
+  .CTA-wrapper {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    width: fit-content;
+    gap: 80px;
+    margin: 0 auto;
+    padding: 0 40px;
+
+    @media screen and (max-width: 1024px) {
+      gap: 32px;
+      padding: 0 32px;
+    }
+    @media screen and (max-width: 768px) {
+      gap: 24px;
+      padding: 0 24px;
+    }
+    @media screen and (max-width: 390px) {
+      display: block;
+      width: calc(100% - 32px);
+      gap: 0;
+      padding: 0;
+      margin: 16px;
+    }
+  }
+
+  .CTA-outstanding {
+    border-top: 2px solid var(--black, #000);
+    padding: 0 40px;
+
+    display: flex;
+    width: 100%;
+    max-width: 800px;
+    height: 500px;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+
+    flex-shrink: 0;
+
+    @media screen and (max-width: 1024px) {
+      padding: 0 32px;
+      max-width: 448px;
+      height: 300px;
+    }
+
+    @media screen and (max-width: 768px) {
+      padding: 0 24px;
+      max-width: 332px;
+      height: 225px;
+    }
+    @media screen and (max-width: 390px) {
+      padding: 0 16px;
+      height: 200px;
+    }
+
+    .CTA-link {
+      border-bottom: 0.4rem solid black;
+      display: inline;
+      align-items: flex-start;
+      gap: 0.625rem;
+
+      @media screen and (max-width: 1440px) {
+        border-bottom: 0.2rem solid black;
+      }
+      @media screen and (max-width: 768px) {
+        border-bottom: 0.15rem solid black;
+      }
+
+      .action-text {
+        display: inline;
+      }
+    }
+
+    .CTA-link::after {
+      content: url(/arrow-black-20.svg);
+      padding-top: .5em;
+      display: inline-block;
+      vertical-align: top;
+    }
+    @media screen and (max-width: 1440px) {
+      .CTA-link::after {
+        padding-top: .25em;
+      }
+    }
+    @media screen and (max-width: 1024px) {
+      .CTA-link::after {
+        content: url(/arrow-black-14.svg);
+      }
+    }
+    @media screen and (max-width: 390px) {
+      .CTA-link::after {
+        content: url(/arrow-black-10.svg);
+      }
+    }
+  }
+</style>
