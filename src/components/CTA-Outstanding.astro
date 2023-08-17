@@ -76,9 +76,11 @@ const { ctas = [] } = Astro.props;
       padding: 0 16px;
       height: 200px;
     }
-
+    .CTA-link:hover {
+      color: var(--orange);
+    }
     .CTA-link {
-      border-bottom: 0.4rem solid black;
+      transition: color 60ms;
       display: inline;
       align-items: flex-start;
       gap: 0.625rem;
@@ -97,13 +99,13 @@ const { ctas = [] } = Astro.props;
 
     .CTA-link::after {
       content: url(/arrow-black-20.svg);
-      padding-top: .5em;
+      padding-top: 0.5em;
       display: inline-block;
       vertical-align: top;
     }
     @media screen and (max-width: 1440px) {
       .CTA-link::after {
-        padding-top: .25em;
+        padding-top: 0.25em;
       }
     }
     @media screen and (max-width: 1024px) {

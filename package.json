@@ -25,5 +25,8 @@
   "bugs": {
     "url": "https://github.com/track-change/AAI-Website/issues"
   },
-  "homepage": "https://github.com/track-change/AAI-Website#readme"
+  "homepage": "https://github.com/track-change/AAI-Website#readme",
+  "devDependencies": {
+    "leading-trim": "^1.0.2"
+  }
 }

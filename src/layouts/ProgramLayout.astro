@@ -1,9 +1,8 @@
 ---
+import BasicLayout from "../layouts/Layout.astro";
 import "../scss/main.scss";
-import Meta from "../partials/Meta.astro";
-import Header from "../partials/Header.astro";
-import Footer from "../components/Footer.astro";
 import CTADefault from "../components/CTA-Button.astro";
+import SideTab from "../components/SideTab.astro";
 
 interface Props {
   title: string;
@@ -14,12 +13,10 @@ const { title } = Astro.props;
 const { bannerSrc } = Astro.props;
 ---
 
-<!DOCTYPE html>
-<Fragment lang="en">
-  <Meta title={title} />
+<BasicLayout title={title}>
+  <SideTab collection="Programs" />
 
-  <body>
-    <Header />
+  <div class="top">
     <h1 class="title">{title}</h1>
     <div class="banner">
       <img src={bannerSrc} alt="Banner image" />
@@ -66,9 +63,8 @@ const { bannerSrc } = Astro.props;
       </ul>
     </div>
     <slot />
-    <Footer />
-  </body>
-</Fragment>
+  </div>
+</BasicLayout>
 
 <style lang="scss" is:global>
   html {
@@ -80,20 +76,39 @@ const { bannerSrc } = Astro.props;
     font-family: Menlo, Monaco, Lucida Console, Liberation Mono,
       DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace;
   }
+  body {
+    display: flex;
+  }
+  .top {
+    // Side Tab Area
+    flex: 1;
+    width: calc(100vw - 4rem);
+    left: 4rem;
 
+    @media screen and (max-width: 64rem) {
+      width: calc(100vw - 3rem);
+      left: 3rem;
+    }
+    @media screen and (max-width: 48rem) {
+      width: calc(100vw - 2.4rem);
+      left: 2.4rem;
+    }
+    @media screen and (max-width: 24.375rem) {
+    }
+  }
   .banner,
   main,
   .front-caption {
     width: 100%;
     max-width: 800px;
 
-    @media screen and (max-width: 1024px) {
+    @media screen and (max-width: 64rem) {
       max-width: 640px;
     }
-    @media screen and (max-width: 768px) {
+    @media screen and (max-width: 48rem) {
       max-width: 480px;
     }
-    @media screen and (max-width: 390px) {
+    @media screen and (max-width: 24.375rem) {
       width: calc(100% - 32px);
       margin: 0 16px;
     }
@@ -101,15 +116,15 @@ const { bannerSrc } = Astro.props;
     display: flex;
     flex-direction: column;
   }
- .title {
+  .title {
     margin: 40px;
-    @media screen and (max-width: 1024px) {
+    @media screen and (max-width: 64rem) {
       margin: 32px;
     }
-    @media screen and (max-width: 768px) {
+    @media screen and (max-width: 48rem) {
       margin: 24px;
     }
-    @media screen and (max-width: 390px) {
+    @media screen and (max-width: 24.375rem) {
       margin: 16px;
     }
   }
@@ -118,7 +133,7 @@ const { bannerSrc } = Astro.props;
     margin: 6.25rem auto;
     gap: 1.25rem;
 
-    @media screen and (max-width: 390px) {
+    @media screen and (max-width: 24.375rem) {
       margin: 2.5rem auto;
     }
   }

@@ -1,0 +1,40 @@
+---
+const { collection } = Astro.props;
+---
+
+<div class="side-tab department">
+  <h6 class="name">{collection}</h6>
+</div>
+
+<style type="scss">
+  /* 1920 side tab */
+  .side-tab {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 4rem;
+    background: var(--black);
+    color: var(--white);
+    padding: 2.5rem 0;
+    display: flex;
+    justify-content: center;
+
+    @media screen and (max-width: 64rem) {
+        width: 3rem;
+    }
+
+    @media screen and (max-width: 48rem) {
+      width: 2.4rem;
+    }
+
+    .name {
+      writing-mode: vertical-rl;
+      text-orientation: mixed;
+      margin-left: -.2em;
+
+    //   leading-trim: both;
+    //   text-edge: cap alphabetic;
+    }
+  }
+</style>
