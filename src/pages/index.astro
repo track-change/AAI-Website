@@ -40,34 +40,15 @@ import ProgramCard from "../components/ProgramCard.astro";
     <section>
       <h2>Tickets</h2>
     </section>
-
-    <CTAOutstanding
-      ctas={[
-        {
-          text: "Galleries open on Thursday & Saturday, 2–6PM. ",
-          action: "",
-        },
-        {
-          text: "",
-          action: "Contact Us",
-        },
-        {
-          text: "Get AAI's newsletter",
-          action: "Sign up",
-        },
-        {
-          text: "",
-          action: "Plan your visit",
-        },
-      ]}
-    />
   </main>
 
-  <style lang="scss">
+  <style type="scss">
     .program-carousel {
       display: flex;
       width: 100vw;
       overflow: scroll;
+      scroll-behavior: smooth;
+      padding-bottom: 2.5rem;
 
       .card-wrapper {
         width: fit-content;
@@ -75,27 +56,26 @@ import ProgramCard from "../components/ProgramCard.astro";
         display: flex;
         justify-content: center;
       }
-      .card-wrapper:nth-child(1) {
-        background-color: aliceblue;
-      }
-      .card-wrapper:nth-child(2) {
-        background-color: yellow;
-      }
-      .card-wrapper:nth-child(3) {
-        background-color: pink;
-      }
     }
     #blurb {
-      padding: 40px;
+      padding: 2.5rem;
       background-color: var(--orange);
     }
   </style>
 </Layout>
 
 <script>
-  const programCarousel = document.querySelector(".program-carousel")
-  programCarousel.addEventListener('click', function(){
-    console.log("hello")
-    this.scrollBy(window.innerWidth, 0, "smooth")
-  })
+  const carousel = document.querySelector(".program-carousel");
+  let currentPos = 0;
+
+  function scrollCarousel() {
+    currentPos += window.innerWidth;
+
+    if (currentPos > carousel.scrollWidth - window.innerWidth) {
+      currentPos = 0;
+    }
+
+    carousel.scrollTo(currentPos, 0);
+  }
+  setInterval(scrollCarousel, 2000);
 </script>

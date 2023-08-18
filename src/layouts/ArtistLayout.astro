@@ -2,27 +2,25 @@
 import BasicLayout from "../layouts/Layout.astro";
 import "../scss/main.scss";
 import CTADefault from "../components/CTA-Button.astro";
-import SideTab from "../components/SideTab-subpage.astro";
+import SideTab from "../components/SideTab.astro";
 import FrontCaption from "../components/FrontCaption.astro";
-import artistimg from "../assets/img/VB-R.png";
 
 interface Props {
-  title: string;
-  artistimg: string;
+  pageTitle: string;
+  bannerSrc: string;
 }
 
-const { title } = Astro.props;
-// const { artistimg } = Astro.props;
+const { pageTitle = "default", bannerSrc } = Astro.props as Props;
 ---
 
-<BasicLayout title={title}>
+<BasicLayout title={pageTitle}>
   <main>
-    <SideTab collection="Programs" />
+    <SideTab text="Artist Directory" href="/artists/" style="subpage"/>
 
     <div class="top">
-      <h1 class="title">{title}</h1>
+      <h1 class="title">{pageTitle}</h1>
       <div class="banner">
-        <img src={artistimg} alt="VB R" />
+        <img src={bannerSrc} alt="VB R" />
         <div class="small-caption">
           Photographed by Shanel Edwards for Femme Noire Movement Collective
           (FNMC)

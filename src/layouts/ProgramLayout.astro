@@ -2,24 +2,28 @@
 import BasicLayout from "../layouts/Layout.astro";
 import "../scss/main.scss";
 import CTADefault from "../components/CTA-Button.astro";
-import SideTab from "../components/SideTab-department.astro";
+import SideTab from "../components/SideTab.astro";
 import FrontCaption from "../components/FrontCaption.astro";
 
+import CTAOutstanding from "../components/CTA-Outstanding.astro";
+
+import testData from "../data/pgData.js"
+
+
 interface Props {
-  title: string;
+  pageTitle: string;
   bannerSrc: string;
 }
 
-const { title } = Astro.props;
-const { bannerSrc } = Astro.props;
+const { pageTitle, bannerSrc } = Astro.props as Props;
 ---
 
-<BasicLayout title={title}>
-  <main>
-    <SideTab collection="Programs" />
+<BasicLayout title={pageTitle}>
+  <div class="top">
+    <SideTab text="Programs" href="/programs/" style="department"/>
 
-    <div class="top">
-      <h1 class="title">{title}</h1>
+    <main>
+      <h1 class="title">{pageTitle}</h1>
       <div class="banner">
         <img src={bannerSrc} alt="Banner image" />
 
@@ -40,10 +44,52 @@ const { bannerSrc } = Astro.props;
           ]}
         />
       </div>
-      <FrontCaption />
+
+      <FrontCaption
+        frontCaptions={[
+          {
+            title: { pageTitle },
+            items: [
+              "Exhibition",
+              "Explicit, Arts in Philadelphia, Social Practice",
+            ],
+          },
+          {
+            title: "Dates",
+            items: ["April 14–May 30, 2023"],
+          },
+          {
+            title: "Curator",
+            items: ["Aubrié Costello"],
+          },
+          {
+            title: "Artists",
+            items: [
+              "Aura Rosenberg",
+              "Jaishri Abichandani",
+              "Lanica Angpak",
+              "Elia Alba",
+              "Mequitta Ahuja",
+            ],
+          },
+        ]}
+      />
       <slot />
-    </div>
-  </main>
+
+      <div class="CTA-wrapper">
+        {
+        testData.map((item) => (
+        
+        <CTAOutstanding
+        text={item.text}
+        action={item.hasLink}
+        linkText={item.linkText}
+        linkHref={item.linkHref}
+        />
+        ))}
+        </div>
+    </main>
+  </div>
 </BasicLayout>
 
 <style lang="scss" is:global>
@@ -58,16 +104,15 @@ const { bannerSrc } = Astro.props;
   }
 
   // Side Tab Area
-  main {
+  .top {
     display: flex;
   }
-  .top {
+  main {
     flex: 1;
   }
 
   .banner,
-  .body-copy,
-  .front-caption {
+  .body-copy {
     width: 100%;
     max-width: 800px;
 
@@ -77,14 +122,12 @@ const { bannerSrc } = Astro.props;
     @media screen and (max-width: 48rem) {
       max-width: 30rem;
       margin: 0 16px;
-
     }
 
     @media screen and (max-width: 35.5rem) {
       background-color: red;
       width: calc(100% - 4.4rem);
       margin: 0 16px;
-
     }
     @media screen and (max-width: 24.375rem) {
       width: calc(100% - 32px);
@@ -113,20 +156,6 @@ const { bannerSrc } = Astro.props;
 
     @media screen and (max-width: 24.375rem) {
       margin: 2.5rem auto;
-    }
-  }
-
-  .front-caption {
-    margin: 6.25rem auto;
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 100px 20px;
-
-    ul > li:first-child {
-      color: var(--darkGray);
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
     }
   }
 

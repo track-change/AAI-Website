@@ -1,9 +1,11 @@
 ---
 import ArtistLayout from "../layouts/ArtistLayout.astro";
 import CTADefault from "../components/CTA-Button.astro";
+import artistImg from "../assets/img/VB-R.png";
+
 ---
 
-<ArtistLayout title="Vitche-Boul Ra">
+<ArtistLayout pageTitle="Vitche-Boul Ra"  bannerSrc={artistImg}>
   <div class="front-caption">
     <CTADefault
       ctas={[
