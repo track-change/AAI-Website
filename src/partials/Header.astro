@@ -85,8 +85,10 @@
   ) as HTMLButtonElement;
   const menu = document.querySelector(".menu") as HTMLDivElement;
   const links = document.querySelector("#toggle-links") as HTMLDivElement;
+  const search = document.querySelector(".search-icon") as HTMLButtonElement;
 
   hamburger.addEventListener("click", () => {
+    search.toggleAttribute("hidden");
     links.toggleAttribute("hidden");
     menu.classList.toggle("active");
     const expanded =
