@@ -2,16 +2,17 @@
 import BasicLayout from "../layouts/Layout.astro";
 import "../scss/main.scss";
 import CTADefault from "../components/CTA-Button.astro";
-import SideTab from "../components/SideTab-department.astro";
+import SideTab from "../components/SideTab-subpage.astro";
 import FrontCaption from "../components/FrontCaption.astro";
+import artistimg from "../assets/img/VB-R.png";
 
 interface Props {
   title: string;
-  bannerSrc: string;
+  artistimg: string;
 }
 
 const { title } = Astro.props;
-const { bannerSrc } = Astro.props;
+// const { artistimg } = Astro.props;
 ---
 
 <BasicLayout title={title}>
@@ -21,26 +22,15 @@ const { bannerSrc } = Astro.props;
     <div class="top">
       <h1 class="title">{title}</h1>
       <div class="banner">
-        <img src={bannerSrc} alt="Banner image" />
+        <img src={artistimg} alt="VB R" />
+        <div class="small-caption">
+          Photographed by Shanel Edwards for Femme Noire Movement Collective
+          (FNMC)
+        </div>
 
-        <CTADefault
-          ctas={[
-            {
-              text: "Get tickets",
-              href: "/tickets",
-            },
-            {
-              text: "RSVP",
-              href: "https://www.eventbrite.com/",
-            },
-            {
-              text: "Download press kit",
-              href: "/press.pdf",
-            },
-          ]}
-        />
+        <!-- <CTADefault /> -->
       </div>
-      <FrontCaption />
+      <!-- <FrontCaption /> -->
       <slot />
     </div>
   </main>
@@ -63,6 +53,8 @@ const { bannerSrc } = Astro.props;
   }
   .top {
     flex: 1;
+    display: flex;
+    flex-direction: column;
   }
 
   .banner,
@@ -77,14 +69,12 @@ const { bannerSrc } = Astro.props;
     @media screen and (max-width: 48rem) {
       max-width: 30rem;
       margin: 0 16px;
-
     }
 
     @media screen and (max-width: 35.5rem) {
       background-color: red;
       width: calc(100% - 4.4rem);
       margin: 0 16px;
-
     }
     @media screen and (max-width: 24.375rem) {
       width: calc(100% - 32px);
@@ -108,8 +98,9 @@ const { bannerSrc } = Astro.props;
   }
 
   .banner {
-    margin: 6.25rem auto;
-    gap: 1.25rem;
+    margin: 2.5rem;
+    gap: .5rem;
+    color: var(--darkGray);
 
     @media screen and (max-width: 24.375rem) {
       margin: 2.5rem auto;
@@ -117,7 +108,7 @@ const { bannerSrc } = Astro.props;
   }
 
   .front-caption {
-    margin: 6.25rem auto;
+    margin: 2.5rem;
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 100px 20px;
@@ -131,7 +122,7 @@ const { bannerSrc } = Astro.props;
   }
 
   .body-copy {
-    margin: 6.25rem auto;
+    margin: 2.5rem;
     display: flex;
     flex-direction: column;
     gap: 2em 0;

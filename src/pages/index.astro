@@ -1,15 +1,101 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import CTAOutstanding from "../components/CTA-Outstanding.astro";
+import ProgramCard from "../components/ProgramCard.astro";
 ---
 
 <Layout title="Homepage">
   <main>
-    <h1>This is H1</h1>
-    <h2>This is H2 asian arts initiative is a multidisciplinary arts center offering exhibitions, performances, artist residencies, youth workshops, and a community gathering space.</h2>
-    <h4>This is H4</h4>
-    <h6>This is H6</h6>
-    <p>This is body asian arts initiative is a multidisciplinary arts center offering exhibitions, performances, artist residencies, youth workshops, and a community gathering space.</p>
+    <section>
+      <h1>Programs: On Now</h1>
+
+      <div class="program-carousel">
+        <div class="card-wrapper">
+          <ProgramCard />
+        </div>
+        <div class="card-wrapper">
+          <ProgramCard />
+        </div>
+        <div class="card-wrapper">
+          <ProgramCard />
+        </div>
+      </div>
+    </section>
+    <section>
+      <h2 id="blurb">
+        asian arts initiative is a multidisciplinary arts center offering
+        exhibitions, performances, artist residencies, youth workshops, and a
+        community gathering space.
+      </h2>
+    </section>
+    <section>
+      <h2>About Us</h2>
+    </section>
+    <section>
+      <h2>Education</h2>
+    </section>
+    <section>
+      <h2>Media Library</h2>
+    </section>
+    <section>
+      <h2>Tickets</h2>
+    </section>
+
+    <CTAOutstanding
+      ctas={[
+        {
+          text: "Galleries open on Thursday & Saturday, 2–6PM. ",
+          action: "",
+        },
+        {
+          text: "",
+          action: "Contact Us",
+        },
+        {
+          text: "Get AAI's newsletter",
+          action: "Sign up",
+        },
+        {
+          text: "",
+          action: "Plan your visit",
+        },
+      ]}
+    />
   </main>
+
+  <style lang="scss">
+    .program-carousel {
+      display: flex;
+      width: 100vw;
+      overflow: scroll;
+
+      .card-wrapper {
+        width: fit-content;
+        min-width: 100vw;
+        display: flex;
+        justify-content: center;
+      }
+      .card-wrapper:nth-child(1) {
+        background-color: aliceblue;
+      }
+      .card-wrapper:nth-child(2) {
+        background-color: yellow;
+      }
+      .card-wrapper:nth-child(3) {
+        background-color: pink;
+      }
+    }
+    #blurb {
+      padding: 40px;
+      background-color: var(--orange);
+    }
+  </style>
 </Layout>
 
-<style lang="scss"></style>
+<script>
+  const programCarousel = document.querySelector(".program-carousel")
+  programCarousel.addEventListener('click', function(){
+    console.log("hello")
+    this.scrollBy(window.innerWidth, 0, "smooth")
+  })
+</script>
