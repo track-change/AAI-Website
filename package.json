@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "astro": "^2.10.8",
+    "astro-sanity": "^1.1.7",
     "sass": "^1.65.1"
   },
   "description": "``` npm create astro@latest -- --template basics ```",
