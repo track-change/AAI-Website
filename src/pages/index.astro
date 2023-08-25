@@ -2,6 +2,7 @@
 import Layout from "../layouts/Layout.astro";
 import CTAOutstanding from "../components/CTA-Outstanding.astro";
 import ProgramCard from "../components/ProgramCard.astro";
+
 ---
 
 <Layout title="Homepage">
@@ -65,7 +66,7 @@ import ProgramCard from "../components/ProgramCard.astro";
 </Layout>
 
 <script>
-  const carousel = document.querySelector(".program-carousel");
+  const carousel = document.querySelector(".program-carousel") as HTMLElement;
   let currentPos = 0;
 
   function scrollCarousel() {

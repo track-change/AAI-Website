@@ -8,22 +8,22 @@ import FrontCaption from "../components/FrontCaption.astro";
 interface Props {
   pageTitle: string;
   bannerSrc: string;
+  credits: string;
 }
 
-const { pageTitle = "default", bannerSrc } = Astro.props as Props;
+const { pageTitle = "default", bannerSrc, credits } = Astro.props as Props;
 ---
 
 <BasicLayout title={pageTitle}>
   <main>
-    <SideTab text="Artist Directory" href="/artists/" style="subpage"/>
+    <SideTab text="Artist Directory" href="/artists/" style="subpage" />
 
     <div class="top">
       <h1 class="title">{pageTitle}</h1>
       <div class="banner">
         <img src={bannerSrc} alt="VB R" />
         <div class="small-caption">
-          Photographed by Shanel Edwards for Femme Noire Movement Collective
-          (FNMC)
+          {credits}
         </div>
 
         <!-- <CTADefault /> -->
@@ -97,7 +97,7 @@ const { pageTitle = "default", bannerSrc } = Astro.props as Props;
 
   .banner {
     margin: 2.5rem;
-    gap: .5rem;
+    gap: 0.5rem;
     color: var(--darkGray);
 
     @media screen and (max-width: 24.375rem) {

@@ -10,7 +10,13 @@
     "astro": "astro"
   },
   "dependencies": {
+    "@sanity/astro": "^1.2.1",
     "astro": "^2.10.9",
+    "astro-portabletext": "^0.9.4",
+    "astro-sanity": "^1.1.7",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "sanity": "^3.15.1",
     "sass": "^1.65.1"
   },
   "description": "``` npm create astro@latest -- --template basics ```",
@@ -27,6 +33,9 @@
   },
   "homepage": "https://github.com/track-change/AAI-Website#readme",
   "devDependencies": {
+    "@portabletext/types": "^2.0.6",
+    "@sanity/image-url": "^1.0.2",
+    "@sanity/types": "^3.15.1",
     "leading-trim": "^1.0.2"
   }
 }

@@ -1,15 +1,18 @@
 ---
+import type {Settings} from "../types/Settings"
 interface Props {
   title: string;
+  settings: Settings;
 }
 
-const { title }: Props = Astro.props;
+const { title, settings }: Props = Astro.props;
+console.log(title, settings);
 ---
 
 <head>
   <!-- <meta charset="UTF-8" /> -->
   <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
-  <meta name="description" content="Astro description" />
+  <meta name="description" content={settings.description} />
   <meta name="viewport" content="width=device-width" />
   <link rel="icon" type="image/svg+xml" href="/logo-orange.svg" />
   <meta name="generator" content={Astro.generator} />
@@ -22,7 +25,7 @@ const { title }: Props = Astro.props;
   <meta property="twitter:card" content="summary_large_image" />
   <meta property="twitter:url" content="https://asianartsinitiative.org/" />
   <meta property="twitter:title" content={title} />
-  <meta property="twitter:description" content="Asian Arts Initiative" />
+  <meta property="twitter:description" content={settings.description} />
   <!-- <meta property="twitter:image" content="https://asianartsinitiative.org/og-image.png" /> -->
   <title>{title} | Asian Arts Initiative</title>
 </head>
