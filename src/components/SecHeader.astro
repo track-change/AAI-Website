@@ -1,0 +1,22 @@
+---
+interface SecHeader {
+    title: string;
+
+}
+
+const { title } = Astro.props;
+---
+
+<section>
+    <p data-sec-title>{title}</p>
+</section>
+
+<style>
+    section {
+        width: 100%;
+        padding: 40px 0;
+        [data-sec-title] {
+            border-top: 1px solid var(--black);
+        }
+    }
+</style>

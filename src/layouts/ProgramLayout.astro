@@ -1,11 +1,9 @@
 ---
 import BasicLayout from "../layouts/Layout.astro";
 import "../scss/main.scss";
-import CTADefault from "../components/CTA-Button.astro";
+import CTA from "../components/CTA.astro";
 import SideTab from "../components/SideTab.astro";
 import FrontCaption from "../components/FrontCaption.astro";
-
-import CTAOutstanding from "../components/CTA-Outstanding.astro";
 
 import testData from "../data/pgData.js"
 
@@ -27,7 +25,7 @@ const { pageTitle, bannerSrc } = Astro.props as Props;
       <div class="banner">
         <img src={bannerSrc} alt="Banner image" />
 
-        <CTADefault
+        <CTA
           ctas={[
             {
               text: "Get tickets",
@@ -80,7 +78,8 @@ const { pageTitle, bannerSrc } = Astro.props as Props;
         {
         testData.map((item) => (
         
-        <CTAOutstanding
+        <CTA
+        type="outstanding"
         text={item.text}
         action={item.hasLink}
         linkText={item.linkText}

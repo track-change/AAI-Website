@@ -1,19 +1,132 @@
 ---
 import Layout from "../../layouts/Layout.astro";
 import { getArtists } from "../../data/api";
-
+import Collapsible from "../../components/Collapsible.astro";
+import SideTab from "../../components/SideTab.astro";
+import SecHeader from "../../components/SecHeader.astro";
+import CTA from "../../components/CTA.astro";
 const artists = await getArtists();
 ---
 
 <Layout title="Artists">
-  <h1>Artists</h1>
-  <ul>
-    {
-      artists.map((artist) => (
-        <li>
-          <a href={`/artists/${artist.slug.current}`}>{artist.name}</a>
-        </li>
-      ))
-    }
-  </ul>
+  <div data-top>
+    <div data-side-wrapper>
+      <SideTab text="Archive" href="/arhive/" style="department" />
+      <SideTab text="Media Library" href="/media-library/" style="subpage" />
+
+      <main data-main>
+        <h2 class="title">Artists Directory</h2>
+
+        <div class="filters caption">
+          <ul>
+            <li>Sort by</li>
+            <li>
+              <ul>
+                <li>Most recent to oldest</li>
+                <li>Oldest to most recent</li>
+                <li>Alphabetical</li>
+              </ul>
+            </li>
+          </ul>
+          <ul>
+            <li>Filter by year of participation</li>
+            <li>
+              <ul>
+                <li>All</li>
+                <li>2023</li>
+                <li>2022</li>
+                <li>2021</li>
+              </ul>
+            </li>
+          </ul>
+
+          <ul>
+            <li>Filter by last name initials</li>
+            <li>
+              <ul>
+                <li>A</li>
+                <li>B</li>
+                <li>C</li>
+                <li>D</li>
+                <li>E</li>
+                <li>F</li>
+
+              </ul>
+            </li>
+          </ul>
+        </div>
+        <ul class="list">
+          {
+            artists.map((artist) => (
+              <li>
+                <a href={`/artists/${artist.slug.current}`}>
+                  <h2>{artist.name}</h2>
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+
+        <CTA type="text" text="Load more" />
+
+        <SecHeader title="Artists FAQ" />
+        <div class="caption FAQ">
+          Asian Arts Initiative has supported hundreds of budding, emergent and
+          mid-career artists into local and global prominence. We publish Calls
+          for Artists for thematic seasons several times a year, and provide
+          opportunities for community-based artist residencies, as well as low
+          and no cost studio and performance rental spaces. Here are some common
+          and Frequently Asked Questions (FAQ).
+        </div>
+        <Collapsible />
+      </main>
+    </div>
+  </div>
 </Layout>
+
+<style type="scss">
+  [data-top] {
+    [data-side-wrapper] {
+      width: 100vw;
+      min-height: 100vh;
+
+      display: flex;
+      flex-direction: row;
+      position: sticky;
+      top: 45px;
+      left: 0;
+
+      [data-main] {
+        padding: 40px;
+        width: 100%;
+
+        display: flex;
+        flex-direction: column;
+
+        .title {
+          margin-bottom: 200px;
+        }
+
+        .filters,
+        .filters > * > * > * {
+          display: flex;
+          justify-content: space-between;
+          gap: 1rem;
+          color: var(--darkGray);
+        }
+        .list {
+          padding: 4rem 0;
+        }
+        .list > * {
+          border-top: 1px solid var(--black);
+          border-bottom: 1px solid var(--black);
+        }
+      }
+    }
+  }
+
+  .FAQ {
+    max-width: 800px;
+    margin: 10rem auto;
+  }
+</style>

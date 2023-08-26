@@ -1,0 +1,56 @@
+---
+import CTA from "./CTA.astro";
+import faqData from "../data/faq.js";
+---
+
+<div class="collapsible">
+    <CTA type="outstanding" text={faqData.title} />
+    <div class="text is-hidden">
+        {
+            faqData.data.map((item) => (
+                <div class="item">
+                    <p>{item.question}</p>
+                    <div class="caption">{item.answer}</div>
+                </div>
+            ))
+        }
+    </div>
+</div>
+
+<style type="scss">
+    .collapsible {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 40px;
+        margin: 40px 0;
+        min-width: 100%;
+        height: fit-content;
+    }
+    .text {
+        // width: 50%;
+        max-width: 800px;
+
+        transition: all 600ms;
+        padding: 40px 0;
+        display: flex;
+        flex-direction: column;
+        gap: 100px;
+
+        .item {
+            display: flex;
+            flex-direction: column;
+
+            gap: 2rem;
+        }
+    }
+    .is-hidden {
+        display: none;
+    }
+</style>
+
+<script is:inline>
+const CTA = document.querySelector(".CTA-outstanding");
+const text = document.querySelector("div.text");
+
+CTA.addEventListener("click", () => text.classList.toggle("is-hidden"));
+</script>
