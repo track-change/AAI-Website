@@ -1,12 +1,9 @@
 ---
 import ProgramLayout from "../layouts/ProgramLayout.astro";
 import bannerImage from "../assets/img/image-1.png";
-import CTAOutstanding from "../components/CTA-Outstanding.astro";
-import CTADefault from "../components/CTA-Button.astro"
 ---
-
-<ProgramLayout title="The Erotic Project" bannerSrc={bannerImage}>
-  <main>
+<ProgramLayout pageTitle="The Erotic Project"  bannerSrc={bannerImage} >  
+<section class="body-copy">
     <p>
       The Storefront will be open Tuesdays, Thursdays, and Saturdays, 2-6pm.
       Based on the explicit content in this exhibit we require guests to be 18
@@ -29,19 +26,11 @@ import CTADefault from "../components/CTA-Button.astro"
       pleasure, catharsis, joy, rest, space, freedom, and a deeper understanding
       of self & of the human experience.
     </p>
-  </main>
+  </section>
 
-  <CTAOutstanding
-    ctas={[
-      {
-        text: "Get AAI’s newsletter",
-        action: "Sign up",
-      },
-      {
-        text: "Open today 2–6PM",
-        action: "Get directions",
-      }
-    ]}
-  />
+
+
+
 </ProgramLayout>
-<style lang="scss"></style>
+
+<style type="scss"></style>

@@ -1,7 +1,7 @@
 ---
 interface CTA {
-  text: string;
-  href: string;
+  title: string;
+  url: string;
 }
 
 const { ctas = [] } = Astro.props;
@@ -10,8 +10,8 @@ const { ctas = [] } = Astro.props;
 <div class="CTA-wrapper">
   {
     ctas.map((cta: CTA) => (
-      <a href={cta.href} class="CTA-default">
-        {cta.text}
+      <a href={cta.url} class="CTA-default">
+        {cta.title}
       </a>
     ))
   }
@@ -26,9 +26,9 @@ const { ctas = [] } = Astro.props;
     justify-content: center;
     align-items: center;
     text-align: center;
+    text-transform: capitalize;
 
     border: 1px solid var(--black, #000);
-    // border-bottom: 1px solid var(--black, #000);
 
     background-color: var(--white, #fff);
 
@@ -39,7 +39,6 @@ const { ctas = [] } = Astro.props;
     }
     @media screen and (max-width: 768px) {
       width: 50%;
-      // max-width: 240px;
     }
     @media screen and (max-width: 390px) {
       width: 100%;

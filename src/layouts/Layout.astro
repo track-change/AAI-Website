@@ -3,6 +3,9 @@ import "../scss/main.scss";
 import Meta from "../partials/Meta.astro";
 import Header from "../partials/Header.astro";
 import Footer from "../components/Footer.astro"
+import {getSiteSettings} from "../data/api";
+
+const settings = await getSiteSettings();
 
 interface Props {
   title: string;
@@ -13,7 +16,7 @@ const { title } = Astro.props;
 
 <!DOCTYPE html>
 <Fragment lang="en">
-  <Meta title={title} />
+  <Meta title={title} settings={settings} />
 
   <body>
     <Header />
