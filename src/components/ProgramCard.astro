@@ -1,5 +1,5 @@
 ---
-import CTAButton from "./CTA-Button.astro";
+import CTA from "./CTA.astro";
 ---
 <div class="program-card">
 
@@ -13,12 +13,7 @@ import CTAButton from "./CTA-Button.astro";
     <p>
         April 14
     </p>
-<CTAButton  ctas={[
-    {
-      text: "See All Programs",
-      href: "/programs",
-    }
-  ]}/>
+<CTA  type="default" text="See All Programs" linkHref="/programs/"/>
 </div>
 
 <style type="scss">
