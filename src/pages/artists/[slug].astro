@@ -8,11 +8,7 @@ import { urlFor } from "../../utils/image";
 
 export async function getStaticPaths() {
   const artists = await getArtists();
-  return artists.map((artist) => {
-    return {
-      params: { slug: artist.slug.current },
-    };
-  });
+  return artists.map((artist) => ({ params: { slug: artist.slug.current } }));
 }
 
 type Params = InferGetStaticParamsType<typeof getStaticPaths>;

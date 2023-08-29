@@ -1,19 +1,32 @@
 import { useSanityClient } from "@sanity/astro";
 import type { PortableTextBlock } from "@portabletext/types";
-import type { ImageAsset, Slug } from "@sanity/types";
+import type { ImageAsset, Slug, File } from "@sanity/types";
 import groq from "groq";
 
+async function fetchData(type: string, slug?: string) {
+  const query = slug
+    ? groq`*[_type == $type && slug.current == $slug][0]`
+    : groq`*[_type == $type]`;
+
+  const params = slug ? { type, slug } : { type };
+
+  return await useSanityClient().fetch(query, params);
+}
+
 export async function getArtists(): Promise<Artist[]> {
-  const query = groq`*[_type == "artist"]`;
-  const artists = await useSanityClient().fetch(query);
-  return artists;
+  return fetchData("artist");
 }
 
 export async function getArtistBySlug(slug: string): Promise<Artist> {
-  return await useSanityClient().fetch(
-    groq`*[_type == "artist" && slug.current == $slug][0]`,
-    { slug }
-  );
+  return fetchData("artist", slug);
+}
+
+export async function getPrograms(): Promise<Program[]> {
+  return fetchData("program");
+}
+
+export async function getProgramBySlug(slug: string): Promise<Program> {
+  return fetchData("program", slug);
 }
 
 export async function getSiteSettings(): Promise<Settings> {
@@ -38,7 +51,23 @@ interface Artist {
   bio: PortableTextBlock[];
 }
 
-interface Settings {
+interface Program {
+  _type: string;
+  _id: string;
+  name: string;
+  slug: Slug;
+  startDateTime: string;
+  endDateTime: string;
+  coverImage: ImageAsset;
+  pressKit: File;
+  curator: string;
+  artists: Artist[];
+  description: PortableTextBlock[];
+  images: ImageAsset[];
+  tags: string[];
+}
+
+export interface Settings {
   _type: string;
   _id: string;
   title: string;
