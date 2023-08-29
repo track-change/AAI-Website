@@ -1,0 +1,29 @@
+---
+import type { InferGetStaticParamsType } from "astro";
+import { PortableText } from "astro-portabletext";
+import ProgramLayout from "../../layouts/ProgramLayout.astro";
+import { getPrograms, getProgramBySlug } from "../../data/api";
+import { urlFor } from "../../utils/image";
+
+export async function getStaticPaths() {
+  const programs = await getPrograms();
+  return programs.map((program) => ({
+    params: { slug: program.slug.current },
+  }));
+}
+
+type Params = InferGetStaticParamsType<typeof getStaticPaths>;
+const { slug } = Astro.params as Params;
+
+const program = await getProgramBySlug(slug);
+---
+
+<ProgramLayout
+  pageTitle={program.name}
+  bannerSrc={urlFor(program.coverImage).url()}
+>
+  <section class="body-copy">
+    <h1>{program.name}</h1>
+    <PortableText value={program.description} />
+  </section>
+</ProgramLayout>

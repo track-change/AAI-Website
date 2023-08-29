@@ -1,0 +1,19 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import { getPrograms } from "../../data/api";
+
+const programs = await getPrograms();
+---
+
+<Layout title="Program">
+  <h1>Programs</h1>
+  <ul>
+    {
+      programs.map((program) => (
+        <li>
+          <a href={`/programs/${program.slug.current}`}>{program.name}</a>
+        </li>
+      ))
+    }
+  </ul>
+</Layout>
