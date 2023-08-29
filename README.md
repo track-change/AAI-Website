@@ -52,3 +52,25 @@ All commands are run from the root of the project, from a terminal:
 ## 👀 Want to learn more?
 
 Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+
+
+-----
+
+Alvin
+- Education pages, CMS + front-end
+- Media pages, CMS + front-end
+- Venue pages, CMS + front-end
+- Visit page, CMS + front-end
+- Ticket page, CMS + front-end
+
+Mianwei
+- Venue page enormous form
+- Education, enormous form
+
+
+Agenda/Questions
+
+- Sanity account, we handle it or they handle it
+- Ticket page, manual input vs program parsing / are you ok with manually input the event links
+- Filters of participation years, onto all pages
+
