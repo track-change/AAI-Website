@@ -80,10 +80,10 @@ function fetchAndEmbed(url, container, sideTabSelector) {
         });
 }
 
-const currentURL = "current/";
+const currentURL = "/programs/current";
 const currentContainer = document.getElementById("current");
 
-const pastURL = "past/";
+const pastURL = "/programs/past";
 const pastContainer = document.getElementById("past");
 
 const sideTab = ".side-tab";
@@ -102,7 +102,7 @@ function resetPastContainerPosition() {
 // Function to handle mousemove event
 function handleMouseMove() {
   clearTimeout(idleTimeout); // Clear previous timeout
-  pastContainer.style.left = "10%"; // Set the new position
+  pastContainer.style.left = "30%"; // Set the new position
   idleTimeout = setTimeout(resetPastContainerPosition, 3000); // 3 seconds timeout
 }
 

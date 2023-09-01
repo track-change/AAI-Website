@@ -55,6 +55,8 @@ Feel free to check [our documentation](https://docs.astro.build) or jump into ou
 
 
 -----
+New ask:
+- Can we make the categories in CMS of 'current' and 'past' under programs?
 
 Alvin
 - Education pages, CMS + front-end
@@ -66,11 +68,16 @@ Alvin
 Mianwei
 - Venue page enormous form
 - Education, enormous form
+- Programs 
+    - need populating some events for the `current` and `past` pages
 
 
 Agenda/Questions
 
-- Sanity account, we handle it or they handle it
-- Ticket page, manual input vs program parsing / are you ok with manually input the event links
-- Filters of participation years, onto all pages
+[x] Sanity account, we handle it or they handle it
+    - look into sanity transfer, [Sanity Project Transfer](https://www.sanity.io/docs/plans-and-payments#project-transfers)
+[x] Ticket page, manual input vs program parsing / are you ok with manually input the event links
+    - manual input
+[x] Filters of participation years, onto all pages
+    - yes
 

@@ -66,6 +66,7 @@ interface Program {
   description: PortableTextBlock[];
   images: ImageAsset[];
   tags: string[];
+  season: string;
 }
 
 export interface Settings {
