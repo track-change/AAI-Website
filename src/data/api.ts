@@ -56,6 +56,7 @@ interface Program {
   _id: string;
   name: string;
   slug: Slug;
+  type: string;
   startDateTime: string;
   endDateTime: string;
   coverImage: ImageAsset;

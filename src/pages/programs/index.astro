@@ -1,19 +1,115 @@
 ---
 import Layout from "../../layouts/Layout.astro";
-import { getPrograms } from "../../data/api";
-
-const programs = await getPrograms();
+import SideTab from "../../components/SideTab.astro";
 ---
 
-<Layout title="Program">
-  <h1>Programs</h1>
-  <ul>
-    {
-      programs.map((program) => (
-        <li>
-          <a href={`/programs/${program.slug.current}`}>{program.name}</a>
-        </li>
-      ))
-    }
-  </ul>
+<Layout title="Programs">
+  <div data-top>
+    <article data-wrapper>
+      <SideTab text="Programs" href="#" style="department" />
+      <main data-main>
+        <div id="current"></div>
+        <div id="past"></div>
+      </main>
+    </article>
+  </div>
 </Layout>
+
+<style type="scss">
+  [data-wrapper] {
+    width: 100vw;
+    min-height: 100vh;
+
+    display: flex;
+    flex-direction: row;
+    position: sticky;
+    top: 45px;
+    left: 0;
+
+    [data-main] {
+      width: calc(100vw - 4rem);
+      height: 200vh; /* Set your desired height */
+
+      position: relative;
+    }
+  }
+
+  #current,
+  #past {
+    width: 100%; /* Set your desired width */
+    height: 200vh; /* Set your desired height */
+    overflow: hidden; /* Hide any overflowing content */
+    position: relative;
+    background-color: var(--white);
+    transition: left 500ms;
+  }
+
+  #past {
+    top: -200vh;
+    left: 66%;
+    box-shadow: -8px 0px 12px 0px rgba(0, 0, 0, 0.1);
+  }
+
+  #current .header,
+  #current .footer,
+  #past .header,
+  #past .footer {
+    display: none;
+  }
+</style>
+
+<script async>
+function fetchAndEmbed(url, container, sideTabSelector) {
+    fetch(url)
+        .then((response) => response.text())
+        .then((content) => {
+            // Modify the content as needed, e.g., remove header, footer
+            const modifiedContent = content
+                .replace(/<header[^>]*>[\s\S]*?<\/header>/gi, "")
+                .replace(/<footer[^>]*>[\s\S]*?<\/footer>/gi, "");
+
+            // Set the modified content inside the container
+            container.innerHTML = modifiedContent;
+
+            // Find and hide the .side-tab elements
+            const sideTabs = container.querySelectorAll(sideTabSelector);
+            sideTabs.forEach((ele) => (ele.style.display = "none"));
+        })
+        .catch((error) => {
+            console.error("Error fetching content:", error);
+        });
+}
+
+const currentURL = "current/";
+const currentContainer = document.getElementById("current");
+
+const pastURL = "past/";
+const pastContainer = document.getElementById("past");
+
+const sideTab = ".side-tab";
+
+fetchAndEmbed(currentURL, currentContainer, sideTab);
+fetchAndEmbed(pastURL, pastContainer, sideTab);
+
+
+let idleTimeout;
+
+// Function to reset pastContainer position
+function resetPastContainerPosition() {
+  pastContainer.style.left = "66%";
+}
+
+// Function to handle mousemove event
+function handleMouseMove() {
+  clearTimeout(idleTimeout); // Clear previous timeout
+  pastContainer.style.left = "10%"; // Set the new position
+  idleTimeout = setTimeout(resetPastContainerPosition, 3000); // 3 seconds timeout
+}
+
+currentContainer.addEventListener('mousemove', () => {
+  pastContainer.style.left = "95%";
+});
+
+pastContainer.addEventListener('mousemove', handleMouseMove);
+
+</script>

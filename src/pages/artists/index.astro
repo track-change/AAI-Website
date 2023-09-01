@@ -5,12 +5,15 @@ import Collapsible from "../../components/Collapsible.astro";
 import SideTab from "../../components/SideTab.astro";
 import SecHeader from "../../components/SecHeader.astro";
 import CTA from "../../components/CTA.astro";
+import { urlFor } from "../../utils/image";
+
 const artists = await getArtists();
+
 ---
 
 <Layout title="Artists">
   <div data-top>
-    <div data-side-wrapper>
+    <article data-wrapper>
       <SideTab text="Archive" href="/arhive/" style="department" />
       <SideTab text="Media Library" href="/media-library/" style="subpage" />
 
@@ -58,10 +61,15 @@ const artists = await getArtists();
         <ul class="list">
           {
             artists.map((artist) => (
-              <li>
+              <li class="list-item">
                 <a href={`/artists/${artist.slug.current}`}>
                   <h2>{artist.name}</h2>
                 </a>
+                <img
+                  class="thumbnail"
+                  src={urlFor(artist.image).url()}
+                  alt=""
+                />
               </li>
             ))
           }
@@ -80,13 +88,13 @@ const artists = await getArtists();
         </div>
         <Collapsible />
       </main>
-    </div>
+    </article>
   </div>
 </Layout>
 
 <style type="scss">
   [data-top] {
-    [data-side-wrapper] {
+    [data-wrapper] {
       width: 100vw;
       min-height: 100vh;
 
@@ -117,9 +125,18 @@ const artists = await getArtists();
         .list {
           padding: 4rem 0;
         }
-        .list > * {
+        .list-item {
           border-top: 1px solid var(--black);
           border-bottom: 1px solid var(--black);
+          // cursor: pointer;
+
+          .thumbnail {
+            position: absolute;
+            display: none;
+            width: 300px;
+            height: auto;
+            pointer-events: none;
+          }
         }
       }
     }
@@ -130,3 +147,32 @@ const artists = await getArtists();
     margin: 10rem auto;
   }
 </style>
+
+<script async>
+  const listItems = document.querySelectorAll(".list-item");
+  const thumbnail = document.querySelector(".thumbnail");
+  // let scrollY = window.scrollY || window.pageYOffset;
+
+  window.addEventListener('scroll', ()=>{
+    let scrollY = window.scrollY
+  })
+  listItems.forEach((item) => {
+    item.addEventListener("mouseenter", (e) => {
+      // const itemPosition = item.getBoundingClientRect();
+      item.style.color = "var(--orange)"
+      thumbnail.style.display = "block";
+      thumbnail.style.left = `${e.clientX}px`;
+      thumbnail.style.top = `${e.clientY + scrollY}px`;
+    });
+
+    item.addEventListener("mousemove", (e) => {
+      thumbnail.style.left = `${e.clientX}px`;
+      thumbnail.style.top = `${e.clientY + scrollY}px`;
+    });
+
+    item.addEventListener("mouseleave", () => {
+      item.style.color = "var(--black)"
+      thumbnail.style.display = "none";
+    });
+  });
+</script>
