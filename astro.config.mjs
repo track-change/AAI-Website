@@ -5,8 +5,8 @@ import { defineConfig } from "astro/config";
 export default defineConfig({
   integrations: [
     sanity({
-      projectId: "4e5m3wpi",
-      dataset: "development",
+      projectId: "jy6yg9wb",
+      dataset: "production",
       apiVersion: "2021-03-25",
       useCdn: true,
     }),
