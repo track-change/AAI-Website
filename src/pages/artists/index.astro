@@ -8,7 +8,6 @@ import CTA from "../../components/CTA.astro";
 import { urlFor } from "../../utils/image";
 
 const artists = await getArtists();
-
 ---
 
 <Layout title="Artists">
@@ -53,7 +52,6 @@ const artists = await getArtists();
                 <li>D</li>
                 <li>E</li>
                 <li>F</li>
-
               </ul>
             </li>
           </ul>
@@ -125,9 +123,12 @@ const artists = await getArtists();
         .list {
           padding: 4rem 0;
         }
+        .list-item:last-child {
+          border-bottom: 1px solid var(--black);
+        }
         .list-item {
           border-top: 1px solid var(--black);
-          border-bottom: 1px solid var(--black);
+          padding: 0.5rem 0;
           // cursor: pointer;
 
           .thumbnail {
@@ -149,30 +150,30 @@ const artists = await getArtists();
 </style>
 
 <script async>
-  const listItems = document.querySelectorAll(".list-item");
-  const thumbnail = document.querySelector(".thumbnail");
-  // let scrollY = window.scrollY || window.pageYOffset;
+const listItems = document.querySelectorAll(".list-item");
+const thumbnail = document.querySelector(".thumbnail");
+// let scrollY = window.scrollY || window.pageYOffset;
 
-  window.addEventListener('scroll', ()=>{
-    let scrollY = window.scrollY
-  })
-  listItems.forEach((item) => {
-    item.addEventListener("mouseenter", (e) => {
-      // const itemPosition = item.getBoundingClientRect();
-      item.style.color = "var(--orange)"
-      thumbnail.style.display = "block";
-      thumbnail.style.left = `${e.clientX}px`;
-      thumbnail.style.top = `${e.clientY + scrollY}px`;
-    });
-
-    item.addEventListener("mousemove", (e) => {
-      thumbnail.style.left = `${e.clientX}px`;
-      thumbnail.style.top = `${e.clientY + scrollY}px`;
-    });
-
-    item.addEventListener("mouseleave", () => {
-      item.style.color = "var(--black)"
-      thumbnail.style.display = "none";
-    });
+window.addEventListener("scroll", () => {
+  let scrollY = window.scrollY;
+});
+listItems.forEach((item) => {
+  item.addEventListener("mouseenter", (e) => {
+    // const itemPosition = item.getBoundingClientRect();
+    item.style.color = "var(--orange)";
+    thumbnail.style.display = "block";
+    thumbnail.style.left = `${e.clientX}px`;
+    thumbnail.style.top = `${e.clientY + scrollY}px`;
   });
+
+  item.addEventListener("mousemove", (e) => {
+    thumbnail.style.left = `${e.clientX}px`;
+    thumbnail.style.top = `${e.clientY + scrollY}px`;
+  });
+
+  item.addEventListener("mouseleave", () => {
+    item.style.color = "var(--black)";
+    thumbnail.style.display = "none";
+  });
+});
 </script>

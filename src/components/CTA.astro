@@ -50,12 +50,16 @@ const { type, text, action = false, linkText, linkHref } = Astro.props
     .CTA-default {
     cursor: pointer;
     display: inline-flex;
-    padding: 12px 24px;
-    max-width: 400px;
-    width: 100%;
+    padding: .75rem 4rem;
+    max-width: 25rem;
+    min-width: 15rem;
+    width: fit-content;
+    height: fit-content;
     justify-content: center;
     align-items: center;
     text-align: center;
+    flex-shrink: 1;
+    flex-grow: 0;
 
     border: 1px solid var(--black, #000);
 
