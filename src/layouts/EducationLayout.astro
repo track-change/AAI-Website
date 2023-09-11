@@ -1,0 +1,117 @@
+---
+import BasicLayout from "./Layout.astro";
+import "../scss/main.scss";
+import CTA from "../components/CTA.astro";
+import SideTab from "../components/SideTab.astro";
+import FrontCaption from "../components/FrontCaption.astro";
+import type { Entry } from "../data/api";
+
+interface Props {
+  pageTitle: string;
+  bannerSrc: string;
+  ctas: Entry[];
+  frontCaptions: Entry[];
+}
+
+const { pageTitle, bannerSrc, ctas, frontCaptions } = Astro.props as Props;
+---
+
+<BasicLayout title={pageTitle}>
+  <div class="top">
+    <SideTab text="Education" href="/educations/" style="department" />
+
+    <main>
+      <h1 class="title">{pageTitle}</h1>
+      <div class="banner">
+        <img src={bannerSrc} alt="Banner image" />
+      </div>
+
+      <FrontCaption {frontCaptions} />
+
+      <slot />
+
+      <div class="CTA-wrapper">
+        {
+          ctas.map((cta: Entry) => (
+            <CTA type={cta._type} text={cta.displayTitle} value={cta.value} />
+          ))
+        }
+      </div>
+    </main>
+  </div>
+</BasicLayout>
+
+<style lang="scss" is:global>
+  html {
+    font-family: system-ui, sans-serif;
+    background: var(--white);
+    background-size: 224px;
+  }
+  code {
+    font-family: Menlo, Monaco, Lucida Console, Liberation Mono,
+      DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace;
+  }
+
+  // Side Tab Area
+  .top {
+    display: flex;
+  }
+  main {
+    flex: 1;
+  }
+
+  .banner,
+  .body-copy {
+    width: 100%;
+    max-width: 800px;
+
+    @media screen and (max-width: 64rem) {
+      max-width: 40rem;
+    }
+    @media screen and (max-width: 48rem) {
+      max-width: 30rem;
+      margin: 0 16px;
+    }
+
+    @media screen and (max-width: 35.5rem) {
+      background-color: red;
+      width: calc(100% - 4.4rem);
+      margin: 0 16px;
+    }
+    @media screen and (max-width: 24.375rem) {
+      width: calc(100% - 32px);
+      margin: 0 16px;
+    }
+
+    display: flex;
+    flex-direction: column;
+  }
+  .title {
+    margin: 40px;
+    @media screen and (max-width: 64rem) {
+      margin: 32px;
+    }
+    @media screen and (max-width: 48rem) {
+      margin: 16px;
+    }
+    @media screen and (max-width: 24.375rem) {
+      margin: 16px;
+    }
+  }
+
+  .banner {
+    margin: 6.25rem auto;
+    gap: 1.25rem;
+
+    @media screen and (max-width: 24.375rem) {
+      margin: 2.5rem auto;
+    }
+  }
+
+  .body-copy {
+    margin: 6.25rem auto;
+    display: flex;
+    flex-direction: column;
+    gap: 2em 0;
+  }
+</style>

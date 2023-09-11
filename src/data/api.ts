@@ -29,10 +29,25 @@ export async function getProgramBySlug(slug: string): Promise<Program> {
   return fetchData("program", slug);
 }
 
+export async function getEducations(): Promise<Education[]> {
+  return fetchData("education");
+}
+
+export async function getEducationBySlug(slug: string): Promise<Education> {
+  return fetchData("education", slug);
+}
+
 export async function getSiteSettings(): Promise<Settings> {
   const query = groq`*[_type == "settings" && _id == "settings"][0]`;
   const siteSettings = await useSanityClient().fetch(query);
   return siteSettings;
+}
+
+export interface Entry {
+  _type: string;
+  _key: string;
+  displayTitle: string;
+  value: string;
 }
 
 interface Link {
@@ -67,6 +82,24 @@ interface Program {
   images: ImageAsset[];
   tags: string[];
   season: string;
+}
+
+interface Tag {
+  _type: string;
+  _id: string;
+  tag: string;
+}
+
+export interface Education {
+  _type: string;
+  _id: string;
+  title: string;
+  slug: Slug;
+  coverImage: ImageAsset;
+  cta: Array<Entry>;
+  frontCaptions: Array<Entry>;
+  body: PortableTextBlock[];
+  tags: Tag[];
 }
 
 export interface Settings {

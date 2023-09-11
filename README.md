@@ -5,12 +5,18 @@ New ask:
 - Can we make the categories in CMS of 'current' and 'past' under programs?
 
 Alvin
-[*] Education pages, CMS + front-end
-[*] Media pages, CMS + front-end
-[*] Venue pages, CMS + front-end
-[*] Visit page, CMS + front-end (Title, CTA, Embed, Body)
-[*] Ticket page, CMS + front-end
+[*] Education pages, CMS
+[ ] Education front-end
+[*] Media pages, CMS
+[ ] Media front-end
+[*] Venue pages, CMS
+[ ] Venue front-end
+[*] Visit page, CMS (Title, CTA, Embed, Body)
+[ ] Visit front-end
+[*] Ticket page, CMS
+[ ] Ticket front-end
 [*] Form
+
 
 Mianwei
 - Venue page enormous form

@@ -1,0 +1,84 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import SideTab from "../../components/SideTab.astro";
+import { getEducations } from "../../data/api";
+import type { Education } from "../../data/api";
+import { urlFor } from "../../utils/image";
+
+const educations = await getEducations();
+---
+
+<Layout title="Education">
+  <div data-top>
+    <article data-wrapper>
+      <SideTab text="Education" href="#" style="department" />
+      <main data-main>
+        <ul class="list">
+          {
+            educations.map((education: Education) => (
+              <li class="list-item">
+                <a href={`/educations/${education.slug.current}`}>
+                  <h2>{education.title}</h2>
+                </a>
+                <img
+                  class="thumbnail"
+                  src={
+                    education.coverImage
+                      ? urlFor(education.coverImage).url()
+                      : null
+                  }
+                  alt=""
+                />
+              </li>
+            ))
+          }
+        </ul>
+      </main>
+    </article>
+  </div>
+</Layout>
+
+<style type="scss">
+  [data-wrapper] {
+    width: 100vw;
+    min-height: 100vh;
+
+    display: flex;
+    flex-direction: row;
+    position: sticky;
+    top: 45px;
+    left: 0;
+
+    [data-main] {
+      width: calc(100vw - 4rem);
+      height: 200vh; /* Set your desired height */
+
+      position: relative;
+    }
+  }
+
+  #current,
+  #past {
+    width: 100%; /* Set your desired width */
+    height: 200vh; /* Set your desired height */
+    overflow: hidden; /* Hide any overflowing content */
+    position: relative;
+    background-color: var(--white);
+    transition: left 500ms;
+  }
+
+  #past {
+    top: -200vh;
+    left: 66%;
+    box-shadow: -8px 0px 12px 0px rgba(0, 0, 0, 0.1);
+  }
+
+  #current .header,
+  #current .footer,
+  #past .header,
+  #past .footer {
+    display: none;
+  }
+</style>
+
+<script async></script>

@@ -1,0 +1,31 @@
+---
+import type { InferGetStaticParamsType } from "astro";
+import { PortableText } from "astro-portabletext";
+import EducationLayout from "../../layouts/EducationLayout.astro";
+import { getEducations, getEducationBySlug } from "../../data/api";
+import { urlFor } from "../../utils/image";
+
+export async function getStaticPaths() {
+  const programs = await getEducations();
+  return programs.map((program) => ({
+    params: { slug: program.slug.current },
+  }));
+}
+
+type Params = InferGetStaticParamsType<typeof getStaticPaths>;
+const { slug } = Astro.params as Params;
+
+const education = await getEducationBySlug(slug);
+---
+
+<EducationLayout
+  pageTitle={education.title}
+  bannerSrc={education.coverImage ? urlFor(education.coverImage).url() : ""}
+  ctas={education.cta}
+  frontCaptions={education.frontCaptions}
+>
+  <section class="body-copy">
+    <!-- <h1>{program.name}</h1> -->
+    <PortableText value={education.body} />
+  </section>
+</EducationLayout>
