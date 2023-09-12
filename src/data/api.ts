@@ -43,11 +43,34 @@ export async function getSiteSettings(): Promise<Settings> {
   return siteSettings;
 }
 
+export async function getVisit(): Promise<Visit> {
+  const query = groq`*[_type == "visit" && _id == "visit"][0]`;
+  const visit = await useSanityClient().fetch(query);
+  return visit;
+}
+
+export async function getFormByRef(ref: string): Promise<Form> {
+  const query = groq`*[_type == "form" && _id == $ref][0]`;
+  const form = await useSanityClient().fetch(query, { ref });
+  return form;
+}
+
 export interface Entry {
   _type: string;
   _key: string;
   displayTitle: string;
   value: string;
+}
+
+export interface FormFields {
+  _type: string;
+  _key: string;
+  displayTitle: string;
+  type: string;
+  required: boolean;
+  placeholder?: string;
+  options?: { displayTitle: string; value: string }[];
+  submitTo: string;
 }
 
 interface Link {
@@ -100,6 +123,35 @@ export interface Education {
   frontCaptions: Array<Entry>;
   body: PortableTextBlock[];
   tags: Tag[];
+}
+
+interface Visit {
+  _type: string;
+  _id: string;
+  address: string;
+  phone: string;
+  ctafields: {
+    displayTitle: string;
+    cta?: {
+      value: string;
+      url: string;
+    };
+    embed?: {
+      url: string;
+    };
+    body?: PortableTextBlock[];
+  }[];
+  forms: Form[];
+}
+
+interface Form {
+  _type: string;
+  _id: string;
+  _ref: string;
+  title: string;
+  description: PortableTextBlock[];
+  subheading: string;
+  fields: Array<FormFields>;
 }
 
 export interface Settings {

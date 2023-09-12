@@ -1,0 +1,59 @@
+---
+import { getFormByRef } from "../data/api";
+import { PortableText } from "astro-portabletext";
+
+interface Props {
+  _ref: string;
+}
+
+const { _ref } = Astro.props as Props;
+
+const form = await getFormByRef(_ref);
+---
+
+<div class="form__wrapper">
+  <h2>{form.title}</h2>
+  {form.description ? <PortableText value={form.description} /> : null}
+  {form.subheading ? <h3>{form.subheading}</h3> : null}
+  <form>
+    {
+      form.fields.map((field) => (
+        <div class="form__field">
+          <label for={field._key}>{field.displayTitle}</label>
+          {field.type === "checkbox" ||
+            (field.type === "radio" &&
+              field.options?.map((option) => (
+                <div class="form__option">
+                  <input
+                    type={field.type}
+                    name={field._key}
+                    id={field._key}
+                    value={option.value}
+                    required={field.required}
+                  />
+                  <label for={field._key}>{option.displayTitle}</label>
+                </div>
+              )))}
+          {field.type === "select" && (
+            <select name={field._key} id={field._key}>
+              {field.options?.map((option) => (
+                <option value={option.value}>{option.displayTitle}</option>
+              ))}
+            </select>
+          )}
+          {field.type !== "checkbox" &&
+            field.type !== "radio" &&
+            field.type !== "select" && (
+              <input
+                type={field.type}
+                name={field._key}
+                id={field._key}
+                placeholder={field.placeholder}
+                required={field.required}
+              />
+            )}
+        </div>
+      ))
+    }
+  </form>
+</div>

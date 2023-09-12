@@ -1,160 +1,137 @@
 ---
 import SideTab from "../components/SideTab.astro";
 import Layout from "../layouts/Layout.astro";
-import visitInfo from "../data/visit";
 import CTA from "../components/CTA.astro";
+import Form from "../components/Form.astro";
+import { getVisit } from "../data/api";
+
+const visit = await getVisit();
 ---
 
 <Layout title="Visit Us">
-    <div data-top>
-        <article id="none" data-wrapper>
-            <SideTab text="Visit" href="/visit/" style="department" />
+  <div data-top>
+    <article id="none" data-wrapper>
+      <SideTab text="Visit" href="/visit/" style="department" />
 
-            <main data-main>
-                <h1 class="title">Visit Asian Arts Initiative</h1>
-
-                <ul class="list">
-                    {
-                        visitInfo.map((item) => (
-                            <li class="list-item">
-                                <h2>{item.text}</h2>
-                                {item.form &&
-                                    item.form.map((input) => (
-                                        <form>
-                                            <label>
-                                                <input
-                                                    type={input.type}
-                                                    name={input.name}
-                                                    placeholder={input.field}
-                                                    required
-                                                />
-                                            </label>
-                                        </form>
-                                    ))}
-                                {item.CTA && (
-                                    <CTA type="default" text={item.CTA} />
-                                )}
-                                {item.embed && (
-                                    <div
-                                        class="map-embed"
-                                        set:html={item.embed}
-                                    />
-                                )}
-                                {item.collapsed && (
-                                    <div class="collapsed">
-                                        <p set:html={item.collapsed.text} />
-                                        <form data-form>
-                                            {item.collapsed.form &&
-                                                item.collapsed.form.map(
-                                                    (input) => (
-                                                        <label class="caption">
-                                                            {input.title}
-                                                            <input
-                                                                type={
-                                                                    input.type
-                                                                }
-                                                                name={
-                                                                    input.name
-                                                                }
-                                                                placeholder={
-                                                                    input.field
-                                                                }
-                                                                required={
-                                                                    input.required
-                                                                }
-                                                            />
-                                                        </label>
-                                                    )
-                                                )}
-                                            <div class="CTA-wrapper">
-                                                <CTA
-                                                    type="default"
-                                                    text="Clear Form"
-                                                />
-                                                <CTA
-                                                    type="default"
-                                                    text="Submit"
-                                                />
-                                            </div>
-                                        </form>
-                                    </div>
-                                )}
-                            </li>
-                        ))
-                    }
-                </ul>
-            </main>
-        </article>
-    </div>
+      <main data-main>
+        <h1 class="title">Visit Asian Arts Initiative</h1>
+        <ul class="list">
+          <li class="list-item">
+            <h2>{visit.address}</h2>
+          </li>
+          <li class="list-item">
+            <h2>{visit.phone}</h2>
+          </li>
+          {
+            visit.ctafields.map((cta) => {
+              return (
+                <li class="list-item">
+                  <h2>{cta.displayTitle}</h2>
+                  {cta.cta ? (
+                    <CTA
+                      type="default"
+                      text={cta.cta.value}
+                      linkHref={cta.cta.url}
+                    />
+                  ) : null}
+                  {cta.embed ? (
+                    <div class="map-embed">
+                      <iframe
+                        src={cta.embed.url}
+                        width="800"
+                        height="800"
+                        style="border:0;"
+                        allowfullscreen=""
+                        loading="lazy"
+                        referrerpolicy="no-referrer-when-downgrade"
+                      />
+                    </div>
+                  ) : null}
+                </li>
+              );
+            })
+          }
+          {
+            visit.forms.map((form) => {
+              return (
+                <li class="list-item">
+                  <Form _ref={form._ref} />
+                </li>
+              );
+            })
+          }
+        </ul>
+      </main>
+    </article>
+  </div>
 </Layout>
 <style type="scss">
-    [data-top] {
-        [data-wrapper] {
-            width: 100vw;
-            min-height: 100vh;
+  [data-top] {
+    [data-wrapper] {
+      width: 100vw;
+      min-height: 100vh;
 
-            display: flex;
-            flex-direction: row;
-            position: sticky;
-            top: 45px;
-            left: 0;
+      display: flex;
+      flex-direction: row;
+      position: sticky;
+      top: 45px;
+      left: 0;
 
-            [data-main] {
-                padding: 40px;
-                width: 100%;
+      [data-main] {
+        padding: 40px;
+        width: 100%;
 
-                display: flex;
-                flex-direction: column;
-
-                .title {
-                    margin-bottom: 200px;
-                }
-                .list {
-                    padding: 4rem 0;
-                }
-                .list-item:last-child {
-                    border-bottom: 1px solid var(--black);
-                }
-                .list-item {
-                    border-top: 1px solid var(--black);
-                    padding: 1rem 0;
-                    display: flex;
-                    flex-direction: column;
-                    flex-wrap: wrap;
-                    gap: 1rem;
-                    // cursor: pointer;
-
-                    .thumbnail {
-                        position: absolute;
-                        display: none;
-                        width: 300px;
-                        height: auto;
-                        pointer-events: none;
-                    }
-                }
-            }
-        }
-    }
-
-    .collapsed {
-        max-width: 60rem;
-        margin: 4rem 0;
-
-        [data-form] {
-            padding: 4rem 0;
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 1rem;
-
-            .caption {
-                display: grid;
-                grid-template-columns: 1fr 1fr;
-            }
-        }
-    }
-    .CTA-wrapper {
         display: flex;
-        gap: 0;
-        
+        flex-direction: column;
+
+        .title {
+          margin-bottom: 200px;
+        }
+        .list {
+          padding: 4rem 0;
+        }
+        .list-item:last-child {
+          border-bottom: 1px solid var(--black);
+        }
+        .list-item {
+          border-top: 1px solid var(--black);
+          padding: 1rem 0;
+          display: flex;
+          flex-direction: column;
+          flex-wrap: wrap;
+          gap: 1rem;
+          // cursor: pointer;
+
+          .thumbnail {
+            position: absolute;
+            display: none;
+            width: 300px;
+            height: auto;
+            pointer-events: none;
+          }
+        }
+      }
     }
+  }
+
+  .collapsed {
+    max-width: 60rem;
+    margin: 4rem 0;
+
+    [data-form] {
+      padding: 4rem 0;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1rem;
+
+      .caption {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+  }
+  .CTA-wrapper {
+    display: flex;
+    gap: 0;
+  }
 </style>
