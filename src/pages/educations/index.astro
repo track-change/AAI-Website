@@ -17,18 +17,9 @@ const educations = await getEducations();
           {
             educations.map((education: Education) => (
               <li class="list-item">
-                <a href={`/educations/${education.slug.current}`}>
-                  <h2>{education.title}</h2>
+                <a data-panel href={`/educations/${education.slug.current}`}>
+                  <h1 class="no-break">{education.title}</h1>
                 </a>
-                <img
-                  class="thumbnail"
-                  src={
-                    education.coverImage
-                      ? urlFor(education.coverImage).url()
-                      : null
-                  }
-                  alt=""
-                />
               </li>
             ))
           }
@@ -51,34 +42,34 @@ const educations = await getEducations();
 
     [data-main] {
       width: calc(100vw - 4rem);
-      height: 200vh; /* Set your desired height */
+      height: fit-content;
 
       position: relative;
+
+      .list {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        white-space: nowrap;
+        position: relative;
+        width: 100%;
+
+        .list-item {
+          writing-mode: vertical-rl;
+          text-orientation: mixed;
+          width: 100%;
+          box-shadow: -10px 0px 14px 0px rgba(0, 0, 0, 0.20);
+          display: flex;
+          align-items: flex-end;
+          padding: 40px;
+        }
+      }
     }
   }
+  // [data-panel] {
+  //   transform: rotate(90deg);
+  //   display: block;
+  // }
 
-  #current,
-  #past {
-    width: 100%; /* Set your desired width */
-    height: 200vh; /* Set your desired height */
-    overflow: hidden; /* Hide any overflowing content */
-    position: relative;
-    background-color: var(--white);
-    transition: left 500ms;
-  }
-
-  #past {
-    top: -200vh;
-    left: 66%;
-    box-shadow: -8px 0px 12px 0px rgba(0, 0, 0, 0.1);
-  }
-
-  #current .header,
-  #current .footer,
-  #past .header,
-  #past .footer {
-    display: none;
-  }
 </style>
 
 <script async></script>

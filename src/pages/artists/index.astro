@@ -65,7 +65,10 @@ const artists = await getArtists();
                 </a>
                 <img
                   class="thumbnail"
-                  src={urlFor(artist.image).url()}
+                  src={
+                    artist.image
+                    ? urlFor(artist.image).url()
+                    : null}
                   alt=""
                 />
               </li>
@@ -151,29 +154,29 @@ const artists = await getArtists();
 
 <script async>
 const listItems = document.querySelectorAll(".list-item");
-const thumbnail = document.querySelector(".thumbnail");
+const thumbnails = document.querySelectorAll(".thumbnail");
 // let scrollY = window.scrollY || window.pageYOffset;
 
 window.addEventListener("scroll", () => {
   let scrollY = window.scrollY;
 });
-listItems.forEach((item) => {
+listItems.forEach((item, index) => {
   item.addEventListener("mouseenter", (e) => {
     // const itemPosition = item.getBoundingClientRect();
     item.style.color = "var(--orange)";
-    thumbnail.style.display = "block";
-    thumbnail.style.left = `${e.clientX}px`;
-    thumbnail.style.top = `${e.clientY + scrollY}px`;
+    thumbnails[index].style.display = "block";
+    thumbnails[index].style.left = `${e.clientX}px`;
+    thumbnails[index].style.top = `${e.clientY + scrollY}px`;
   });
 
   item.addEventListener("mousemove", (e) => {
-    thumbnail.style.left = `${e.clientX}px`;
-    thumbnail.style.top = `${e.clientY + scrollY}px`;
+    thumbnails[index].style.left = `${e.clientX}px`;
+    thumbnails[index].style.top = `${e.clientY + scrollY}px`;
   });
 
   item.addEventListener("mouseleave", () => {
     item.style.color = "var(--black)";
-    thumbnail.style.display = "none";
+    thumbnails[index].style.display = "none";
   });
 });
 </script>

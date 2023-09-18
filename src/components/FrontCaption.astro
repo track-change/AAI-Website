@@ -1,7 +1,7 @@
 ---
 interface FrontCaption {
   _type: string;
-  title: string;
+  displayTitle: string;
   value: string;
 }
 
@@ -10,10 +10,10 @@ const { frontCaptions = [] } = Astro.props;
 
 <div class="front-caption">
   {
-    frontCaptions.map((caption: FrontCaption) => (
+    frontCaptions.map((frontCaption: FrontCaption) => (
       <ul class="caption">
-        <li>{caption.title}</li>
-        <li>{caption.value}</li>
+        <li>{frontCaption.displayTitle}</li>
+        <li>{frontCaption.value}</li>
       </ul>
     ))
   }
@@ -45,11 +45,11 @@ const { frontCaptions = [] } = Astro.props;
       margin: 0 16px;
     }
 
-    ul > li:first-child {
-      color: var(--darkGray);
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-    }
+    // .caption > li:first-child {
+    //   color: var(--darkGray);
+    //   display: flex;
+    //   flex-direction: column;
+    //   gap: 8px;
+    // }
   }
 </style>

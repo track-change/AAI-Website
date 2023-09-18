@@ -89,7 +89,7 @@ interface Artist {
   bio: PortableTextBlock[];
 }
 
-interface Program {
+export interface Program {
   _type: string;
   _id: string;
   name: string;
@@ -105,6 +105,8 @@ interface Program {
   images: ImageAsset[];
   tags: string[];
   season: string;
+  cta: Array<Entry>;
+  frontCaptions: Array<Entry>;
 }
 
 interface Tag {
@@ -152,6 +154,7 @@ interface Form {
   description: PortableTextBlock[];
   subheading: string;
   fields: Array<FormFields>;
+  submitTo: string;
 }
 
 export interface Settings {

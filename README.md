@@ -1,26 +1,33 @@
-# Asian American Initiative Website
+# Asian Arts Initiative Website
 
 -----
 New ask:
 - Can we make the categories in CMS of 'current' and 'past' under programs?
 
 Alvin
-[*] Education pages, CMS
-[ ] Education front-end
-[*] Media pages, CMS
+[x] Education pages, CMS
+[x] Education front-end
+    [x] index page
+    [ ] adding image carousel
+    [ ] can we change the index path from /educations/ to /education/?
+[x] Media pages, CMS
 [ ] Media front-end
-[*] Venue pages, CMS
+[x] Venue pages, CMS
 [ ] Venue front-end
-[*] Visit page, CMS (Title, CTA, Embed, Body)
-[ ] Visit front-end
-[*] Ticket page, CMS
+[x] Visit page, CMS (Title, CTA, Embed, Body)
+[x] Visit front-end
+[x] Ticket page, CMS
 [ ] Ticket front-end
-[*] Form
+[x] Form
+    - [ ] configure submit button
+    - [ ] single form page tbd (rental form)
+[ ] Tags
+[ ] Homepage
 
 
 Mianwei
-- Venue page enormous form
-- Education, enormous form
+- [ ] Venue page enormous form
+- [x] Education, enormous form
 - Programs 
     - need populating some events for the `current` and `past` pages
 

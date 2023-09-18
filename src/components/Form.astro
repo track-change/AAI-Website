@@ -14,26 +14,34 @@ const form = await getFormByRef(_ref);
 <div class="form__wrapper">
   <h2>{form.title}</h2>
   {form.description ? <PortableText value={form.description} /> : null}
-  {form.subheading ? <h3>{form.subheading}</h3> : null}
-  <form>
+  <br />
+  {form.subheading ? <h6>{form.subheading}</h6> : null}
+  <form action={form.submitTo}>
     {
       form.fields.map((field) => (
         <div class="form__field">
-          <label for={field._key}>{field.displayTitle}</label>
+          <label class="caption" for={field._key}>
+            {field.displayTitle}
+            {field.required && <span class="required">*</span>}
+          </label>
           {field.type === "checkbox" ||
-            (field.type === "radio" &&
-              field.options?.map((option) => (
-                <div class="form__option">
-                  <input
-                    type={field.type}
-                    name={field._key}
-                    id={field._key}
-                    value={option.value}
-                    required={field.required}
-                  />
-                  <label for={field._key}>{option.displayTitle}</label>
-                </div>
-              )))}
+            (field.type === "radio" && (
+              <div class="radio-wrapper">
+                {field.options?.map((option) => (
+                  <div class="form__option">
+                    <input
+                      type={field.type}
+                      name={field._key}
+                      id={option.value}
+                      value={option.value}
+                      required={field.required}
+                      class={"caption"}
+                    />
+                    <label class="caption">{option.displayTitle}</label>
+                  </div>
+                ))}
+              </div>
+            ))}
           {field.type === "select" && (
             <select name={field._key} id={field._key}>
               {field.options?.map((option) => (
@@ -41,19 +49,100 @@ const form = await getFormByRef(_ref);
               ))}
             </select>
           )}
+          {field.type === "textarea" && (
+            <textarea
+              name={field._key}
+              id={field._key}
+              placeholder={field.placeholder}
+              required={field.required}
+              class={"caption"}
+              rows="5"
+            />
+          )}
           {field.type !== "checkbox" &&
             field.type !== "radio" &&
-            field.type !== "select" && (
+            field.type !== "select" &&
+            field.type != "textarea" && (
               <input
                 type={field.type}
                 name={field._key}
                 id={field._key}
                 placeholder={field.placeholder}
                 required={field.required}
+                class={"caption"}
               />
             )}
         </div>
       ))
     }
+    <button type="submit">Submit</button>
   </form>
 </div>
+
+<style lang="scss" is:global>
+  input {
+    border: none;
+    border-bottom: solid 1px var(--black);
+    min-height: 1em;
+  }
+
+  textarea {
+    border: solid 1px var(--black);
+  }
+
+  [type="radio"] {
+    width: 1.2rem;
+    height: 1.2rem;
+    margin: 4px;
+  }
+  .form__option {
+    label {
+      line-height: 2rem;
+    }
+  }
+
+  .form {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .form__field {
+    @media screen and (max-width: 64rem) {
+      max-width: 40rem;
+    }
+    @media screen and (max-width: 48rem) {
+      max-width: 30rem;
+    }
+
+    @media screen and (max-width: 35.5rem) {
+      flex-direction: column;
+      max-width: calc(100% - 4.4rem);
+      margin: 40px 0;
+      gap: 4px;
+    }
+    @media screen and (max-width: 24.375rem) {
+      flex-direction: column;
+      max-width: calc(100% - 32px);
+    }
+
+    margin: 40px 0;
+    max-width: 800px;
+    display: flex;
+    align-items: flex-start;
+    gap: 40px;
+    * {
+      flex: 1 0 0;
+
+      @media screen and (max-width: 35.5rem) {
+        width: 100%;
+      }
+      @media screen and (max-width: 24.375rem) {
+        width: 100%;
+      }
+    }
+    .required {
+      color: var(--orange);
+    }
+  }
+</style>

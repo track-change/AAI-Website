@@ -4,16 +4,18 @@ import "../scss/main.scss";
 import CTA from "../components/CTA.astro";
 import SideTab from "../components/SideTab.astro";
 import FrontCaption from "../components/FrontCaption.astro";
-
-import testData from "../data/pgData.js"
+import type { Entry } from "../data/api";
 
 
 interface Props {
   pageTitle: string;
   bannerSrc: string;
+  ctas: Entry[];
+  frontCaptions: Entry[];
 }
 
-const { pageTitle, bannerSrc } = Astro.props as Props;
+const { pageTitle, bannerSrc, ctas, frontCaptions } = Astro.props as Props;
+
 ---
 
 <BasicLayout title={pageTitle}>
@@ -24,69 +26,19 @@ const { pageTitle, bannerSrc } = Astro.props as Props;
       <h1 class="title">{pageTitle}</h1>
       <div class="banner">
         <img src={bannerSrc} alt="Banner image" />
-
-        <CTA
-          ctas={[
-            {
-              text: "Get tickets",
-              href: "/tickets",
-            },
-            {
-              text: "RSVP",
-              href: "https://www.eventbrite.com/",
-            },
-            {
-              text: "Download press kit",
-              href: "/press.pdf",
-            },
-          ]}
-        />
       </div>
 
-      <FrontCaption
-        frontCaptions={[
+        <div class="CTA-wrapper">
           {
-            title: { pageTitle },
-            items: [
-              "Exhibition",
-              "Explicit, Arts in Philadelphia, Social Practice",
-            ],
-          },
-          {
-            title: "Dates",
-            items: ["April 14–May 30, 2023"],
-          },
-          {
-            title: "Curator",
-            items: ["Aubrié Costello"],
-          },
-          {
-            title: "Artists",
-            items: [
-              "Aura Rosenberg",
-              "Jaishri Abichandani",
-              "Lanica Angpak",
-              "Elia Alba",
-              "Mequitta Ahuja",
-            ],
-          },
-        ]}
-      />
-      <slot />
+            ctas.map((cta: Entry) => (
+              <CTA type='default' text={cta.displayTitle} value={cta.value} />
+            ))
+          }
+          </div>
 
-      <div class="CTA-wrapper">
-        {
-        testData.map((item) => (
-        
-        <CTA
-        type="outstanding"
-        text={item.text}
-        action={item.hasLink}
-        linkText={item.linkText}
-        linkHref={item.linkHref}
-        />
-        ))}
-        </div>
+          <FrontCaption frontCaptions={frontCaptions} />
+          <slot />
+
     </main>
   </div>
 </BasicLayout>
@@ -164,4 +116,40 @@ const { pageTitle, bannerSrc } = Astro.props as Props;
     flex-direction: column;
     gap: 2em 0;
   }
+
+
+  .CTA-wrapper {
+    width: 100%;
+    max-width: 800px;
+
+    @media screen and (max-width: 64rem) {
+      max-width: 40rem;
+    }
+    @media screen and (max-width: 48rem) {
+      max-width: 30rem;
+      // margin: 0 16px;
+    }
+
+    @media screen and (max-width: 35.5rem) {
+      background-color: red;
+      width: calc(100% - 4.4rem);
+      // margin: 0 16px;
+    }
+    @media screen and (max-width: 24.375rem) {
+      width: calc(100% - 32px);
+      // margin: 0 16px;
+    }
+
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    margin: 6.25rem auto;
+
+    * {
+      width: 100%;
+      height: 100%;
+      border: none;
+      box-shadow: 0 0 0 1px var(--black);
+    }
+  }
+
 </style>
