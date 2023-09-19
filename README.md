@@ -23,13 +23,20 @@ Alvin
     - [ ] single form page tbd (rental form)
 [ ] Tags
 [ ] Homepage
+----
+- Programs (new asks)
+    [ ] query "tags" in the front end
+    [ ] query document CTA
+    [ ] inline images [current example of the logos](https://asianartsinitiative.org/events/virtual-avatar-workshop)
+- [ ] Education -> /education/
 
 
 Mianwei
 - [ ] Venue page enormous form
+- Ticket page
 - [x] Education, enormous form
 - Programs 
-    - need populating some events for the `current` and `past` pages
+    [x] need populating some events for the `current` and `past` pages
 
 
 Agenda/Questions

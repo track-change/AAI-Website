@@ -276,3 +276,9 @@ h6 {
   }
 
 }
+
+.body-copy > * > a {
+  border-bottom: 2px solid var(--black) !important;
+  line-height: 1;
+  display: inline-block;
+}
