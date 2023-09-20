@@ -17,7 +17,7 @@ const educations = await getEducations();
           {
             educations.map((education: Education) => (
               <li class="list-item">
-                <a data-panel href={`/educations/${education.slug.current}`}>
+                <a data-panel href={`/education/${education.slug.current}`}>
                   <h1 class="no-break">{education.title}</h1>
                 </a>
               </li>
