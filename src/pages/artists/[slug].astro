@@ -2,7 +2,7 @@
 import type { InferGetStaticParamsType } from "astro";
 import { PortableText } from "astro-portabletext";
 import ArtistLayout from "../../layouts/ArtistLayout.astro";
-import CTADefault from "../../components/CTA-Button.astro";
+import CTA from "../../components/CTA.astro";
 import { getArtistBySlug, getArtists } from "../../data/api";
 import { urlFor } from "../../utils/image";
 
@@ -15,23 +15,16 @@ type Params = InferGetStaticParamsType<typeof getStaticPaths>;
 const { slug } = Astro.params as Params;
 
 const artist = await getArtistBySlug(slug);
+console.log(artist.links)
 ---
 
 <ArtistLayout
   pageTitle={artist.name}
   bannerSrc={urlFor(artist.image).url()}
   credits={artist.imageCredit}
+  ctas={artist.links}
 >
-  <div class="front-caption">
-    <CTADefault
-      ctas={artist.links.map((link) => {
-        return {
-          title: link._type,
-          url: link.url,
-        };
-      })}
-    />
-  </div>
+    
   <section class="body-copy">
     <PortableText value={artist.bio} />
   </section>

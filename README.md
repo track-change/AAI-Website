@@ -14,6 +14,8 @@ New ask:
 - [ ] Media front-end
 - [x] Venue pages, CMS
 - [ ] Venue front-end
+- [ ] About pages, CMS
+- [ ] About front-end, CMS
 - [x] Visit page, CMS (Title, CTA, Embed, Body)
 - [x] Visit front-end
 - [x] Ticket page, CMS
@@ -29,7 +31,7 @@ New ask:
     - [x] query document CTA
     - [ ] inline images [current example of the logos](https://asianartsinitiative.org/events/virtual-avatar-workshop)
 - [x] Education -> /education/
-
+- [ ] recommended content / reference
 
 Mianwei
 - [ ] Venue page enormous form
@@ -48,3 +50,22 @@ Agenda/Questions
     - manual input
 [x] Filters of participation years, onto all pages
     - yes
+
+-----
+### September 20th, Meeting 
+- [ ] Artists, ready for population
+- [ ] Program, ready for population
+- [ ] Education, ready for population
+- [ ] Visit, ready for edits
+
+- the goals for us next time to meet:
+    - Schedule:
+        - tentative 10/03: progress checkin, 
+        - 10/27: program complete, and we do QA 
+        - 10/30~11/10: QA, then launch ( ? )
+
+    - AAI team populate the majority of the content above
+    - deploy the site
+    - [ ] About 
+    - [ ] Programs (rework on index page) 
+    - [ ] Venue (contains form)

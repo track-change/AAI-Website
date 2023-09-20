@@ -61,7 +61,12 @@ const programs = await getPrograms();
                         <img src={urlFor(program.coverImage).url()} />
                         <h4>{program.name}</h4>
                         <ul class="caption">
-                          <li class="grayout">{program.type}</li>
+                          <li class="grayout">
+                            {program.eventTypes &&
+                              program.eventTypes.map((eventType) => (
+                                <span>{eventType}</span>
+                              ))}
+                          </li>
                           <li>
                             {formatDateRange(
                               `${program.startDateTime}—${program.endDateTime}`
@@ -131,10 +136,10 @@ const programs = await getPrograms();
               display: flex;
               flex-direction: column;
               // align-items: center;
-              gap: .5rem;
+              gap: 0.5rem;
               text-align: center;
               .grayout {
-                margin-bottom: .5rem;
+                margin-bottom: 0.5rem;
                 color: var(--darkGray);
                 text-transform: capitalize;
               }
@@ -145,5 +150,4 @@ const programs = await getPrograms();
     }
   }
 </style>
-<script async>
-</script>
+<script async></script>

@@ -1,5 +1,6 @@
 ---
 import SideTab from "../components/SideTab.astro";
+import { PortableText } from "astro-portabletext";
 import Layout from "../layouts/Layout.astro";
 import CTA from "../components/CTA.astro";
 import Form from "../components/Form.astro";
@@ -46,6 +47,9 @@ const visit = await getVisit();
                         referrerpolicy="no-referrer-when-downgrade"
                       />
                     </div>
+                  ) : null}
+                  {cta.body ? (
+                    <PortableText value={cta.body} class="collapsed" />
                   ) : null}
                 </li>
               );
@@ -102,12 +106,9 @@ const visit = await getVisit();
           gap: 1rem;
           // cursor: pointer;
 
-          .thumbnail {
-            position: absolute;
-            display: none;
-            width: 300px;
-            height: auto;
-            pointer-events: none;
+          h2 {
+            width: fit-content;
+          }
           }
         }
       }
@@ -115,8 +116,8 @@ const visit = await getVisit();
   }
 
   .collapsed {
-    max-width: 60rem;
-    margin: 4rem 0;
+    max-width: 800px;
+    margin: 1rem 0;
 
     [data-form] {
       padding: 4rem 0;
@@ -134,4 +135,32 @@ const visit = await getVisit();
     display: flex;
     gap: 0;
   }
+  *>p>a {
+    border-bottom: 2px solid black;
+    cursor: pointer default;
+  }
 </style>
+
+<script async>
+document.addEventListener("DOMContentLoaded", (event) => {
+  const listItems = document.querySelectorAll(".list-item");
+
+  listItems.forEach((item) => {
+    const body = item.querySelector(".collapsed");
+    const title = item.querySelector("h2");
+
+    if (body) {
+      title.style.cursor = "pointer"
+      body.style.display = "none";
+
+      title.addEventListener("click", () => {
+        if (body.style.display === "none") {
+          body.style.display = "block";
+        } else {
+          body.style.display = "none";
+        }
+      });
+    }
+  });
+  });
+</script>

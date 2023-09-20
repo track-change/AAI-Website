@@ -113,6 +113,7 @@ interface Artist {
   image: ImageAsset;
   imageCredit: string;
   links: Link[];
+  // links: Array<Entry>;
   bio: PortableTextBlock[];
 }
 export interface Program {
@@ -121,6 +122,7 @@ export interface Program {
   name: string;
   slug: Slug;
   type: string;
+  eventTypes: string[];
   startDateTime: string;
   endDateTime: string;
   coverImage: ImageAsset;

@@ -1,17 +1,19 @@
 ---
 import BasicLayout from "../layouts/Layout.astro";
 import "../scss/main.scss";
-import CTADefault from "../components/CTA-Button.astro";
+import CTA from "../components/CTA.astro";
 import SideTab from "../components/SideTab.astro";
 import FrontCaption from "../components/FrontCaption.astro";
+import type { Entry } from "../data/api";
 
 interface Props {
   pageTitle: string;
   bannerSrc: string;
   credits: string;
+  ctas: Entry[] | any[];
 }
 
-const { pageTitle = "default", bannerSrc, credits } = Astro.props as Props;
+const { pageTitle = "default", bannerSrc, credits, ctas } = Astro.props as Props;
 ---
 
 <BasicLayout title={pageTitle}>
@@ -25,7 +27,13 @@ const { pageTitle = "default", bannerSrc, credits } = Astro.props as Props;
         <div class="small-caption">
           {credits}
         </div>
-
+        <div class="CTA-wrapper">
+          {
+            ctas.map((cta: Entry) => (
+              <CTA type='default' text={cta._type} linkHref={cta.url} />
+            ))
+          }
+          </div>
         <!-- <CTADefault /> -->
       </div>
       <!-- <FrontCaption /> -->
@@ -98,7 +106,6 @@ const { pageTitle = "default", bannerSrc, credits } = Astro.props as Props;
   .banner {
     margin: 2.5rem;
     gap: 0.5rem;
-    color: var(--darkGray);
 
     @media screen and (max-width: 24.375rem) {
       margin: 2.5rem auto;
