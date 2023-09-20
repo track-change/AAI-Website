@@ -16,15 +16,14 @@ type Params = InferGetStaticParamsType<typeof getStaticPaths>;
 const { slug } = Astro.params as Params;
 
 const program = await getProgramBySlug(slug);
-
-console.log('Tags:', program.tags);
 ---
 
 <ProgramLayout
   pageTitle={program.name}
   bannerSrc={program.coverImage ? urlFor(program.coverImage).url() : ""}
-  ctas={program.cta}
+  ctas={program.cta || []}
   frontCaptions={program.frontCaptions}
+  tags={program.tags}
 >
   <section class="body-copy">
     <!-- <h1>{program.name}</h1> -->

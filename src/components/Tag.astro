@@ -1,0 +1,14 @@
+---
+import { getTagByRef } from "../data/api";
+
+interface Param {
+  tagRef: string;
+}
+
+const { tagRef }: Param = Astro.props as Param;
+const { tag } = await getTagByRef(tagRef);
+---
+
+<div class="tag">
+  <p>{tag}</p>
+</div>

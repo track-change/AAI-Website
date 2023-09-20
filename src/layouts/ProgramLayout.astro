@@ -5,22 +5,25 @@ import CTA from "../components/CTA.astro";
 import SideTab from "../components/SideTab.astro";
 import FrontCaption from "../components/FrontCaption.astro";
 import type { Entry } from "../data/api";
-
+import Tag from "../components/Tag.astro";
 
 interface Props {
   pageTitle: string;
   bannerSrc: string;
   ctas: Entry[];
   frontCaptions: Entry[];
+  tags: {
+    _ref: string;
+  }[];
 }
 
-const { pageTitle, bannerSrc, ctas, frontCaptions } = Astro.props as Props;
-
+const { pageTitle, bannerSrc, ctas, frontCaptions, tags } =
+  Astro.props as Props;
 ---
 
 <BasicLayout title={pageTitle}>
   <div class="top">
-    <SideTab text="Programs" href="/programs/" style="department"/>
+    <SideTab text="Programs" href="/programs/" style="department" />
 
     <main>
       <h1 class="title">{pageTitle}</h1>
@@ -28,17 +31,25 @@ const { pageTitle, bannerSrc, ctas, frontCaptions } = Astro.props as Props;
         <img src={bannerSrc} alt="Banner image" />
       </div>
 
-        <div class="CTA-wrapper">
-          {
-            ctas.map((cta: Entry) => (
-              <CTA type='default' text={cta.displayTitle} value={cta.value} />
-            ))
-          }
-          </div>
+      <div class="tag-wrapper">
+        {tags.map((tag) => <Tag tagRef={tag._ref} />)}
+      </div>
 
-          <FrontCaption frontCaptions={frontCaptions} />
-          <slot />
+      <div class="CTA-wrapper">
+        {
+          ctas.map((cta: Entry) => (
+            <CTA
+              type={cta._type}
+              text={cta.displayTitle}
+              value={cta.value}
+              chooseFile={cta.chooseFile}
+            />
+          ))
+        }
+      </div>
 
+      <FrontCaption frontCaptions={frontCaptions} />
+      <slot />
     </main>
   </div>
 </BasicLayout>
@@ -117,7 +128,6 @@ const { pageTitle, bannerSrc, ctas, frontCaptions } = Astro.props as Props;
     gap: 2em 0;
   }
 
-
   .CTA-wrapper {
     width: 100%;
     max-width: 800px;
@@ -151,5 +161,4 @@ const { pageTitle, bannerSrc, ctas, frontCaptions } = Astro.props as Props;
       box-shadow: 0 0 0 1px var(--black);
     }
   }
-
 </style>

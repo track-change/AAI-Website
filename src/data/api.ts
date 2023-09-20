@@ -49,10 +49,31 @@ export async function getVisit(): Promise<Visit> {
   return visit;
 }
 
+export async function getFileLink(fileRef: string): Promise<string | null> {
+  try {
+    const file = await useSanityClient().getDocument(fileRef);
+    if (file?.url) {
+      return file.url;
+    } else {
+      console.error("File not found in Sanity");
+      return null;
+    }
+  } catch (error) {
+    console.error("Error retrieving file from Sanity", error);
+    return null;
+  }
+}
+
 export async function getFormByRef(ref: string): Promise<Form> {
   const query = groq`*[_type == "form" && _id == $ref][0]`;
   const form = await useSanityClient().fetch(query, { ref });
   return form;
+}
+
+export async function getTagByRef(ref: string): Promise<Tag> {
+  const query = groq`*[_type == "tag" && _id == $ref][0]`;
+  const tag = await useSanityClient().fetch(query, { ref });
+  return tag;
 }
 
 export interface Entry {
@@ -60,6 +81,12 @@ export interface Entry {
   _key: string;
   displayTitle: string;
   value: string;
+  chooseFile?: {
+    _type: string;
+    asset: {
+      _ref: string;
+    };
+  };
 }
 
 export interface FormFields {
@@ -88,7 +115,6 @@ interface Artist {
   links: Link[];
   bio: PortableTextBlock[];
 }
-
 export interface Program {
   _type: string;
   _id: string;
@@ -103,13 +129,14 @@ export interface Program {
   artists: Artist[];
   description: PortableTextBlock[];
   images: ImageAsset[];
-  tags: string[];
+  tags: {
+    _ref: string;
+  }[];
   season: string;
   cta: Array<Entry>;
   frontCaptions: Array<Entry>;
 }
-
-interface Tag {
+export interface Tag {
   _type: string;
   _id: string;
   tag: string;

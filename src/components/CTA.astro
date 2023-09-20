@@ -1,4 +1,5 @@
 ---
+import { getFileLink } from "../data/api";
 interface CTA {
   type:
     | "default"
@@ -6,12 +7,20 @@ interface CTA {
     | "text"
     | "singleLine"
     | "multiLine"
+    | "doc"
     | "link";
+
   text: string;
   action?: boolean;
   linkText?: string;
   linkHref?: string;
   value?: string;
+  chooseFile?: {
+    _type: string;
+    asset: {
+      _ref: string;
+    };
+  };
 }
 
 type Params = CTA;
@@ -23,7 +32,10 @@ const {
   linkText,
   linkHref,
   value,
+  chooseFile,
 } = Astro.props as Params;
+
+const fileLink = chooseFile && (await getFileLink(chooseFile.asset._ref));
 ---
 
 {
@@ -82,6 +94,14 @@ const {
 {
   type === "link" && (
     <a class="CTA-text" href={value}>
+      {text}
+    </a>
+  )
+}
+
+{
+  type === "doc" && (
+    <a class="CTA-default" href={fileLink}>
       {text}
     </a>
   )
