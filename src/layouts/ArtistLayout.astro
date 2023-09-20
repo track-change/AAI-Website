@@ -11,9 +11,11 @@ interface Props {
   bannerSrc: string;
   credits: string;
   ctas: Entry[] | any[];
+  frontCaptions: Entry[];
+
 }
 
-const { pageTitle = "default", bannerSrc, credits, ctas } = Astro.props as Props;
+const { pageTitle = "default", bannerSrc, credits, frontCaptions, ctas } = Astro.props as Props;
 ---
 
 <BasicLayout title={pageTitle}>
@@ -34,9 +36,9 @@ const { pageTitle = "default", bannerSrc, credits, ctas } = Astro.props as Props
             ))
           }
           </div>
-        <!-- <CTADefault /> -->
       </div>
-      <!-- <FrontCaption /> -->
+      <FrontCaption frontCaptions={frontCaptions} />
+
       <slot />
     </div>
   </main>

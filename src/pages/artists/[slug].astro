@@ -15,7 +15,6 @@ type Params = InferGetStaticParamsType<typeof getStaticPaths>;
 const { slug } = Astro.params as Params;
 
 const artist = await getArtistBySlug(slug);
-console.log(artist.links)
 ---
 
 <ArtistLayout
@@ -23,6 +22,7 @@ console.log(artist.links)
   bannerSrc={urlFor(artist.image).url()}
   credits={artist.imageCredit}
   ctas={artist.links}
+  frontCaptions={artist.frontCaptions}
 >
     
   <section class="body-copy">

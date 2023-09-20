@@ -69,3 +69,19 @@ Agenda/Questions
     - [ ] About 
     - [ ] Programs (rework on index page) 
     - [ ] Venue (contains form)
+
+## Agenda: 
+- Schedule (tentative)
+    - 10/03: progress checkin (content population and live site deployment) 
+    - 10/27: Programming complete
+    - 10/30–11/10: QA (design and technical feedback)
+    - mid November: Launch
+
+- CMS deployed and ready for population
+    - [ ] Artists
+    - [ ] Programs
+        - in 'Event type', let us know if anything beyond current selection
+    - [ ] Education
+    - [ ] Visit
+    - [ ] Form
+    - [ ] Tags

@@ -115,6 +115,7 @@ interface Artist {
   links: Link[];
   // links: Array<Entry>;
   bio: PortableTextBlock[];
+  frontCaptions: Array<Entry>;
 }
 export interface Program {
   _type: string;
