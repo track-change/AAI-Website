@@ -76,6 +76,12 @@ export async function getTagByRef(ref: string): Promise<Tag> {
   return tag;
 }
 
+export async function getTickets(): Promise<Ticket[]> {
+  const query = groq`*[_type == "ticket"]`;
+  const tickets = await useSanityClient().fetch(query);
+  return tickets;
+}
+
 export interface Entry {
   _type: string;
   _key: string;
@@ -192,4 +198,18 @@ export interface Settings {
   _id: string;
   title: string;
   description: string;
+}
+
+interface Ticket {
+  _type: string;
+  _id: string;
+  title: string;
+  program: {
+    _ref: string;
+  };
+  eventType: {
+    _ref: string;
+  };
+  price: string;
+  getTicket: string;
 }
