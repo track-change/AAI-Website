@@ -1,0 +1,24 @@
+---
+import { getMedia } from "../../data/api";
+import { urlFor } from "../../utils/image";
+
+const medias = await getMedia();
+---
+
+<ul class="list">
+  {
+    medias.map((media) => (
+      <li>
+        <a href={`/media/${media.slug.current}`}>
+          <img
+            src={media.thumbnail ? urlFor(media.thumbnail).url() : ""}
+            alt=""
+          />
+          <p>{media.title}</p>
+          <p>{media.mediaType}</p>
+          <p>{media.date}</p>
+        </a>
+      </li>
+    ))
+  }
+</ul>

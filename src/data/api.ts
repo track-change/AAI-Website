@@ -1,6 +1,16 @@
 import { useSanityClient } from "@sanity/astro";
-import type { PortableTextBlock } from "@portabletext/types";
-import type { ImageAsset, Slug, File } from "@sanity/types";
+import type {
+  Artist,
+  Education,
+  Form,
+  Media,
+  Program,
+  Settings,
+  Tag,
+  Ticket,
+  Visit,
+} from "./types";
+
 import groq from "groq";
 
 async function fetchData(type: string, slug?: string) {
@@ -76,140 +86,20 @@ export async function getTagByRef(ref: string): Promise<Tag> {
   return tag;
 }
 
+export async function getMedia(): Promise<Media[]> {
+  const query = groq`*[_type == "media"]`;
+  const media = await useSanityClient().fetch(query);
+  return media;
+}
+
+export async function getMediaBySlug(slug: string): Promise<Media> {
+  const query = groq`*[_type == "media" && slug.current == $slug][0]`;
+  const media = await useSanityClient().fetch(query, { slug });
+  return media;
+}
+
 export async function getTickets(): Promise<Ticket[]> {
   const query = groq`*[_type == "ticket"]`;
   const tickets = await useSanityClient().fetch(query);
   return tickets;
-}
-
-export interface Entry {
-  _type: string;
-  _key: string;
-  displayTitle: string;
-  value: string;
-  chooseFile?: {
-    _type: string;
-    asset: {
-      _ref: string;
-    };
-  };
-}
-
-export interface FormFields {
-  _type: string;
-  _key: string;
-  displayTitle: string;
-  type: string;
-  required: boolean;
-  placeholder?: string;
-  options?: { displayTitle: string; value: string }[];
-  submitTo: string;
-}
-
-interface Link {
-  _type: string;
-  url: string;
-}
-
-interface Artist {
-  _type: string;
-  _id: string;
-  name: string;
-  slug: Slug;
-  image: ImageAsset;
-  imageCredit: string;
-  links: Link[];
-  // links: Array<Entry>;
-  bio: PortableTextBlock[];
-  frontCaptions: Array<Entry>;
-}
-export interface Program {
-  _type: string;
-  _id: string;
-  name: string;
-  slug: Slug;
-  type: string;
-  eventTypes: string[];
-  startDateTime: string;
-  endDateTime: string;
-  coverImage: ImageAsset;
-  pressKit: File;
-  curator: string;
-  artists: Artist[];
-  description: PortableTextBlock[];
-  images: ImageAsset[];
-  tags: {
-    _ref: string;
-  }[];
-  season: string;
-  cta: Array<Entry>;
-  frontCaptions: Array<Entry>;
-}
-export interface Tag {
-  _type: string;
-  _id: string;
-  tag: string;
-}
-
-export interface Education {
-  _type: string;
-  _id: string;
-  title: string;
-  slug: Slug;
-  coverImage: ImageAsset;
-  cta: Array<Entry>;
-  frontCaptions: Array<Entry>;
-  body: PortableTextBlock[];
-  tags: Tag[];
-}
-
-interface Visit {
-  _type: string;
-  _id: string;
-  address: string;
-  phone: string;
-  ctafields: {
-    displayTitle: string;
-    cta?: {
-      value: string;
-      url: string;
-    };
-    embed?: {
-      url: string;
-    };
-    body?: PortableTextBlock[];
-  }[];
-  forms: Form[];
-}
-
-interface Form {
-  _type: string;
-  _id: string;
-  _ref: string;
-  title: string;
-  description: PortableTextBlock[];
-  subheading: string;
-  fields: Array<FormFields>;
-  submitTo: string;
-}
-
-export interface Settings {
-  _type: string;
-  _id: string;
-  title: string;
-  description: string;
-}
-
-interface Ticket {
-  _type: string;
-  _id: string;
-  title: string;
-  program: {
-    _ref: string;
-  };
-  eventType: {
-    _ref: string;
-  };
-  price: string;
-  getTicket: string;
 }
