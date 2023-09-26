@@ -1,55 +1,55 @@
 # Asian Arts Initiative Website
 
 -----
-New ask:
-- Can we make the categories in CMS of 'current' and 'past' under programs?
-
-- Alvin
-- [x] Education pages, CMS
-- [x] Education front-end
+- ## Education 
+    - [x] CMS
+    - [x] API front-end
     - [x] index page
-    - [ ] adding image carousel
-    - [ ] can we change the index path from /educations/ to /education/?
-- [x] Media pages, CMS
-- [ ] Media front-end
-- [x] Venue pages, CMS
-- [ ] Venue front-end
-- [ ] About pages, CMS
-- [ ] About front-end, CMS
-- [x] Visit page, CMS (Title, CTA, Embed, Body)
-- [x] Visit front-end
-- [x] Ticket page, CMS
-- [ ] Ticket front-end
-- [x] Form
-    - [ ] configure submit button
-    - [ ] single form page tbd (rental form)
-- [ ] Tags
-- [ ] Homepage
-----
-- Programs (new asks)
-    - [x] query "tags" in the front end
-    - [x] query document CTA
-    - [ ] inline images [current example of the logos](https://asianartsinitiative.org/events/virtual-avatar-workshop)
-- [x] Education -> /education/
-- [ ] recommended content / reference
+    - [ ] image carousel
 
-Mianwei
-- [ ] Venue page enormous form
-- Ticket page
-- [x] Education, enormous form
-- Programs 
-    [x] need populating some events for the `current` and `past` pages
-- [ ] discuss the (big) CTA
+- ## Media 
+    - [x] CMS
+    - [ ] API (front-end)
+    - [ ] CSS
 
+- ## Venue
+    - [x] Venue pages, CMS
+    - [ ] API (front-end)
+    - [ ] CSS
 
-Agenda/Questions
+- ## About
+    - [ ] CMS
+    - [ ] API (front-end)
+    - [ ] CSS + JS
 
-[x] Sanity account, we handle it or they handle it
-    - look into sanity transfer, [Sanity Project Transfer](https://www.sanity.io/docs/plans-and-payments#project-transfers)
-[x] Ticket page, manual input vs program parsing / are you ok with manually input the event links
-    - manual input
-[x] Filters of participation years, onto all pages
-    - yes
+- ## Visit
+    - [x] CMS (Title, CTA, Embed, Body)
+    - [x] API (front-end)
+    - [x] CSS
+
+- ## Ticket
+    - [x] CMS
+    - [ ] API
+    - [ ] CSS
+
+- ## Form
+    - [x] setup (CMS, API, CSS)
+    - [ ] <form> submit configuration
+    - [ ] rental form page
+
+- ## Sitewide CTA
+    - [ ] 
+
+- ## Tags
+    - [x] CMS
+    - [x] API (query)
+    - [ ] CSS
+
+- ## In the pipe:
+    - Program pages: 
+        - [ ] inline images [current example of the logos](https://asianartsinitiative.org/events/virtual-avatar-workshop)
+    - recommended content / reference
+    - Homepage
 
 -----
 ### September 20th, Meeting 
