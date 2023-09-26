@@ -1,0 +1,95 @@
+---
+import { getProgramByRef, getTagByRef } from "../data/api";
+import CTA from "./CTA.astro";
+import { urlFor } from "../utils/image";
+import { formatDateRange } from "../utils/dateFormatting.js";
+
+
+interface Props {
+  program: {
+    _ref: string;
+  };
+  eventType: {
+    _ref: string;
+  };
+
+  title: string;
+  startDateTime: string,
+  endDateTime: string, 
+  price: string;
+  url: string;
+}
+
+const { title, eventType, price, url, program, startDateTime, endDateTime} = Astro.props
+const programFetched = await getProgramByRef(program._ref)
+const tagFecteched = await getTagByRef(eventType._ref)
+
+// console.log(programFetched.coverImage)
+---
+<div class="ticket-card">
+    <div class="ticket__left">
+        <div>
+            <h4>{title}</h4>
+            <p class="gray-out caption">{tagFecteched.tag}</p>
+            <div class="caption">
+                {formatDateRange(
+                    `${startDateTime}—${endDateTime}`
+                  )}
+            </div>
+        </div>
+        <div>
+            <div class="caption">{price}</div>
+            <br>
+            <CTA invert=true type="default" text="Get Tickets" linkHref={url} / >
+        </div>
+    </div>
+
+    <img src={programFetched.coverImage ? urlFor(programFetched.coverImage).url() : ""} alt=""> 
+</div>
+
+
+<style type="scss">
+    .ticket-card {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        gap: 5rem;
+        height: 320px;
+
+        @media screen and (max-width: 768px) {
+          flex-direction: column;
+          height: fit-content;
+          gap: 1rem;
+        }
+    }
+
+    .ticket__left {
+        display: flex;
+        flex-direction: column;
+        flex: 1 0 0;
+        width: 50%;
+        
+        justify-content: space-between;
+
+        @media screen and (max-width: 768px) {
+          width: 100%;
+        }
+    }
+
+    img {
+        max-width: 480px;
+        max-height: 320px;
+        height: 100%;
+
+        object-fit: cover;
+
+    @media screen and (max-width: 1024px) {
+        max-width: 320px;
+        max-height: 216px;
+    }
+    @media screen and (max-width: 768px) {
+        max-width: 100%;
+        max-height: 100%;
+    }
+  }
+</style>

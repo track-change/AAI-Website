@@ -1,0 +1,79 @@
+---
+import SideTab from "../components/SideTab.astro";
+import Layout from "../layouts/Layout.astro";
+import { getTickets } from "../data/api";
+import TicketCard from "../components/TicketCard.astro";
+
+const tickets = await getTickets();
+
+// console.log(tickets[0]);
+---
+
+<Layout title="Ticket">
+  <div data-top>
+    <article data-wrapper>
+      <SideTab text="Tickets" href="/tickets/" style="department" />
+
+      <main data-main>
+        <h2 class="title">Ticketed Events</h2>
+
+        <ul class="list">
+          {
+            tickets.map((ticket) => (
+              <li class="list-item">
+                <TicketCard
+                  title={ticket.title}
+                  program={ticket.program}
+                  eventType={ticket.eventType}
+                  price={ticket.price}
+                  url={ticket.getTicket}
+                  startDateTime={ticket.startDateTime}
+                  endDateTime={ticket.endDateTime}
+                />
+              </li>
+            ))
+          }
+        </ul>
+      </main>
+    </article>
+  </div>
+</Layout>
+
+<style type="scss">
+  [data-top] {
+    background-color: var(--black);
+    color: var(--white);
+
+    [data-wrapper] {
+      width: 100vw;
+      min-height: 100vh;
+
+      display: flex;
+      flex-direction: row;
+      position: sticky;
+      top: 45px;
+      left: 0;
+
+      [data-main] {
+        padding: 40px;
+        width: 100%;
+
+        display: flex;
+        flex-direction: column;
+
+
+        .list {
+          padding: 4rem 0;
+          display: flex;
+          flex-direction: column;
+          gap: 10rem;
+
+          @media screen and (max-width:768px) {
+            gap: 6rem;
+          }
+        }
+        }
+      }
+    }
+
+</style>

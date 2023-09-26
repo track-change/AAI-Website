@@ -29,8 +29,8 @@
 
 - ## Ticket
     - [x] CMS
-    - [ ] API
-    - [ ] CSS
+    - [x] API
+    - [x] CSS
 
 - ## Form
     - [x] setup (CMS, API, CSS)

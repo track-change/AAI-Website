@@ -15,6 +15,7 @@ interface CTA {
   linkText?: string;
   linkHref?: string;
   value?: string;
+  invert?: boolean;
   chooseFile?: {
     _type: string;
     asset: {
@@ -32,6 +33,7 @@ const {
   linkText,
   linkHref,
   value,
+  invert,
   chooseFile,
 } = Astro.props as Params;
 
@@ -40,7 +42,7 @@ const fileLink = chooseFile && (await getFileLink(chooseFile.asset._ref));
 
 {
   type === "default" && (
-    <a class="CTA-default" href={linkHref}>
+    <a class={invert ? "CTA-default-inverted" : "CTA-default"} href={linkHref}>
       {text}
     </a>
   )
@@ -109,7 +111,17 @@ const fileLink = chooseFile && (await getFileLink(chooseFile.asset._ref));
 
 <style>
   /* Default CTA styles */
+
   .CTA-default {
+    border: 1px solid var(--black, #000);
+    background-color: var(--white, #fff);
+  }
+  .CTA-default-inverted {
+    border: 1px solid var(--white, #fff);
+    background-color: var(--black, #000);
+  }
+  .CTA-default,
+  .CTA-default-inverted {
     cursor: pointer;
     display: inline-flex;
     padding: 0.75rem 2rem;
@@ -124,10 +136,6 @@ const fileLink = chooseFile && (await getFileLink(chooseFile.asset._ref));
     flex-grow: 0;
     text-transform: capitalize;
 
-    border: 1px solid var(--black, #000);
-
-    background-color: var(--white, #fff);
-
     margin: -1px 0 0 -1px;
 
     @media screen and (max-width: 1024px) {
@@ -141,9 +149,9 @@ const fileLink = chooseFile && (await getFileLink(chooseFile.asset._ref));
       max-width: 100%;
     }
   }
-  .CTA-default:hover {
+  /* .CTA-default:hover {
     background-color: whitesmoke;
-  }
+  } */
 
   /* Outstanding CTA styles */
 
