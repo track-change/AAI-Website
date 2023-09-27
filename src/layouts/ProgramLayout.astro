@@ -32,12 +32,12 @@ const { pageTitle, bannerSrc, ctas, frontCaptions, tags } =
       </div>
 
       <div class="tag-wrapper">
-        {tags.map((tag) => <Tag tagRef={tag._ref} />)}
+        {tags?.map((tag) => <Tag tagRef={tag._ref} />)}
       </div>
 
       <div class="CTA-wrapper">
         {
-          ctas.map((cta: Entry) => (
+          ctas?.map((cta: Entry) => (
             <CTA
               type={cta._type}
               text={cta.displayTitle}
