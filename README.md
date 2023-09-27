@@ -10,7 +10,8 @@
 - ## Media 
     - [x] CMS
     - [ ] API (front-end)
-    - [ ] CSS
+    - [x] Slug page CSS
+    - [ ] index component
 
 - ## Venue
     - [x] Venue pages, CMS

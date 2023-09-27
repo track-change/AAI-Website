@@ -1,0 +1,43 @@
+---
+import SecHeader from "../SecHeader.astro";
+import SectionLayout from "../../layouts/SectionLayout.astro";
+import { getAboutSec } from "../../data/api";
+import { urlFor } from "../../utils/image";
+
+const about = await getAboutSec();
+
+interface AboutSec {
+  invert?: boolean;
+}
+---
+
+<SectionLayout title="About section">
+  <div>
+    <h2>{about.title}</h2>
+  </div>
+
+    {
+      about.content.map(
+        (entry) =>
+          entry._type === "body" ? (
+            
+          <p class="text">{entry.value}</p>
+
+          ) : entry._type === "subheading" ? (
+            
+          <SecHeader title={entry.value} />
+          
+          ) : entry._type === "image" ? (
+            
+          <div>
+              <img class="inline-img"
+                src={entry.asset ? urlFor(entry.asset).url() : ""}
+                alt={entry?.alt}
+              />
+              <captio class="small-caption">{entry?.caption}</caption>
+        </div>
+          ) : null // You might want to handle other cases or return null for unrecognized types
+      )
+    }
+
+</SectionLayout>

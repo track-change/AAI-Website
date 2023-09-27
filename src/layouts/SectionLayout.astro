@@ -1,35 +1,10 @@
 ---
-import BasicLayout from "./Layout.astro";
 import "../scss/main.scss";
-import SideTab from "../components/SideTab.astro";
-import FrontCaption from "../components/FrontCaption.astro";
-import type { Entry } from "../data/types";
-
-interface Props {
-  pageTitle: string;
-  bannerSrc: string;
-  frontCaptions: Entry[];
-}
-
-const { pageTitle, bannerSrc, frontCaptions } = Astro.props as Props;
 ---
 
-<BasicLayout title={pageTitle}>
-  <div class="top">
-    <SideTab text="Media Library" href="/archive/#media" style="subpage" />
-
-    <main>
-      <h2 class="title">{pageTitle}</h2>
-      <div class="banner">
-        <!-- not image but video embeds here -->
-        <img src={bannerSrc} alt="Banner image" />
-      </div>
-
-      <FrontCaption frontCaptions={frontCaptions} />
-      <slot />
-    </main>
-  </div>
-</BasicLayout>
+<main data-main>
+  <slot />
+</main>
 
 <style lang="scss" is:global>
   html {
@@ -42,52 +17,33 @@ const { pageTitle, bannerSrc, frontCaptions } = Astro.props as Props;
       DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace;
   }
 
-  // Side Tab Area
-  .top {
-    display: flex;
-    background-color: var(--gray);
-  }
   main {
+    display: flex;
+    flex-direction: column;
+    gap: 80px;
     flex: 1;
-  }
-
-  .banner,
-{
-    padding: 40px;
     width: 100%;
-    max-width: 1720px;
+    max-width: 1080px;
+    margin: 40px;
 
     @media screen and (max-width: 64rem) {
+      margin: 32px;
       max-width: 40rem;
+      gap: 24px;
     }
     @media screen and (max-width: 48rem) {
+      margin: 16px;
       max-width: 30rem;
-      margin: 0 16px;
     }
 
     @media screen and (max-width: 35.5rem) {
       background-color: red;
       width: calc(100% - 4.4rem);
-      margin: 0 16px;
-    }
-    @media screen and (max-width: 24.375rem) {
-      width: calc(100% - 32px);
-      margin: 0 16px;
+      gap: 8px;
     }
 
-    display: flex;
-    flex-direction: column;
-  }
-  .title {
-    margin: 40px;
-    @media screen and (max-width: 64rem) {
-      margin: 32px;
-    }
-    @media screen and (max-width: 48rem) {
-      margin: 16px;
-    }
     @media screen and (max-width: 24.375rem) {
-      margin: 16px;
+      width: calc(100% - 32px);
     }
   }
 
@@ -100,12 +56,10 @@ const { pageTitle, bannerSrc, frontCaptions } = Astro.props as Props;
     }
   }
 
-  .body-copy {
-    margin: 40px;
-    display: flex;
-    flex-direction: column;
-    gap: 2em 0;
-    max-width: 800px;
+  .text,.inline-img {
+    max-width: 50rem;
+    width: 100%;
+    // height: fit-content;
   }
 
   .CTA-wrapper {

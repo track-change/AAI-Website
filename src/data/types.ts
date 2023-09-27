@@ -146,3 +146,17 @@ export interface Ticket {
   price: string;
   getTicket: string;
 }
+
+export interface About {
+  _type: string;
+  _id: string;
+  title: string;
+  content: Array<{
+    _key: string;
+    _type: string;
+    value?: string;
+    asset?: ImageAsset;
+    alt?: string;
+    caption?: string;
+  }>;
+}
