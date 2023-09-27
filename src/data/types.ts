@@ -68,6 +68,7 @@ export interface Program {
 export interface Tag {
   _type: string;
   _id: string;
+  _ref: string;
   tag: string;
 }
 export interface Education {

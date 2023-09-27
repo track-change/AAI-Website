@@ -1,24 +1,70 @@
 ---
-import { getMedia } from "../../data/api";
+import { getMedia, getTagByRef } from "../../data/api";
 import { urlFor } from "../../utils/image";
+import Tag from "../Tag.astro";
+import SectionLayout from "../../layouts/SectionLayout.astro";
+import type { Entry } from "../../data/types";
 
 const medias = await getMedia();
+
+console.log(medias[0].tags);
 ---
 
-<ul class="list">
-  {
-    medias.map((media) => (
-      <li>
-        <a href={`/media/${media.slug.current}`}>
-          <img
-            src={media.thumbnail ? urlFor(media.thumbnail).url() : ""}
-            alt=""
-          />
-          <p>{media.title}</p>
-          <p>{media.mediaType}</p>
-          <p>{media.date}</p>
-        </a>
-      </li>
-    ))
+<SectionLayout backGround="var(--gray)">
+  <div class="title">
+    <h2>Media Library</h2>
+  </div>
+
+  <ul class="list">
+    {
+      medias.map((media) => (
+        <li class="list-item">
+          <a href={`/media/${media.slug.current}`}>
+            <img
+              src={media.thumbnail ? urlFor(media.thumbnail).url() : ""}
+              alt=""
+            />
+            <h6>{media.title}</h6>
+            <br />
+            <div class="caption">
+              {media.mediaType}, {media.date}
+            </div>
+            <div class="tag-wrapper caption">
+              {media.tags.map((tag) => (
+                <Tag tagRef={tag._ref} />
+              ))}
+            </div>
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+</SectionLayout>
+
+<style lang="scss">
+  .list {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    column-gap: 40px;
+
+    @media screen and (max-width: 64rem) {
+      grid-template-columns: repeat(3, 1fr);
+      column-gap: 32px;
+    }
+
+    @media screen and (max-width: 48rem) {
+      grid-template-columns: repeat(2, 1fr);
+      column-gap: 16px;
+    }
   }
-</ul>
+  .caption {
+    text-transform: capitalize;
+  }
+
+  img {
+    height: fit-content;
+    object-fit: cover;
+    aspect-ratio: 3 / 2;
+    width: 100%;
+  }
+</style>

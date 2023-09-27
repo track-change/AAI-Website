@@ -1,12 +1,21 @@
 ---
+import { string } from "astro/zod";
 import "../scss/main.scss";
+
+interface Prop {
+  backGround?: string;
+  textColor?: string;
+}
+
+const { backGround, textColor } = Astro.props as Prop
+
 ---
 
-<main data-main>
+<main data-main >
   <slot />
 </main>
 
-<style lang="scss" is:global>
+<style lang="scss" is:global define:vars={{ backGround, textColor }}>
   html {
     font-family: system-ui, sans-serif;
     background: var(--white);
@@ -16,6 +25,18 @@ import "../scss/main.scss";
     font-family: Menlo, Monaco, Lucida Console, Liberation Mono,
       DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace;
   }
+  .title,
+  section {
+    max-width: 1080px;
+
+    @media screen and (max-width: 64rem) {
+      max-width: 40rem;
+    }
+    @media screen and (max-width: 48rem) {
+      max-width: 30rem;
+    }
+
+  }
 
   main {
     display: flex;
@@ -23,17 +44,16 @@ import "../scss/main.scss";
     gap: 80px;
     flex: 1;
     width: 100%;
-    max-width: 1080px;
-    margin: 40px;
+    padding: 40px;
+    background-color: var(--backGround, #fff);
+    color: var(--textColor, #000);
 
     @media screen and (max-width: 64rem) {
-      margin: 32px;
-      max-width: 40rem;
+      padding: 32px;
       gap: 24px;
     }
     @media screen and (max-width: 48rem) {
-      margin: 16px;
-      max-width: 30rem;
+      padding: 16px;
     }
 
     @media screen and (max-width: 35.5rem) {
@@ -48,18 +68,26 @@ import "../scss/main.scss";
   }
 
   .banner {
-    margin: 6.25rem auto;
+    padding: 6.25rem auto;
     gap: 1.25rem;
 
     @media screen and (max-width: 24.375rem) {
-      margin: 2.5rem auto;
+      padding: 2.5rem auto;
     }
   }
 
-  .text,.inline-img {
+  .text,
+  .inline-img {
     max-width: 50rem;
     width: 100%;
     // height: fit-content;
+
+    @media screen and (max-width: 64rem) {
+      max-width: 40rem;
+    }
+    @media screen and (max-width: 48rem) {
+      max-width: 30rem;
+    }
   }
 
   .CTA-wrapper {

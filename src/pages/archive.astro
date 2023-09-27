@@ -1,10 +1,36 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import MediaSec from "../components/sections/MediaSec.astro";
+import SideTab from "../components/SideTab.astro";
 ---
 
 <Layout title="Archive">
-  <main>
-    <MediaSec />
-  </main>
+  <div class="top">
+    <div data-top>
+      <article data-wrapper>
+        <SideTab text="Archive" href="/programs/" style="department" />
+        <MediaSec />
+      </article>
+    </div>
+  </div>
 </Layout>
+
+<style lang="scss">
+  [data-wrapper] {
+    width: 100vw;
+    min-height: 100vh;
+
+    display: flex;
+    flex-direction: row;
+    position: sticky;
+    top: 45px;
+    left: 0;
+
+    [data-main] {
+      width: calc(100vw - 4rem);
+      height: fit-content;
+
+      position: relative;
+    }
+  }
+</style>

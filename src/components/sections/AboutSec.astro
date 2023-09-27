@@ -11,8 +11,8 @@ interface AboutSec {
 }
 ---
 
-<SectionLayout title="About section">
-  <div>
+<SectionLayout backGround="black" textColor="white" title="About section">
+  <div class="title">
     <h2>{about.title}</h2>
   </div>
 
@@ -25,7 +25,7 @@ interface AboutSec {
 
           ) : entry._type === "subheading" ? (
             
-          <SecHeader title={entry.value} />
+          <SecHeader color="white" title={entry.value} />
           
           ) : entry._type === "image" ? (
             
