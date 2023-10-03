@@ -9,14 +9,23 @@ import PastPrograms from "../../components/sections/PastPrograms.astro";
   <div data-top>
     <article data-wrapper>
       <SideTab text="Programs" href="/programs/" style="department" />
-      <SideTab text="Current and Upcoming"  style="subpage" shadow="left" classes="current-tab"/>
+      <SideTab
+        text="Current and Upcoming"
+        style="subpage"
+        shadow="left"
+        classes="current-tab"
+      />
       <div class="overlay">
         <CurrentPrograms />
         <PastPrograms />
       </div>
-      <SideTab text="Past seasons"  style="subpage" shadow="right" classes="past-tab"/>
+      <SideTab
+        text="Past seasons"
+        style="subpage"
+        shadow="right"
+        classes="past-tab"
+      />
     </article>
-
   </div>
 </Layout>
 
@@ -38,50 +47,48 @@ import PastPrograms from "../../components/sections/PastPrograms.astro";
     width: 100vw;
     overflow-x: hidden;
 
-    .current, .past {
+    .current,
+    .past {
       position: absolute;
       min-height: 100vh;
     }
     .past {
-      box-shadow: -10px 0px 14px 0px rgba(0, 0, 0, 0.10);
+      box-shadow: -10px 0px 14px 0px rgba(0, 0, 0, 0.1);
       left: 66%;
     }
   }
-
 </style>
 
 <script async>
-  const currentContainer = document.querySelector("main.current")
-  const pastContainer = document.querySelector("main.past")
-  const currentTab = document.querySelector(".current-tab")
-  const pastTab = document.querySelector(".past-tab")
+const currentContainer = document.querySelector("main.current");
+const pastContainer = document.querySelector("main.past");
+const currentTab = document.querySelector(".current-tab");
+const pastTab = document.querySelector(".past-tab");
 
 function initialPosition() {
   pastContainer.style.left = "66%";
-  pastTab.style.display = "none"
-  currentTab.style.display = "none"
+  pastTab.style.display = "none";
+  currentTab.style.display = "none";
 }
 
 function pastOver() {
   pastContainer.style.left = "0%";
-  currentContainer.style.display = "none"
+  currentContainer.style.display = "none";
 
-  pastTab.style.display = "none"
-  currentTab.style.display = "flex"
+  pastTab.style.display = "none";
+  currentTab.style.display = "flex";
 }
 
-function currentOver () {
+function currentOver() {
   pastContainer.style.left = "110%";
-  currentContainer.style.display = "flex"
+  currentContainer.style.display = "flex";
 
-  pastTab.style.display = "flex"
-  currentTab.style.display = "none"
-}
+  pastTab.style.display = "flex";
+  currentTab.style.display = "none";
+  }
 
-
-initialPosition()
-pastContainer.addEventListener('mouseenter', pastOver);
-currentTab.addEventListener('click', currentOver)
-pastTab.addEventListener('click', pastOver)
-
+  initialPosition();
+  pastContainer.addEventListener("mouseenter", pastOver);
+  currentTab.addEventListener("click", currentOver);
+  pastTab.addEventListener("click", pastOver);
 </script>

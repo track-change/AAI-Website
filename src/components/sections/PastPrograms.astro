@@ -1,23 +1,9 @@
 ---
 import SectionLayout from "../../layouts/SectionLayout.astro";
-import SecHeader from "../SecHeader.astro";
 import { getPrograms } from "../../data/api";
 import { urlFor } from "../../utils/image";
 import { formatDateRange } from "../../utils/dateFormatting.js";
-// import type { Program, ImageAsset } from "../../data/types";
-import type { ImageAsset, Slug, File } from "@sanity/types";
-
-
-interface Props {
-  season: string;
-  slug: Slug;
-  key?: string;
-  coverImage: ImageAsset;
-  name: string;
-  startDateTime: string;
-  endDateTime: string;
-  type: string;
-}
+import type { Program } from "../../data/types";
 
 const programs = await getPrograms();
 const currentDate = new Date();
@@ -25,7 +11,7 @@ const pastPrograms = programs.filter(
   (program) => new Date(program.endDateTime) < currentDate
 );
 
-const programsBySeason: { [key: string]: Props[] } = {};
+const programsBySeason: { [key: string]: Program[] } = {};
 pastPrograms.forEach((program) => {
   const season = program.season;
   if (!programsBySeason[season]) {
