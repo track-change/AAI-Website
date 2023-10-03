@@ -1,0 +1,146 @@
+---
+import SectionLayout from "../../layouts/SectionLayout.astro";
+import SecHeader from "../SecHeader.astro";
+import { getPrograms } from "../../data/api";
+import { urlFor } from "../../utils/image";
+import { formatDateRange } from "../../utils/dateFormatting.js";
+// import type { Program, ImageAsset } from "../../data/types";
+import type { ImageAsset, Slug, File } from "@sanity/types";
+
+
+interface Props {
+  season: string;
+  slug: Slug;
+  key?: string;
+  coverImage: ImageAsset;
+  name: string;
+  startDateTime: string;
+  endDateTime: string;
+  type: string;
+}
+
+const programs = await getPrograms();
+const currentDate = new Date();
+const pastPrograms = programs.filter(
+  (program) => new Date(program.endDateTime) < currentDate
+);
+
+const programsBySeason: { [key: string]: Props[] } = {};
+pastPrograms.forEach((program) => {
+  const season = program.season;
+  if (!programsBySeason[season]) {
+    programsBySeason[season] = [];
+  }
+  programsBySeason[season].push(program);
+});
+---
+
+<SectionLayout className="past">
+  <h2 class="title">Past Seasons</h2>
+  <div>
+    {
+      Object.entries(programsBySeason).map(([season, programs]) => (
+        <section id={season} class="past-seasons">
+          
+          <h4 class="season-title">{season}</h4>
+          <ul class="list is-hidden">
+            {programs.map((program) => (
+              <li class="list-item">
+                <a data-link href={`/programs/${program.slug.current}`}>
+                  <img
+                    src={urlFor(program.coverImage).url()}
+                    alt={program.name}
+                  />
+                  <h4>{program.name}</h4>
+
+                  <ul class="caption">
+                    <li class="grayout">{program.type}</li>
+                    <li>
+                      {formatDateRange(
+                        `${program.startDateTime}—${program.endDateTime}`
+                      )}
+                    </li>
+                  </ul>
+                </a>
+              </li>
+            ))}
+          </ul>
+        </section>
+      ))
+    }
+  </div>
+</SectionLayout>
+
+<style type="scss">
+  section:last-child {
+    border-bottom: 1px solid var(--black);
+  }
+  section {
+    width: 100%;
+
+    display: flex;
+    flex-direction: column;
+
+    border-top: 1px solid var(--black);
+
+    .season-title {
+      padding: 8px 0;
+      cursor: pointer;
+    }
+    
+    .filters,
+    .filters > * > * > * {
+      display: flex;
+      justify-content: space-between;
+      gap: 1rem;
+      color: var(--darkGray);
+    }
+    .list {
+      padding: 4rem 0;
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      justify-content: space-around;
+      align-items: flex-start;
+      gap: 4rem;
+
+
+
+      .list-item {
+        max-width: 45%;
+
+        // display: flex;
+        // flex-direction: column;
+        // text-align: center;
+        [data-link] {
+          display: flex;
+          flex-direction: column;
+          // align-items: center;
+          gap: 0.5rem;
+          text-align: center;
+          .grayout {
+            margin-bottom: 0.5rem;
+            color: var(--darkGray);
+            text-transform: capitalize;
+          }
+        }
+      }
+    }
+    .is-hidden {
+      display: none;
+    }
+  }
+</style>
+<script async>
+// for each section, hide .list
+// when click on the section-header, .list shows up
+const sections = document.querySelectorAll(".past-seasons");
+
+sections.forEach((section) => {
+  const secHeader = section.querySelector(".season-title");
+  const secPrograms = section.querySelector(".list");
+  secHeader.addEventListener("click", () => {
+    secPrograms.classList.toggle("is-hidden");
+  });
+});
+</script>

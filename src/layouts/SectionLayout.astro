@@ -5,13 +5,14 @@ import "../scss/main.scss";
 interface Prop {
   backGround?: string;
   textColor?: string;
+  className?: string;
 }
 
-const { backGround, textColor } = Astro.props as Prop
+const { backGround, textColor, className } = Astro.props as Prop
 
 ---
 
-<main data-main >
+<main class={className}>
   <slot />
 </main>
 
@@ -25,18 +26,7 @@ const { backGround, textColor } = Astro.props as Prop
     font-family: Menlo, Monaco, Lucida Console, Liberation Mono,
       DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace;
   }
-  .title,
-  section {
-    max-width: 1080px;
 
-    @media screen and (max-width: 64rem) {
-      max-width: 40rem;
-    }
-    @media screen and (max-width: 48rem) {
-      max-width: 30rem;
-    }
-
-  }
 
   main {
     display: flex;

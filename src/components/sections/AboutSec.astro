@@ -16,28 +16,36 @@ interface AboutSec {
     <h2>{about.title}</h2>
   </div>
 
-    {
-      about.content.map(
-        (entry) =>
-          entry._type === "body" ? (
-            
+  {
+    about.content.map(
+      (entry) =>
+        entry._type === "body" ? (
           <p class="text">{entry.value}</p>
-
-          ) : entry._type === "subheading" ? (
-            
+        ) : entry._type === "subheading" ? (
           <SecHeader color="white" title={entry.value} />
-          
-          ) : entry._type === "image" ? (
-            
+        ) : entry._type === "image" ? (
           <div>
-              <img class="inline-img"
-                src={entry.asset ? urlFor(entry.asset).url() : ""}
-                alt={entry?.alt}
-              />
-              <captio class="small-caption">{entry?.caption}</caption>
-        </div>
-          ) : null // You might want to handle other cases or return null for unrecognized types
-      )
-    }
-
+            <img
+              class="inline-img"
+              src={entry.asset ? urlFor(entry.asset).url() : ""}
+              alt={entry?.alt}
+            />
+            <captio class="small-caption">{entry?.caption}</captio>
+          </div>
+        ) : null // You might want to handle other cases or return null for unrecognized types
+    )
+  }
 </SectionLayout>
+<style lang="scss">
+  .title,
+  .section-header {
+    max-width: 1080px;
+
+    @media screen and (max-width: 64rem) {
+      max-width: 40rem;
+    }
+    @media screen and (max-width: 48rem) {
+      max-width: 30rem;
+    }
+  }
+</style>

@@ -42,6 +42,17 @@ console.log(medias[0].tags);
 </SectionLayout>
 
 <style lang="scss">
+  .title,
+  section {
+    max-width: 1080px;
+
+    @media screen and (max-width: 64rem) {
+      max-width: 40rem;
+    }
+    @media screen and (max-width: 48rem) {
+      max-width: 30rem;
+    }
+  }
   .list {
     display: grid;
     grid-template-columns: repeat(4, 1fr);

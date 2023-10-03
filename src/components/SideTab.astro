@@ -1,15 +1,16 @@
 ---
 interface Props {
   text: string;
-  href: string;
+  href?: string;
   style: "department" | "subpage";
   classes?: string;
+  shadow?: "left" | "right";
 }
 
-const { text, href, style, classes } = Astro.props as Props;
+const { text, href, style, classes, shadow } = Astro.props as Props;
 ---
 
-<div class:list={["side-tab", classes, style]}>
+<div class:list={["side-tab", classes, style, shadow]}>
   <a href={href}>
     <h6 class="vert-text">{text}</h6>
   </a>
@@ -51,9 +52,15 @@ const { text, href, style, classes } = Astro.props as Props;
   .subpage {
     color: var(--black, #000);
     /* right-inner-shadow */
-    box-shadow: -8px 0px 12px 0px rgba(0, 0, 0, 0.1) inset;
     padding: 2.5rem 0;
     display: flex;
     justify-content: center;
+  }
+
+  .left {
+    box-shadow: inset -8px 0px 8px 0px rgba(0, 0, 0, 0.1) ;
+  }
+  .right {
+    box-shadow: inset 8px 0px 8px 0px rgba(0, 0, 0, 0.1) ;
   }
 </style>

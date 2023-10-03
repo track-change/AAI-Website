@@ -1,0 +1,132 @@
+---
+import SectionLayout from "../../layouts/SectionLayout.astro";
+import { getPrograms } from "../../data/api";
+import { urlFor } from "../../utils/image";
+import SecHeader from "../SecHeader.astro";
+import { formatDateRange } from "../../utils/dateFormatting.js";
+
+const programs = await getPrograms();
+const currentDate = new Date();
+
+const currentPrograms = programs.filter(
+  (program) => new Date(program.endDateTime) >= currentDate
+);
+---
+
+<SectionLayout className="current">
+  <h2 class="title">Current & Upcoming</h2>
+
+  <section data-exhibits>
+    <h6>On View</h6>
+    <ul class="list">
+      { 
+        currentPrograms.map((program) => (
+          <Fragment key={program._id}>
+            {program.type === "exhibition" && (
+              <li class="list-item">
+                <a data-link href={`/programs/${program.slug.current}`}>
+                  <img src={urlFor(program.coverImage).url()} />
+                  <h4>{program.name}</h4>
+
+                  <ul class="caption">
+                    <li class="grayout">{program.type}</li>
+                    <li>
+                      {formatDateRange(
+                        `${program.startDateTime}—${program.endDateTime}`
+                      )}
+                    </li>
+                  </ul>
+                </a>
+              </li>
+            )}
+          </Fragment>
+        ))
+      }
+    </ul>
+  </section>
+  <section data-events>
+    <SecHeader title="Upcoming Events" />
+
+    <div>Calendar</div>
+
+    <ul class="list">
+      {
+        currentPrograms.map((program) => (
+          <Fragment key={program._id}>
+            {program.type === "event" && (
+              <li class="list-item">
+                <a data-link href={`/programs/${program.slug.current}`}>
+                  <img src={urlFor(program.coverImage).url()} />
+                  <h4>{program.name}</h4>
+                  <ul class="caption">
+                    <li class="grayout">
+                      {program.eventTypes &&
+                        program.eventTypes.map((eventType) => (
+                          <span>{eventType}</span>
+                        ))}
+                    </li>
+                    <li>
+                      {formatDateRange(
+                        `${program.startDateTime}—${program.endDateTime}`
+                      )}
+                    </li>
+                  </ul>
+                </a>
+              </li>
+            )}
+          </Fragment>
+        ))
+      }
+    </ul>
+  </section>
+</SectionLayout>
+
+<style type="scss">
+  section {
+    width: 100%;
+
+    display: flex;
+    flex-direction: column;
+
+    .title {
+      margin-bottom: 200px;
+    }
+
+    .filters,
+    .filters > * > * > * {
+      display: flex;
+      justify-content: space-between;
+      gap: 1rem;
+      color: var(--darkGray);
+    }
+    .list {
+      padding: 4rem 0;
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      justify-content: space-around;
+      align-items: flex-start;
+      gap: 4rem;
+
+      .list-item {
+        max-width: 45%;
+        // display: flex;
+        // flex-direction: column;
+        // text-align: center;
+        [data-link] {
+          display: flex;
+          flex-direction: column;
+          // align-items: center;
+          gap: 0.5rem;
+          text-align: center;
+          .grayout {
+            margin-bottom: 0.5rem;
+            color: var(--darkGray);
+            text-transform: capitalize;
+          }
+        }
+      }
+    }
+  }
+</style>
+<script async></script>
