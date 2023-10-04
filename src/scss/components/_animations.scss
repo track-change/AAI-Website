@@ -15,3 +15,15 @@
     opacity: 0;
   }
 }
+
+@keyframes slideIn {
+  to {
+    left: 0%;
+  }
+}
+
+@keyframes slideOut {
+  to {
+    left: 100%;
+  }
+}

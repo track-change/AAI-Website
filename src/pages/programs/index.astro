@@ -29,28 +29,30 @@ import PastPrograms from "../../components/sections/PastPrograms.astro";
   </div>
 </Layout>
 
-<style type="scss">
+<style type="scss" is:global>
+
   [data-wrapper] {
     display: flex;
     flex-direction: row;
     position: sticky;
 
     .subpage {
-      position: sticky;
       cursor: pointer;
+      position: sticky;
     }
   }
 
   .overlay {
     display: flex;
     position: relative;
-    width: 100vw;
+    width: 100%;
     overflow-x: hidden;
 
     .current,
     .past {
       position: absolute;
-      min-height: 100vh;
+      height: fit-content;
+      overflow-y:hidden;
     }
     .past {
       box-shadow: -10px 0px 14px 0px rgba(0, 0, 0, 0.1);
@@ -65,30 +67,49 @@ const pastContainer = document.querySelector("main.past");
 const currentTab = document.querySelector(".current-tab");
 const pastTab = document.querySelector(".past-tab");
 
+window.addEventListener("load", () => {
+  const maxHeight = Math.max(
+    currentContainer.clientHeight,
+    pastContainer.clientHeight
+  );
+  document.querySelector(".overlay").style.height = maxHeight + "px";
+  document.querySelector("[data-top]").style.height = maxHeight + "px";
+  document.querySelector("[data-wrapper]").style.height = maxHeight + "px";
+  currentContainer.style.height = maxHeight + "px";
+  pastContainer.style.height = maxHeight + "px";
+});
+
 function initialPosition() {
   pastContainer.style.left = "66%";
   pastTab.style.display = "none";
-  currentTab.style.display = "none";
+  currentTab.style.visibility = "hidden";
 }
 
 function pastOver() {
-  pastContainer.style.left = "0%";
-  currentContainer.style.display = "none";
+  pastContainer.style.animation = "slideIn 0.4s linear forwards";
+  currentContainer.style.animation = "fadeOut 0.4s var(--ease) forwards";
 
-  pastTab.style.display = "none";
-  currentTab.style.display = "flex";
+  currentTab.style.animation = "fadeIn 0.8s var(--ease) forwards";
+  currentTab.style.visibility = "visible";
+
+  pastTab.style.visibility = "hidden";
 }
 
 function currentOver() {
-  pastContainer.style.left = "110%";
-  currentContainer.style.display = "flex";
+  pastContainer.style.animation = "slideOut 0.4s linear forwards";
+  pastContainer.style.boxShadow = "none";
 
-  pastTab.style.display = "flex";
-  currentTab.style.display = "none";
-  }
+  currentContainer.style.animation = "fadeIn 0.8s var(--ease) forwards";
+  pastTab.style.animation = "fadeIn 0.8s var(--ease) forwards";
+  pastTab.style.visibility = "visible";
+  pastTab.style.display = "flex"
 
-  initialPosition();
-  pastContainer.addEventListener("mouseenter", pastOver);
-  currentTab.addEventListener("click", currentOver);
-  pastTab.addEventListener("click", pastOver);
+  currentTab.style.visibility = "hidden";
+}
+
+initialPosition();
+pastContainer.addEventListener("mouseenter", pastOver);
+currentContainer.addEventListener("mouseenter", currentOver);
+currentTab.addEventListener("click", currentOver);
+pastTab.addEventListener("click", pastOver);
 </script>
