@@ -25,7 +25,12 @@ const currentPrograms = programs.filter(
             {program.type === "exhibition" && (
               <li class="list-item">
                 <a data-link href={`/programs/${program.slug.current}`}>
-                  <img src={urlFor(program.coverImage).url()} />
+                  {program.coverImage && (
+                    <img
+                    src={urlFor(program.coverImage).url()}
+                    alt={program.name}
+                  />
+                  )}
                   <h4>{program.name}</h4>
 
                   <ul class="caption">
@@ -47,7 +52,6 @@ const currentPrograms = programs.filter(
   <section data-events>
     <SecHeader title="Upcoming Events" />
 
-    <div>Calendar</div>
 
     <ul class="list">
       {
@@ -56,7 +60,12 @@ const currentPrograms = programs.filter(
             {program.type === "event" && (
               <li class="list-item">
                 <a data-link href={`/programs/${program.slug.current}`}>
-                  <img src={urlFor(program.coverImage).url()} />
+                  {program.coverImage && (
+                    <img
+                    src={urlFor(program.coverImage).url()}
+                    alt={program.name}
+                  />
+                  )}
                   <h4>{program.name}</h4>
                   <ul class="caption">
                     <li class="grayout">
@@ -129,4 +138,3 @@ const currentPrograms = programs.filter(
     }
   }
 </style>
-<script async></script>
