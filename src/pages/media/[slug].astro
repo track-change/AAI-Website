@@ -4,6 +4,8 @@ import { PortableText } from "astro-portabletext";
 import MediaLayout from "../../layouts/MediaLayout.astro";
 import { getMedia, getMediaBySlug } from "../../data/api";
 import { urlFor } from "../../utils/image";
+import FrontCaption from "../../components/FrontCaption.astro";
+
 
 export async function getStaticPaths() {
   const media = await getMedia();
@@ -16,13 +18,23 @@ type Params = InferGetStaticParamsType<typeof getStaticPaths>;
 const { slug } = Astro.params as Params;
 
 const media = await getMediaBySlug(slug);
+
+console.log(media)
 ---
 
 <MediaLayout
   pageTitle={media.title}
   bannerSrc={media.thumbnail ? urlFor(media.thumbnail).url() : ""}
   frontCaptions={media.frontCaptions}
+  embedURL={`${media.media}?rel="0"&showinfo=0&autohide=1&controls=0`}
 >
+<div class="caption">
+  {media.date}, {media.mediaType}
+</div>
+{ media.frontCaptions && (
+<FrontCaption frontCaptions={media.frontCaptions} />
+)}
+
   <section class="body-copy">
     <PortableText value={media.description} />
   </section>

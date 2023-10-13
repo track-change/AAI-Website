@@ -8,14 +8,23 @@ import SideTab from "../components/SideTab.astro";
   <div class="top">
     <div data-top>
       <article data-wrapper>
-        <SideTab text="Archive" href="/programs/" style="department" />
+        <SideTab text="Archive" href="/archive/" style="department" />
         <MediaSec />
       </article>
     </div>
   </div>
 </Layout>
 
-<style lang="scss">
+<style lang="scss" is:global>
+  html {
+    font-family: system-ui, sans-serif;
+    background: var(--white);
+    background-size: 224px;
+  }
+  code {
+    font-family: Menlo, Monaco, Lucida Console, Liberation Mono,
+      DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace;
+  }
   [data-wrapper] {
     width: 100vw;
     min-height: 100vh;

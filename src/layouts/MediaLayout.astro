@@ -2,16 +2,16 @@
 import BasicLayout from "./Layout.astro";
 import "../scss/main.scss";
 import SideTab from "../components/SideTab.astro";
-import FrontCaption from "../components/FrontCaption.astro";
 import type { Entry } from "../data/types";
 
 interface Props {
   pageTitle: string;
   bannerSrc: string;
   frontCaptions: Entry[];
+  embedURL?: string;
 }
 
-const { pageTitle, bannerSrc, frontCaptions } = Astro.props as Props;
+const { pageTitle, bannerSrc, frontCaptions, embedURL } = Astro.props as Props;
 ---
 
 <BasicLayout title={pageTitle}>
@@ -21,11 +21,11 @@ const { pageTitle, bannerSrc, frontCaptions } = Astro.props as Props;
     <main>
       <h2 class="title">{pageTitle}</h2>
       <div class="banner">
-        <!-- not image but video embeds here -->
-        <img src={bannerSrc} alt="Banner image" />
+        <div class="video-container">
+          <!-- <img src={bannerSrc} alt="Banner image" class="video-poster" /> -->
+          <iframe src={embedURL} frameborder="0" allowfullscreen></iframe>
+        </div>
       </div>
-
-      <FrontCaption frontCaptions={frontCaptions} />
       <slot />
     </main>
   </div>
@@ -37,6 +37,7 @@ const { pageTitle, bannerSrc, frontCaptions } = Astro.props as Props;
     background: var(--white);
     background-size: 224px;
   }
+
   code {
     font-family: Menlo, Monaco, Lucida Console, Liberation Mono,
       DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace;
@@ -47,56 +48,50 @@ const { pageTitle, bannerSrc, frontCaptions } = Astro.props as Props;
     display: flex;
     background-color: var(--gray);
   }
+
   main {
     flex: 1;
+    box-shadow: -10px 0px 14px 0px rgba(0, 0, 0, 0.1);
   }
 
-  .banner,
-{
-    padding: 40px;
+  .banner, .caption {
+    padding: 1rem 2.5rem;
     width: 100%;
     max-width: 1720px;
 
     @media screen and (max-width: 64rem) {
       max-width: 40rem;
     }
+
     @media screen and (max-width: 48rem) {
       max-width: 30rem;
       margin: 0 16px;
     }
 
-    @media screen and (max-width: 35.5rem) {
+    @media screen and (max-width: 35.5rem),
+    (max-width: 24.375rem) {
       background-color: red;
       width: calc(100% - 4.4rem);
-      margin: 0 16px;
-    }
-    @media screen and (max-width: 24.375rem) {
-      width: calc(100% - 32px);
       margin: 0 16px;
     }
 
     display: flex;
     flex-direction: column;
-  }
-  .title {
-    margin: 40px;
-    @media screen and (max-width: 64rem) {
-      margin: 32px;
-    }
-    @media screen and (max-width: 48rem) {
-      margin: 16px;
-    }
-    @media screen and (max-width: 24.375rem) {
-      margin: 16px;
-    }
-  }
-
-  .banner {
-    margin: 6.25rem auto;
+    margin: 0 0;
     gap: 1.25rem;
 
     @media screen and (max-width: 24.375rem) {
       margin: 2.5rem auto;
+    }
+  }
+
+  .title {
+    margin: 40px;
+
+    @media screen and (max-width: 64rem),
+    (max-width: 48rem),
+    (max-width: 24.375rem) {
+      margin: 16px;
     }
   }
 
@@ -108,37 +103,23 @@ const { pageTitle, bannerSrc, frontCaptions } = Astro.props as Props;
     max-width: 800px;
   }
 
-  .CTA-wrapper {
-    width: 100%;
-    max-width: 800px;
+  .video-container {
+    position: relative;
+    padding-bottom: 56.25%; /* 16:9 aspect ratio (height/width) */
+    overflow: hidden;
 
-    @media screen and (max-width: 64rem) {
-      max-width: 40rem;
-    }
-    @media screen and (max-width: 48rem) {
-      max-width: 30rem;
-      // margin: 0 16px;
-    }
-
-    @media screen and (max-width: 35.5rem) {
-      background-color: red;
-      width: calc(100% - 4.4rem);
-      // margin: 0 16px;
-    }
-    @media screen and (max-width: 24.375rem) {
-      width: calc(100% - 32px);
-      // margin: 0 16px;
-    }
-
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    margin: 6.25rem auto;
-
-    * {
+    iframe,
+    .video-poster {
+      position: absolute;
+      top: 0;
+      left: 0;
       width: 100%;
       height: 100%;
-      border: none;
-      box-shadow: 0 0 0 1px var(--black);
+    }
+
+    .video-poster {
+      object-fit: cover;
+      z-index: 1;
     }
   }
 </style>

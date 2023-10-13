@@ -6,6 +6,7 @@ export interface Entry {
   _key: string;
   displayTitle: string;
   value: string;
+  url: string;
   chooseFile?: {
     _type: string;
     asset: {

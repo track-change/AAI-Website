@@ -30,7 +30,19 @@ import PastPrograms from "../../components/sections/PastPrograms.astro";
 </Layout>
 
 <style type="scss" is:global>
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  overscroll-behavior: none;
+}
 
+[data-top] {
+  flex-grow: 1; /* Make the container div take up remaining vertical space */
+  display: flex;
+  flex-direction: column;
+  overscroll-behavior-y: contain;
+}
   [data-wrapper] {
     display: flex;
     flex-direction: row;
@@ -57,6 +69,7 @@ import PastPrograms from "../../components/sections/PastPrograms.astro";
     .past {
       box-shadow: -10px 0px 14px 0px rgba(0, 0, 0, 0.1);
       left: 66%;
+      flex-grow: 1;
     }
   }
 </style>
@@ -67,17 +80,17 @@ const pastContainer = document.querySelector("main.past");
 const currentTab = document.querySelector(".current-tab");
 const pastTab = document.querySelector(".past-tab");
 
-window.addEventListener("load", () => {
-  const maxHeight = Math.max(
-    currentContainer.clientHeight,
-    pastContainer.clientHeight
-  );
-  document.querySelector(".overlay").style.height = maxHeight + "px";
-  document.querySelector("[data-top]").style.height = maxHeight + "px";
-  document.querySelector("[data-wrapper]").style.height = maxHeight + "px";
-  currentContainer.style.height = maxHeight + "px";
-  pastContainer.style.height = maxHeight + "px";
-});
+// window.addEventListener("load", () => {
+//   const maxHeight = Math.max(
+//     currentContainer.clientHeight,
+//     pastContainer.clientHeight
+//   );
+//   document.querySelector(".overlay").style.height = maxHeight + "px";
+//   document.querySelector("[data-top]").style.height = maxHeight + "px";
+//   document.querySelector("[data-wrapper]").style.height = maxHeight + "px";
+//   currentContainer.style.height = maxHeight + "px";
+//   pastContainer.style.height = maxHeight + "px";
+// });
 
 function initialPosition() {
   pastContainer.style.left = "66%";
@@ -108,8 +121,8 @@ function currentOver() {
 }
 
 initialPosition();
-pastContainer.addEventListener("mouseenter", pastOver);
-currentContainer.addEventListener("mouseenter", currentOver);
+pastContainer.addEventListener("click", pastOver);
+currentContainer.addEventListener("click", currentOver);
 currentTab.addEventListener("click", currentOver);
 pastTab.addEventListener("click", pastOver);
 </script>

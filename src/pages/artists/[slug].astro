@@ -5,6 +5,7 @@ import ArtistLayout from "../../layouts/ArtistLayout.astro";
 import CTA from "../../components/CTA.astro";
 import { getArtistBySlug, getArtists } from "../../data/api";
 import { urlFor } from "../../utils/image";
+import FrontCaption from "../../components/FrontCaption.astro";
 
 export async function getStaticPaths() {
   const artists = await getArtists();
@@ -22,9 +23,10 @@ const artist = await getArtistBySlug(slug);
   bannerSrc={urlFor(artist.image).url()}
   credits={artist.imageCredit}
   ctas={artist.links}
-  frontCaptions={artist.frontCaptions}
 >
-    
+{ artist.frontCaptions && (
+  <FrontCaption frontCaptions={artist.frontCaptions} />
+  )}
   <section class="body-copy">
     <PortableText value={artist.bio} />
   </section>

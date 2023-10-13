@@ -20,19 +20,17 @@ console.log(medias[0].tags);
       medias.map((media) => (
         <li class="list-item">
           <a href={`/media/${media.slug.current}`}>
-            <img
-              src={media.thumbnail ? urlFor(media.thumbnail).url() : ""}
-              alt=""
-            />
-            <h6>{media.title}</h6>
+            {media.thumbnail && (
+              <img src={urlFor(media.thumbnail).url()} alt="" />
+            )}
+
+            <h6 class="item-title">{media.title}</h6>
             <br />
             <div class="caption">
               {media.mediaType}, {media.date}
             </div>
             <div class="tag-wrapper caption">
-              {media.tags.map((tag) => (
-                <Tag tagRef={tag._ref} />
-              ))}
+              {media.tags && media.tags.map((tag) => <Tag tagRef={tag._ref} />)}
             </div>
           </a>
         </li>
@@ -41,7 +39,16 @@ console.log(medias[0].tags);
   </ul>
 </SectionLayout>
 
-<style lang="scss">
+<style lang="scss" is:global>
+    html {
+    font-family: system-ui, sans-serif;
+    background: var(--white);
+    background-size: 224px;
+  }
+  code {
+    font-family: Menlo, Monaco, Lucida Console, Liberation Mono,
+      DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace;
+  }
   .title,
   section {
     max-width: 1080px;
@@ -55,8 +62,9 @@ console.log(medias[0].tags);
   }
   .list {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(auto-fit, minmax(calc(25% - 40px), 1fr));
     column-gap: 40px;
+    row-gap: 80px;
 
     @media screen and (max-width: 64rem) {
       grid-template-columns: repeat(3, 1fr);
@@ -77,5 +85,8 @@ console.log(medias[0].tags);
     object-fit: cover;
     aspect-ratio: 3 / 2;
     width: 100%;
+  }
+  .item-title {
+    margin: 1rem 0;
   }
 </style>

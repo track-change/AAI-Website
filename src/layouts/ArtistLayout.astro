@@ -4,25 +4,28 @@ import "../scss/main.scss";
 import CTA from "../components/CTA.astro";
 import SideTab from "../components/SideTab.astro";
 import FrontCaption from "../components/FrontCaption.astro";
-import type { Entry } from "../data/types";
+import type { Entry, Artist } from "../data/types";
 
 interface Props {
   pageTitle: string;
   bannerSrc: string;
   credits: string;
   ctas: Entry[] | any[];
-  frontCaptions: Entry[];
-
 }
 
-const { pageTitle = "default", bannerSrc, credits, frontCaptions, ctas } = Astro.props as Props;
+const {
+  pageTitle = "default",
+  bannerSrc,
+  credits,
+  ctas,
+} = Astro.props as Props;
+console.log(ctas);
 ---
 
 <BasicLayout title={pageTitle}>
-  <main>
+  <div class="top">
     <SideTab text="Artist Directory" href="/artists/" style="subpage" />
-
-    <div class="top">
+    <main>
       <h1 class="title">{pageTitle}</h1>
       <div class="banner">
         <img src={bannerSrc} alt="VB R" />
@@ -31,17 +34,18 @@ const { pageTitle = "default", bannerSrc, credits, frontCaptions, ctas } = Astro
         </div>
         <div class="CTA-wrapper">
           {
-            ctas.map((cta: Entry) => (
-              <CTA type='default' text={cta._type} linkHref={cta.url} />
-            ))
+            ctas.map(
+              (cta: Entry) =>
+                cta && (
+                  <CTA type="default" text={cta._type} linkHref={cta.url} />
+                )
+            )
           }
-          </div>
+        </div>
       </div>
-      <FrontCaption frontCaptions={frontCaptions} />
-
       <slot />
-    </div>
-  </main>
+    </main>
+  </div>
 </BasicLayout>
 
 <style lang="scss" is:global>
@@ -56,13 +60,14 @@ const { pageTitle = "default", bannerSrc, credits, frontCaptions, ctas } = Astro
   }
 
   // Side Tab Area
-  main {
-    display: flex;
-  }
   .top {
-    flex: 1;
     display: flex;
-    flex-direction: column;
+    background-color: var(--white);
+  }
+
+  main {
+    flex: 1;
+    box-shadow: -10px 0px 14px 0px rgba(0, 0, 0, 0.1);
   }
 
   .banner,
