@@ -6,11 +6,9 @@ import SectionLayout from "../../layouts/SectionLayout.astro";
 import type { Entry } from "../../data/types";
 
 const medias = await getMedia();
-
-console.log(medias[0].tags);
 ---
 
-<SectionLayout backGround="var(--gray)">
+<SectionLayout backGround="var(--gray)" className="media-library">
   <div class="title">
     <h2>Media Library</h2>
   </div>
@@ -21,11 +19,10 @@ console.log(medias[0].tags);
         <li class="list-item">
           <a href={`/media/${media.slug.current}`}>
             {media.thumbnail && (
-              <img src={urlFor(media.thumbnail).url()} alt="" />
+              <img class="media-thumbnail" src={urlFor(media.thumbnail).url()} alt="" />
             )}
+            <h6 class="media-item-title">{media.title}</h6>
 
-            <h6 class="item-title">{media.title}</h6>
-            <br />
             <div class="caption">
               {media.mediaType}, {media.date}
             </div>
@@ -39,7 +36,7 @@ console.log(medias[0].tags);
   </ul>
 </SectionLayout>
 
-<style lang="scss" is:global>
+<style lang="scss">
     html {
     font-family: system-ui, sans-serif;
     background: var(--white);
@@ -62,8 +59,8 @@ console.log(medias[0].tags);
   }
   .list {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(calc(25% - 40px), 1fr));
-    column-gap: 40px;
+    grid-template-columns: repeat(auto-fit, minmax(calc(33% - 80px), 1fr));
+    column-gap: 80px;
     row-gap: 80px;
 
     @media screen and (max-width: 64rem) {
@@ -80,13 +77,20 @@ console.log(medias[0].tags);
     text-transform: capitalize;
   }
 
-  img {
+  .media-thumbnail {
     height: fit-content;
     object-fit: cover;
     aspect-ratio: 3 / 2;
     width: 100%;
+
+    box-shadow: 0 0 10px 10px rgba(255, 255, 255, 0.3);
   }
-  .item-title {
-    margin: 1rem 0;
+
+  .media-thumbnail:hover {
+    box-shadow: 0 0 10px 12px white;
+
+  }
+  .media-item-title {
+    margin: 20px 0;
   }
 </style>

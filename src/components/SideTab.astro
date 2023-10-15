@@ -4,10 +4,11 @@ interface Props {
   href?: string;
   style: "department" | "subpage";
   classes?: string;
-  shadow?: "left" | "right";
+  shadow?: "left" | "right" | "none";
+  backGround?: string;
 }
 
-const { text, href, style, classes, shadow } = Astro.props as Props;
+const { text, href, style, classes, shadow, backGround } = Astro.props as Props;
 ---
 
 <div class:list={["side-tab", classes, style, shadow]}>
@@ -16,51 +17,81 @@ const { text, href, style, classes, shadow } = Astro.props as Props;
   </a>
 </div>
 
-<style type="scss">
+<style type="scss" define:vars={{ backGround }}>
   /* 1920 side tab */
   .side-tab {
+    --side-tab-width: 4rem;
+    --side-tab-padding: 2.5rem;
+
     position: sticky;
     top: 0;
-    // left: 0;
     height: 100vh;
-    width: 4rem;
-    padding: 2.5rem 0;
+    width: var(--side-tab-width);
+    padding: var(--side-tab-padding) 0;
     display: flex;
     justify-content: center;
+    background-color: var(--backGround);
 
     @media screen and (max-width: 64rem) {
       padding: 2rem 0;
-      width: 3rem;
+      --side-tab-width: 3rem;
+      --side-tab-padding: 2rem;
     }
 
     @media screen and (max-width: 48rem) {
       padding: 1rem 0;
-      width: 2.4rem;
+      --side-tab-width: 2.4rem;
+      --side-tab-padding: 1rem;
     }
     .vert-text {
       writing-mode: vertical-rl;
       text-orientation: mixed;
-      margin-left: -.2em;
+      margin-left: -0.2em;
     }
   }
 
   .department {
     background: var(--black);
     color: var(--white);
+    transition: width 100ms;
+  }
+  .is-major {
+    --side-tab-major-width: 8rem;
+    --side-tab-major-fsize: 110px;
+    width: var(--side-tab-major-width);
+    .vert-text {
+      font-size: var(--side-tab-major-fsize);
+    }
+
+    @media screen and (max-width: 64rem) {
+      padding: 2rem 0;
+      --side-tab-major-width: 6rem;
+      --side-tab-major-fsize: 60px;
+    }
+
+    @media screen and (max-width: 48rem) {
+      padding: 1rem 0;
+      --side-tab-major-width: 4.8rem;
+      --side-tab-major-fsize: 32px;
+    }
   }
 
+  @keyframes major {
+    to {
+      width: var(--side-tab-width);
+    }
+  }
   .subpage {
     color: var(--black, #000);
-    /* right-inner-shadow */
-    padding: 2.5rem 0;
-    display: flex;
-    justify-content: center;
   }
 
   .left {
-    box-shadow: inset -8px 0px 8px 0px rgba(0, 0, 0, 0.1) ;
+    box-shadow: inset -8px 0px 8px 0px rgba(0, 0, 0, 0.1);
+  }
+  .none {
+    box-shadow: none;
   }
   .right {
-    box-shadow:  -8px 0px 8px 0px rgba(0, 0, 0, 0.1) ;
+    box-shadow: -8px 0px 8px 0px rgba(0, 0, 0, 0.1);
   }
 </style>

@@ -19,6 +19,24 @@ pastPrograms.forEach((program) => {
   }
   programsBySeason[season].push(program);
 });
+
+const seasonValue = {
+  'Winter': 1,
+  'Spring': 2,
+  'Summer': 3,
+  'Fall': 4,
+};
+
+const sortedSeasons = Object.entries(programsBySeason).sort(([seasonA], [seasonB]) => {
+  const [seasonNameA, yearA] = seasonA.split(' ');
+  const [seasonNameB, yearB] = seasonB.split(' ');
+
+  if (yearA !== yearB) {
+    return parseInt(yearB) - parseInt(yearA);
+  } else {
+    return seasonValue[seasonNameB as keyof typeof seasonValue] - seasonValue[seasonNameA as keyof typeof seasonValue];
+  }
+});
 ---
 
 <SectionLayout className="past">
@@ -63,7 +81,8 @@ pastPrograms.forEach((program) => {
 
   <div>
     {
-      Object.entries(programsBySeason).map(([season, programs]) => (
+      sortedSeasons
+      .map(([season, programs]) => (
         <section id={season} class="past-seasons">
           
           <h4 class="season-title">{season}</h4>
@@ -166,8 +185,6 @@ pastPrograms.forEach((program) => {
         }
 </style>
 <script async>
-// for each section, hide .list
-// when click on the section-header, .list shows up
 const sections = document.querySelectorAll(".past-seasons");
 
 sections.forEach((section) => {
@@ -175,6 +192,7 @@ sections.forEach((section) => {
   const secPrograms = section.querySelector(".list");
   secHeader.addEventListener("click", () => {
     secPrograms.classList.toggle("is-hidden");
+    updateWrapperHeight()
   });
 });
 </script>

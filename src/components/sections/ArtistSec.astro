@@ -1,22 +1,17 @@
 ---
 import Layout from "../../layouts/Layout.astro";
+import SectionLayout from "../../layouts/SectionLayout.astro";
 import { getArtists } from "../../data/api";
-import Collapsible from "../../components/Collapsible.astro";
-import SideTab from "../../components/SideTab.astro";
-import SecHeader from "../../components/SecHeader.astro";
-import CTA from "../../components/CTA.astro";
+import Collapsible from "../Collapsible.astro";
+import SideTab from "../SideTab.astro";
+import SecHeader from "../SecHeader.astro";
+import CTA from "../CTA.astro";
 import { urlFor } from "../../utils/image";
 
 const artists = await getArtists();
 ---
 
-<Layout title="Artists">
-  <div data-top>
-    <article data-wrapper>
-      <SideTab text="Archive" href="/archive/" style="department" />
-      <SideTab text="Media Library" href="/archive/#media" style="subpage" />
-
-      <main data-main>
+<SectionLayout className="artist-directory">
         <h2 class="title">Artists Directory</h2>
 
         <div class="filters caption">
@@ -59,12 +54,12 @@ const artists = await getArtists();
         <ul class="list">
           {
             artists.map((artist) => (
-              <li class="list-item">
+              <li class="artist-list-item">
                 <a href={`/artists/${artist.slug.current}`}>
                   <h2>{artist.name}</h2>
                 </a>
                 <img
-                  class="thumbnail"
+                  class="artist-thumbnail"
                   src={
                     artist.image
                     ? urlFor(artist.image).url()
@@ -88,34 +83,10 @@ const artists = await getArtists();
           and Frequently Asked Questions (FAQ).
         </div>
         <Collapsible />
-      </main>
-    </article>
-  </div>
-</Layout>
 
-<style type="scss">
-  [data-top] {
-    [data-wrapper] {
-      width: 100vw;
-      min-height: 100vh;
+</SectionLayout>
 
-      display: flex;
-      flex-direction: row;
-      position: sticky;
-      top: 45px;
-      left: 0;
-
-      [data-main] {
-        padding: 40px;
-        width: 100%;
-
-        display: flex;
-        flex-direction: column;
-
-        .title {
-          margin-bottom: 200px;
-        }
-
+<style lang="scss">
         .filters,
         .filters > * > * > * {
           display: flex;
@@ -125,16 +96,18 @@ const artists = await getArtists();
         }
         .list {
           padding: 4rem 0;
+          display: flex;
+          flex-direction: column;
         }
-        .list-item:last-child {
+        .artist-list-item:last-child {
           border-bottom: 1px solid var(--black);
         }
-        .list-item {
+        .artist-list-item {
           border-top: 1px solid var(--black);
           padding: 0.5rem 0;
-          // cursor: pointer;
+          cursor: pointer;
 
-          .thumbnail {
+          .artist-thumbnail {
             position: absolute;
             display: none;
             width: 300px;
@@ -142,9 +115,6 @@ const artists = await getArtists();
             pointer-events: none;
           }
         }
-      }
-    }
-  }
 
   .FAQ {
     max-width: 800px;
@@ -153,9 +123,10 @@ const artists = await getArtists();
 </style>
 
 <script async>
-const listItems = document.querySelectorAll(".list-item");
-const thumbnails = document.querySelectorAll(".thumbnail");
-// let scrollY = window.scrollY || window.pageYOffset;
+const listItems = document.querySelectorAll(".artist-list-item");
+const thumbnails = document.querySelectorAll(".artist-thumbnail");
+console.log(thumbnails)
+let scrollY = window.scrollY || window.pageYOffset;
 
 window.addEventListener("scroll", () => {
   let scrollY = window.scrollY;

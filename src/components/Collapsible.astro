@@ -52,5 +52,8 @@ import faqData from "../data/faq.js";
 const CTA = document.querySelector(".CTA-outstanding");
 const text = document.querySelector("div.text");
 
-CTA.addEventListener("click", () => text.classList.toggle("is-hidden"));
+CTA.addEventListener("click", () => {
+    text.classList.toggle("is-hidden")
+    updateWrapperHeight();
+    });
 </script>
