@@ -1,0 +1,36 @@
+---
+import { getVenue, getVenueBySlug } from "../../data/api";
+import { urlFor } from "../../utils/image";
+import Tag from "../Tag.astro";
+import SectionLayout from "../../layouts/SectionLayout.astro";
+import type { Entry } from "../../data/types";
+
+const rentals = await getVenue();
+console.log(rentals)
+---
+
+<SectionLayout className="rentals">
+    <div class="title">
+        <h2>Rentals</h2>
+    </div>
+
+
+    <ul class="list">
+        {
+          rentals.map((rental) => (
+            <li class="rental-list-item">
+              <a href={`/rental/${rental.slug.current}`}>
+                {rental.coverImage && (
+                  <img class="rental-thumbnail" src={urlFor(rental.coverImage).url()} alt="" />
+                )}
+                <h4 class="rental-item-title">{rental.name}</h4>
+    
+                <div class="tag-wrapper caption">
+                  {rental.tags && rental.tags.map((tag) => <Tag tagRef={tag._ref} />)}
+                </div>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+</SectionLayout>

@@ -33,7 +33,7 @@ h6 {
 
 a,
 p,
-// li,
+li,
 input,
 select,
 textarea {
@@ -216,6 +216,15 @@ h6 {
   }
 }
 
+:root {
+  --caption-font-size: 22px;
+  @media screen and (max-width: 1024px) {
+    --caption-font-size: 16px;
+  }
+  @media screen and (max-width: 768px) {
+    --caption-font-size: 15px;
+  }
+}
 .caption {
   /* 1920/Caption */
   font-size     : 22px;

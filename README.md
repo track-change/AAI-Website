@@ -54,6 +54,10 @@
     - recommended content / reference
     - Homepage
 
+- ## widget (CMS linking)
+- ## banners (need a demonstration)
+- ## references (work in progress)
+
 -----
 ### September 20th, Meeting 
 - [ ] Artists, ready for population

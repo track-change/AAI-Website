@@ -10,6 +10,7 @@ import type {
   Ticket,
   Visit,
   About,
+  Venue,
 } from "./types";
 
 import groq from "groq";
@@ -46,6 +47,14 @@ export async function getEducations(): Promise<Education[]> {
 
 export async function getEducationBySlug(slug: string): Promise<Education> {
   return fetchData("education", slug);
+}
+
+export async function getVenue(): Promise<Venue[]> {
+  return fetchData("venue");
+}
+
+export async function getVenueBySlug(slug: string): Promise<Venue> {
+  return fetchData("venue", slug);
 }
 
 export async function getSiteSettings(): Promise<Settings> {

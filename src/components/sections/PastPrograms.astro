@@ -21,31 +21,36 @@ pastPrograms.forEach((program) => {
 });
 
 const seasonValue = {
-  'Winter': 1,
-  'Spring': 2,
-  'Summer': 3,
-  'Fall': 4,
+  Winter: 1,
+  Spring: 2,
+  Summer: 3,
+  Fall: 4,
 };
 
-const sortedSeasons = Object.entries(programsBySeason).sort(([seasonA], [seasonB]) => {
-  const [seasonNameA, yearA] = seasonA.split(' ');
-  const [seasonNameB, yearB] = seasonB.split(' ');
+const sortedSeasons = Object.entries(programsBySeason).sort(
+  ([seasonA], [seasonB]) => {
+    const [seasonNameA, yearA] = seasonA.split(" ");
+    const [seasonNameB, yearB] = seasonB.split(" ");
 
-  if (yearA !== yearB) {
-    return parseInt(yearB) - parseInt(yearA);
-  } else {
-    return seasonValue[seasonNameB as keyof typeof seasonValue] - seasonValue[seasonNameA as keyof typeof seasonValue];
+    if (yearA !== yearB) {
+      return parseInt(yearB) - parseInt(yearA);
+    } else {
+      return (
+        seasonValue[seasonNameB as keyof typeof seasonValue] -
+        seasonValue[seasonNameA as keyof typeof seasonValue]
+      );
+    }
   }
-});
+);
 ---
 
 <SectionLayout className="past">
   <h2 class="title">Past Seasons</h2>
   <div class="filters caption">
-    <ul>
+    <ul class="caption">
       <li>Sort by</li>
       <li>
-        <ul>
+        <ul class="caption">
           <li>Most recent to oldest</li>
           <li>Oldest to most recent</li>
           <li>Alphabetical</li>
@@ -81,10 +86,8 @@ const sortedSeasons = Object.entries(programsBySeason).sort(([seasonA], [seasonB
 
   <div>
     {
-      sortedSeasons
-      .map(([season, programs]) => (
+      sortedSeasons.map(([season, programs]) => (
         <section id={season} class="past-seasons">
-          
           <h4 class="season-title">{season}</h4>
           <ul class="list is-hidden">
             {programs.map((program) => (
@@ -92,9 +95,9 @@ const sortedSeasons = Object.entries(programsBySeason).sort(([seasonA], [seasonB
                 <a data-link href={`/programs/${program.slug.current}`}>
                   {program.coverImage && (
                     <img
-                    src={urlFor(program.coverImage).url()}
-                    alt={program.name}
-                  />
+                      src={urlFor(program.coverImage).url()}
+                      alt={program.name}
+                    />
                   )}
                   <h4>{program.name}</h4>
 
@@ -116,7 +119,7 @@ const sortedSeasons = Object.entries(programsBySeason).sort(([seasonA], [seasonB
   </div>
 </SectionLayout>
 
-<style type="scss">
+<style lang="scss">
   section:last-child {
     border-bottom: 1px solid var(--black);
   }
@@ -132,14 +135,7 @@ const sortedSeasons = Object.entries(programsBySeason).sort(([seasonA], [seasonB
       padding: 8px 0;
       cursor: pointer;
     }
-    
-    .filters,
-    .filters > * > * > * {
-      display: flex;
-      justify-content: space-between;
-      gap: 1rem;
-      color: var(--darkGray);
-    }
+
     .list {
       padding: 4rem 0;
       display: flex;
@@ -148,8 +144,6 @@ const sortedSeasons = Object.entries(programsBySeason).sort(([seasonA], [seasonB
       justify-content: space-around;
       align-items: flex-start;
       gap: 4rem;
-
-
 
       .list-item {
         max-width: 45%;
@@ -177,12 +171,21 @@ const sortedSeasons = Object.entries(programsBySeason).sort(([seasonA], [seasonB
   }
 
   .filters,
-        .filters > * > * > * {
-          display: flex;
-          justify-content: space-between;
-          gap: 1rem;
-          color: var(--darkGray);
-        }
+  .filters > *,
+  .filters > * > *,
+  .filters > * > * > *,
+  .filters > * > * > * > * {
+    display: flex;
+    gap: 1rem;
+    color: var(--darkGray);
+    font-size: var(--caption-font-size);
+  }
+  .filters {
+    justify-content: space-between;
+  }
+  .filters > * {
+    flex-direction: column;
+  }
 </style>
 <script async>
 const sections = document.querySelectorAll(".past-seasons");
@@ -192,7 +195,7 @@ sections.forEach((section) => {
   const secPrograms = section.querySelector(".list");
   secHeader.addEventListener("click", () => {
     secPrograms.classList.toggle("is-hidden");
-    updateWrapperHeight()
+    updateWrapperHeight();
   });
 });
 </script>

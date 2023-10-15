@@ -84,6 +84,18 @@ export interface Education {
   tags: Tag[];
 }
 
+export interface Venue {
+  _type: string;
+  _id: string;
+  name: string;
+  slug: Slug;
+  coverImage: ImageAsset;
+  cta: Array<Entry>;
+  frontCaptions: Array<Entry>;
+  description: PortableTextBlock[];
+  tags: Tag[];
+}
+
 export interface Media {
   _type: string;
   _id: string;

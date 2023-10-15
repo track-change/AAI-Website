@@ -16,7 +16,7 @@ const medias = await getMedia();
   <ul class="list">
     {
       medias.map((media) => (
-        <li class="list-item">
+        <li class="media-list-item">
           <a href={`/media/${media.slug.current}`}>
             {media.thumbnail && (
               <img class="media-thumbnail" src={urlFor(media.thumbnail).url()} alt="" />

@@ -12,8 +12,10 @@ const { frontCaptions = [] } = Astro.props;
   {
     frontCaptions.map((frontCaption: FrontCaption) => (
       <ul class="caption">
-        <li>{frontCaption.displayTitle}</li>
-        <li>{frontCaption.value}</li>
+        <li class="caption">{frontCaption.displayTitle}</li>
+        <li class="caption">{frontCaption.value}</li>
+
+        
       </ul>
     ))
   }
@@ -21,10 +23,10 @@ const { frontCaptions = [] } = Astro.props;
 
 <style type="scss">
   .front-caption {
-    margin: 6.25rem auto;
+    margin: 2rem auto;
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 100px 20px;
+    gap: 40px 40px;
 
     width: 100%;
     max-width: 800px;
@@ -45,11 +47,11 @@ const { frontCaptions = [] } = Astro.props;
       margin: 0 16px;
     }
 
-    // .caption > li:first-child {
-    //   color: var(--darkGray);
-    //   display: flex;
-    //   flex-direction: column;
-    //   gap: 8px;
-    // }
+    .caption > li:first-child {
+      color: var(--darkGray);
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
   }
 </style>

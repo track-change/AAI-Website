@@ -1,0 +1,30 @@
+---
+import type { InferGetStaticParamsType } from "astro";
+import { PortableText } from "astro-portabletext";
+import VenueLayout from "../../layouts/VenueLayout.astro";
+import { getVenue, getVenueBySlug } from "../../data/api";
+import { urlFor } from "../../utils/image";
+
+export async function getStaticPaths() {
+  const education = await getVenue();
+  return education.map((edu) => ({
+    params: { slug: edu.slug.current },
+  }));
+}
+
+type Params = InferGetStaticParamsType<typeof getStaticPaths>;
+const { slug } = Astro.params as Params;
+
+const venue = await getVenueBySlug(slug);
+---
+
+<VenueLayout
+  pageTitle={venue.name}
+  bannerSrc={venue.coverImage ? urlFor(venue.coverImage).url() : ""}
+  ctas={venue.cta}
+  frontCaptions={venue.frontCaptions}
+>
+  <section class="body-copy">
+    <PortableText value={venue.description} />
+  </section>
+</VenueLayout>
