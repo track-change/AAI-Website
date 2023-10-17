@@ -1,23 +1,20 @@
 ---
-import Layout from "../../layouts/Layout.astro";
-import SectionLayout from "../../layouts/SectionLayout.astro";
-import AboutSec from "../../components/sections/AboutSec.astro";
-import SideTab from "../../components/SideTab.astro";
-import RentalSec from "../../components/sections/RentalSec.astro";
+import Layout from "../layouts/Layout.astro";
+import SectionLayout from "../layouts/SectionLayout.astro";
+import SideTab from "../components/SideTab.astro";
+import RentalSec from "../components/sections/RentalSec.astro";
 ---
 
 <Layout title="About">
   <div data-top>
-    <SideTab text="Venue" href="#" style="department" classes="is-major"/>
+    <SideTab text="Venue" href="#" style="department" classes="is-major" />
     <article data-wrapper>
-
       <SectionLayout backGround="black" textColor="white" title="About section">
         <div class="title">
           <h2>Our Space</h2>
         </div>
       </SectionLayout>
 
-      
       <RentalSec />
     </article>
   </div>

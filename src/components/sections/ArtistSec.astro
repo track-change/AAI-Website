@@ -87,13 +87,22 @@ const artists = await getArtists();
 </SectionLayout>
 
 <style lang="scss">
-        .filters,
-        .filters > * > * > * {
-          display: flex;
-          justify-content: space-between;
-          gap: 1rem;
-          color: var(--darkGray);
-        }
+  .filters,
+  .filters > *,
+  .filters > * > *,
+  .filters > * > * > *,
+  .filters > * > * > * > * {
+    display: flex;
+    gap: 1rem;
+    color: var(--darkGray);
+    font-size: var(--caption-font-size);
+  }
+  .filters {
+    justify-content: space-between;
+  }
+  .filters > * {
+    flex-direction: column;
+  }
         .list {
           padding: 4rem 0;
           display: flex;
@@ -125,7 +134,6 @@ const artists = await getArtists();
 <script async>
 const listItems = document.querySelectorAll(".artist-list-item");
 const thumbnails = document.querySelectorAll(".artist-thumbnail");
-console.log(thumbnails)
 let scrollY = window.scrollY || window.pageYOffset;
 
 window.addEventListener("scroll", () => {
