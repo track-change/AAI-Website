@@ -174,3 +174,30 @@ export interface About {
     caption?: string;
   }>;
 }
+
+export interface Home{
+  _type: string;
+  _id: string;
+  programs: {
+    _ref: string;
+  }[];
+  aboutUs: {
+    _key: string;
+    _type: string;
+    value: string;
+  }[];
+  content: PortableTextBlock[];
+  education: {
+    _ref: string;
+  }[];
+  mediaLibrary: {
+    _ref: string;
+  }[];
+  tickets: {
+    _ref: string;
+  }[];
+  banners: {
+    _ref: string;
+  }[];
+
+}
