@@ -11,6 +11,7 @@ import type {
   Visit,
   About,
   Venue,
+  Home,
 } from "./types";
 
 import groq from "groq";
@@ -55,6 +56,10 @@ export async function getVenue(): Promise<Venue[]> {
 
 export async function getVenueBySlug(slug: string): Promise<Venue> {
   return fetchData("venue", slug);
+}
+
+export async function getHome(): Promise<Home> {
+  return fetchData("home");
 }
 
 export async function getSiteSettings(): Promise<Settings> {

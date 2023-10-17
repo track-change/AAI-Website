@@ -1,6 +1,10 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import ProgramCard from "../components/ProgramCard.astro";
+import { getHome } from "../data/api";
+
+const homeData = await getHome();
+console.log(homeData);
 ---
 
 <Layout title="Homepage">
