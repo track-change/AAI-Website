@@ -1,52 +1,21 @@
 # Asian Arts Initiative Website
 
 -----
-- ## Education 
-    - [x] CMS
-    - [x] API front-end
-    - [x] index page
-    - [ ] image carousel
+## Front-End
+- [ ] Image carousel
+- [ ] Calendar 
+- [ ] Homepage
+- [ ] Venue
+- [ ] Donate
+- [ ] CSS variables clean-up
 
-- ## Media 
-    - [x] CMS
-    - [x] API (front-end)
-    - [x] Slug page CSS
-        - [ ] front caption
-    - [x] index component
+## Back-End
+- [ ] Reference (related programs)
+- [x] News
 
-- ## Venue
-    - [x] Venue pages, CMS
-    - [ ] API (front-end)
-    - [ ] CSS
+## Content Entry
+- [ ] Banners
 
-- ## About
-    - [ ] CMS
-    - [ ] API (front-end)
-    - [ ] CSS + JS
-        - [ ] `About Section` component
-
-- ## Visit
-    - [x] CMS (Title, CTA, Embed, Body)
-    - [x] API (front-end)
-    - [x] CSS
-
-- ## Ticket
-    - [x] CMS
-    - [x] API
-    - [x] CSS
-
-- ## Form
-    - [x] setup (CMS, API, CSS)
-    - [ ] <form> submit configuration
-    - [ ] rental form page
-
-- ## Sitewide CTA
-    - [ ] 
-
-- ## Tags
-    - [x] CMS
-    - [x] API (query)
-    - [ ] CSS
 
 - ## In the pipe:
     - Program pages: 
@@ -59,36 +28,24 @@
 - ## references (work in progress)
 
 -----
-### September 20th, Meeting 
-- [ ] Artists, ready for population
-- [ ] Program, ready for population
-- [ ] Education, ready for population
-- [ ] Visit, ready for edits
+### Oct 17th, Meeting 
+- from the client: 
+Website Questions:
+PROGRAMS
+1. Are we adding a “Related” pages option at the bottom, to link to relevant programs/exhibits? (also in Artist Directory)
+2. What’s the difference between adding a name under “Curator” (not currently showing up on display) and adding a curator as a “Front Caption”?
+3. How does the option to add images at the bottom work / show up on the page? 
+Reorganization of Past Programs: just by year, not season? Search by event type (especially for music)?  
 
-- the goals for us next time to meet:
-    - Schedule:
-        - tentative 10/03: progress checkin, 
-        - 10/27: program complete, and we do QA 
-        - 10/30~11/10: QA, then launch ( ? )
 
-    - AAI team populate the majority of the content above
-    - deploy the site
-    - [ ] About 
-    - [ ] Programs (rework on index page) 
-    - [ ] Venue (contains form)
+- Tags
+How useful is it? 
 
-## Agenda: 
-- Schedule (tentative)
-    - 10/03: progress checkin (content population and live site deployment) 
-    - 10/27: Programming complete
-    - 10/30–11/10: QA (design and technical feedback)
-    - mid November: Launch
 
-- CMS deployed and ready for population
-    - [ ] Artists
-    - [ ] Programs
-        - in 'Event type', let us know if anything beyond current selection
-    - [ ] Education
-    - [ ] Visit
-    - [ ] Form
-    - [ ] Tags
+- Add more Event Types
+Fundraiser
+Panel / Conversation 
+Community Event 
+
+
+Artist Directory has to have a better description of what it is and how it’s made and a contact for “if you want any change”
