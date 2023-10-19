@@ -1,18 +1,18 @@
 @font-face {
   font-family: 'founders_groteskregular';
-  src        : url('/fonts/foundersgrotesk-regular-webfont.woff2') format('woff2'),
+  src: url('/fonts/foundersgrotesk-regular-webfont.woff2') format('woff2'),
     url('fonts/foundersgrotesk-regular-webfont.woff') format('woff');
   font-weight: normal;
-  font-style : normal;
+  font-style: normal;
 
 }
 
 @font-face {
   font-family: 'founders_groteskRgIt';
-  src        : url('/fonts/foundersgrotesk-regularitalic-webfont.woff2') format('woff2'),
+  src: url('/fonts/foundersgrotesk-regularitalic-webfont.woff2') format('woff2'),
     url('fonts/foundersgrotesk-regularitalic-webfont.woff') format('woff');
   font-weight: normal;
-  font-style : normal;
+  font-style: normal;
 
 }
 
@@ -26,8 +26,8 @@ h3,
 h4,
 h5,
 h6 {
-  margin     : 0;
-  padding    : 0;
+  margin: 0;
+  padding: 0;
   font-weight: 400;
 }
 
@@ -40,29 +40,24 @@ textarea {
   overflow-wrap: break-word;
 
   /* 1920/Body */
-  font-size     : 30px;
-  font-style    : normal;
-  font-weight   : 400;
-  line-height   : 125%;
+  font-size: 30px;
+  font-weight: 400;
+  line-height: 125%;
   /* 37.5px */
   letter-spacing: 0.45px;
 
   @media screen and (max-width: 1024px) {
     /* 1024/Body */
-    font-size     : 20px;
-    font-style    : normal;
-    font-weight   : 400;
-    line-height   : 125%;
+    font-size: 20px;
+
     /* 25px */
     letter-spacing: 0.3px;
   }
 
   @media screen and (max-width: 768px) {
     /* Mobile/Body */
-    font-size     : 18px;
-    font-style    : normal;
-    font-weight   : 400;
-    line-height   : 125%;
+    font-size: 18px;
+
     /* 22.5px */
     letter-spacing: 0.27px;
   }
@@ -72,14 +67,14 @@ textarea {
 a,
 a:visited,
 a:active {
-  color          : inherit;
+  color: inherit;
   text-decoration: none;
 }
 
 ul {
   list-style: none;
-  margin    : 0;
-  padding   : 0;
+  margin: 0;
+  padding: 0;
 }
 
 b,
@@ -96,39 +91,30 @@ em {
 
 h1 {
   /* 1920/H1 */
-  font-size     : 220px;
-  font-style    : normal;
-  font-weight   : 400;
-  line-height   : 85%;
+  font-size: var(--h1-font-size);
+  font-style: normal;
+  font-weight: 400;
+  line-height: 85%;
   /* 187px */
   letter-spacing: -5.5px;
 
   @media screen and (max-width: 1024px) {
     /* 1024/H1 */
-    font-size     : 120px;
-    font-style    : normal;
-    font-weight   : 400;
-    line-height   : 85%;
+
     /* 102px */
     letter-spacing: -3px;
   }
 
   @media screen and (max-width: 768px) {
     /* 768/H1 */
-    font-size     : 90px;
-    font-style    : normal;
-    font-weight   : 400;
-    line-height   : 85%;
+
     /* 76.5px */
     letter-spacing: -1.8px;
   }
 
   @media screen and (max-width: 390px) {
     /* Mobile/H1 */
-    font-size     : 50px;
-    font-style    : normal;
-    font-weight   : 400;
-    line-height   : 90%;
+    line-height: 90%;
     /* 45px */
     letter-spacing: -0.5px;
   }
@@ -136,120 +122,67 @@ h1 {
 
 h2 {
   /* 1920/H2 */
-  font-size  : 110px;
-  font-style : normal;
+  font-size: var(--h2-font-size);
+  font-style: normal;
   font-weight: 400;
   line-height: 105%;
-  /* 115.5px */
-
-  @media screen and (max-width: 1440px) {
-    /* 1440/H2 */
-    font-size: 60px;
-  }
-
-  @media screen and (max-width: 1024px) {
-    /* 1024/H2 */
-    font-size  : 48px;
-    /* 66px */
-  }
-
-  @media screen and (max-width: 768px) {
-    /* Mobile/H2 */
-    font-size  : 32px;
-    /* 33.6px */
-  }
 }
 
 h4 {
   /* 1920/H4 */
-  font-size  : 48px;
-  font-style : normal;
+  font-size: var(--h4-font-size);
+  font-style: normal;
   font-weight: 400;
   line-height: 105%;
-  /* 50.4px */
-
-  @media screen and (max-width: 1440px) {
-    /* additional 1440 */
-    font-size: 33px;
-  }
-  @media screen and (max-width: 1024px) {
-    /* 1024/H4 */
-    font-size  : 28px;
-    /* 29.4px */
-  }
-
-  @media screen and (max-width: 768px) {
-    /* Mobile/H4 */
-    font-size  : 24px;
-    letter-spacing: .48px;
-    /* 25.2px */
-  }
+  word-spacing: -0.02em;
 }
 
 h6 {
   /* 1920/H6 */
-  font-family   : Founders Grotesk;
-  font-size     : 30px;
-  font-style    : normal;
-  font-weight   : 400;
-  line-height   : 115%;
+  font-family: Founders Grotesk;
+  font-size: 30px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 115%;
   /* 34.5px */
   letter-spacing: 0.3px;
 
   @media screen and (max-width: 1024px) {
     /* 1024/H6 */
-    font-size     : 20px;
-    font-style    : normal;
-    font-weight   : 400;
-    line-height   : 115%;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 115%;
     /* 23px */
     letter-spacing: 0.2px;
   }
 
   @media screen and (max-width: 768px) {
     /* Mobile/H6 */
-    font-size  : 18px;
-    font-style : normal;
+    font-size: 18px;
+    font-style: normal;
     font-weight: 400;
     line-height: 110%;
     /* 19.8px */
   }
 }
 
-:root {
-  --caption-font-size: 22px;
-  @media screen and (max-width: 1024px) {
-    --caption-font-size: 16px;
-  }
-  @media screen and (max-width: 768px) {
-    --caption-font-size: 15px;
-  }
-}
 .caption {
   /* 1920/Caption */
-  font-size     : 22px;
-  font-style    : normal;
-  font-weight   : 400;
-  line-height   : 125%;
+  font-size: var(--caption-font-size);
+  font-style: normal;
+  font-weight: 400;
   /* 27.5px */
   letter-spacing: 0.3px;
 
   @media screen and (max-width: 1024px) {
     /* 1024/Caption */
-    font-size     : 16px;
-    font-style    : normal;
-    font-weight   : 400;
-    line-height   : 125%;
     /* 20px */
     letter-spacing: 0.16px;
   }
 
   @media screen and (max-width: 768px) {
     /* Mobile/Caption */
-    font-size     : 15px;
-    font-style    : normal;
-    font-weight   : 400;
-    line-height   : 125%;
     /* 18.75px */
     letter-spacing: 0.15px;
   }
@@ -257,40 +190,39 @@ h6 {
 
 .small-caption {
   /* 1920/Small Caption */
-  font-size     : 17px;
-  font-style    : normal;
-  font-weight   : 400;
-  line-height   : 115%;
+  font-size: var(--small-cap-font-size);
+  font-style: normal;
+  font-weight: 400;
+  line-height: 115%;
   /* 19.55px */
   letter-spacing: 0.34px;
 
   @media screen and (max-width: 1024px) {
     /* 1024/Small Caption */
-    font-size     : 14px;
-    font-style    : normal;
-    font-weight   : 400;
-    line-height   : 125%;
+    line-height: 125%;
     /* 17.5px */
     letter-spacing: 0.28px;
   }
 
   @media screen and (max-width: 768px) {
     /* Mobile/Small Caption */
-    font-size     : 14px;
-    font-style    : normal;
-    font-weight   : 400;
-    line-height   : 125%;
+    line-height: 125%;
     /* 17.5px */
     letter-spacing: 0.42px;
   }
 
 }
 
-.body-copy > * > a {
+.body-copy>*>a {
   border-bottom: 2px solid var(--black) !important;
   line-height: 1;
   display: inline-block;
 }
+
 .gray-out {
   color: var(--darkGray);
+}
+
+.event-type {
+  text-transform: capitalize;
 }

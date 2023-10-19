@@ -59,7 +59,10 @@ export async function getVenueBySlug(slug: string): Promise<Venue> {
 }
 
 export async function getHome(): Promise<Home> {
-  return fetchData("home");
+  const query = groq`*[_type == "home" && _id == "home"][0]`;
+  const home = await useSanityClient().fetch(query);
+  return home;
+  // return fetchData("home");
 }
 
 export async function getSiteSettings(): Promise<Settings> {

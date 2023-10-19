@@ -4,9 +4,21 @@ import Layout from "../layouts/Layout.astro";
 
 <Layout title="calendar">
   <div class="cal-month">
-    <h4 class="prev-month">&#8249;</h4>
-    <h4 class="month-year"></h4>
-    <h4 class="next-month">&#8250;</h4>
+    <div class="prev-month">Previous</div>
+    <h6 class="month-year"></h6>
+    <div class="next-month">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="27"
+        height="32"
+        viewBox="0 0 27 32"
+        fill="none"
+      >
+        <path
+          d="M27 16.0001L0 31.5885L1.36279e-06 0.411621L27 16.0001Z"
+          fill="black"></path>
+      </svg>
+    </div>
   </div>
   <div class="weekdays">
     <div>Sun</div>
@@ -17,8 +29,7 @@ import Layout from "../layouts/Layout.astro";
     <div>Fri</div>
     <div>Sat</div>
   </div>
-  <div class="cal-days">
-  </div>
+  <div class="cal-days"></div>
 </Layout>
 
 <style type="scss">
@@ -52,12 +63,11 @@ import Layout from "../layouts/Layout.astro";
         background-color: var(--black);
 
         &:hover {
-            background-color: var(--white);
-        color: var(--black);
-        box-shadow: 0 0 0 4px var(--white), 0 0 0 6px var(--black);
-        // border-radius: 2px;
-        z-index: 99;
-
+          background-color: var(--white);
+          color: var(--black);
+          box-shadow: 0 0 0 4px var(--white), 0 0 0 6px var(--black);
+          // border-radius: 2px;
+          z-index: 99;
         }
       }
 
@@ -70,9 +80,10 @@ import Layout from "../layouts/Layout.astro";
   .cal-month {
     background-color: yellow;
     display: flex;
-    justify-content: center;
-    align-items: baseline;
-    padding: 20px;
+    align-items: center;
+
+    gap: 1rem;
+    padding: 1rem;
   }
 
   .month-year {
@@ -80,150 +91,159 @@ import Layout from "../layouts/Layout.astro";
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-bottom: 1em;
+    height: fit-content;
+    line-height: 1;
   }
 
   .prev-month,
   .next-month {
+    // font-size: var(--caption-font-size);
+    height: fit-content;
+    
     cursor: pointer;
-    // background-color: pink;
-    padding: 1rem;
+
+    &:hover {
+      svg {
+        transform: translateY(-2px);
+        box-shadow: 0px 2px 0px 0px;
+      }
+    }
   }
 </style>
 
 <script async>
-  document.addEventListener("DOMContentLoaded", () => {
-    let currentDate = new Date();
-    let currentYear = currentDate.getFullYear();
-    let currentMonth = currentDate.getMonth();
-    let monthYearEl = document.querySelector(".month-year");
-    let prevMonthEl = document.querySelector(".prev-month");
-    let nextMonthEl = document.querySelector(".next-month");
-    let data = { firstDate: null, secondDate: null };
+document.addEventListener("DOMContentLoaded", () => {
+  let currentDate = new Date();
+  let currentYear = currentDate.getFullYear();
+  let currentMonth = currentDate.getMonth();
+  let monthYearEl = document.querySelector(".month-year");
+  let prevMonthEl = document.querySelector(".prev-month");
+  let nextMonthEl = document.querySelector(".next-month");
+  let data = { firstDate: null, secondDate: null };
 
-    const machine = {
-      initial: "idle",
-      states: {
-        idle: {
-          on: {
-            pointerdown: function (data, event) {
-              data.firstDate = +event.currentTarget.dataset.day;
-              data.secondDate = null;
-              return "dragging";
-            },
-          },
-        },
-        dragging: {
-          on: {
-            pointerover: function (data, event) {
-              data.secondDate = +event.currentTarget.dataset.day;
-              return "dragging";
-            },
-            pointerup: "idle",
-            pointercancel: "idle",
+  const machine = {
+    initial: "idle",
+    states: {
+      idle: {
+        on: {
+          pointerdown: function (data, event) {
+            data.firstDate = +event.currentTarget.dataset.day;
+            data.secondDate = null;
+            return "dragging";
           },
         },
       },
-    };
+      dragging: {
+        on: {
+          pointerover: function (data, event) {
+            data.secondDate = +event.currentTarget.dataset.day;
+            return "dragging";
+          },
+          pointerup: "idle",
+          pointercancel: "idle",
+        },
+      },
+    },
+  };
 
-    let currentState = machine.initial;
+  let currentState = machine.initial;
 
-    function getDaysInMonth(year, month) {
-      return new Date(year, month + 1, 0).getDate();
+  function getDaysInMonth(year, month) {
+    return new Date(year, month + 1, 0).getDate();
+  }
+
+  function getFirstDayOfMonth(year, month) {
+    return new Date(year, month, 1).getDay();
+  }
+
+  function generateCalendar(year, month) {
+    const daysInMonth = getDaysInMonth(year, month);
+    const firstDayOfWeek = getFirstDayOfMonth(year, month);
+
+    const calendarEl = document.querySelector(".cal-days");
+    calendarEl.innerHTML = ""; // Clear the previous calendar
+
+    for (let i = 0; i < firstDayOfWeek; i++) {
+      const emptyDayEl = document.createElement("div");
+      emptyDayEl.classList.add("day");
+      calendarEl.appendChild(emptyDayEl);
     }
 
-    function getFirstDayOfMonth(year, month) {
-      return new Date(year, month, 1).getDay();
+    for (let i = 1; i <= daysInMonth; i++) {
+      const dayEl = document.createElement("div");
+      dayEl.classList.add("day");
+      dayEl.dataset.day = i;
+      dayEl.innerHTML = `<span class="number">${i}</span>`;
+      dayEl.addEventListener("pointerdown", send);
+      dayEl.addEventListener("pointerover", send);
+      calendarEl.appendChild(dayEl);
     }
 
-    function generateCalendar(year, month) {
-      const daysInMonth = getDaysInMonth(year, month);
-      const firstDayOfWeek = getFirstDayOfMonth(year, month);
+    document.body.addEventListener("pointerup", send);
+    document.body.addEventListener("pointercancel", send);
+  }
 
-      const calendarEl = document.querySelector(".cal-days");
-      calendarEl.innerHTML = ""; // Clear the previous calendar
+  function setUp(month, year) {
+    const monthName = new Date(year, month).toLocaleString("default", {
+      month: "long",
+    });
+    monthYearEl.textContent = `${year} ${monthName}`;
+    generateCalendar(year, month);
+  }
 
-      for (let i = 0; i < firstDayOfWeek; i++) {
-        const emptyDayEl = document.createElement("div");
-        emptyDayEl.classList.add("day");
-        calendarEl.appendChild(emptyDayEl);
-      }
-
-      for (let i = 1; i <= daysInMonth; i++) {
-        const dayEl = document.createElement("div");
-        dayEl.classList.add("day");
-        dayEl.dataset.day = i;
-        dayEl.innerHTML = `<span class="number">${i}</span>`;
-        dayEl.addEventListener("pointerdown", send);
-        dayEl.addEventListener("pointerover", send);
-        calendarEl.appendChild(dayEl);
-      }
-
-      document.body.addEventListener("pointerup", send);
-      document.body.addEventListener("pointercancel", send);
+  function goToPreviousMonth() {
+    currentMonth--;
+    if (currentMonth < 0) {
+      currentMonth = 11;
+      currentYear--;
     }
-
-    function setUp(month, year) {
-      const monthName = new Date(year, month).toLocaleString("default", {
-        month: "long",
-      });
-      monthYearEl.textContent = `${year} ${monthName}`;
-      generateCalendar(year, month);
-    }
-
-    function goToPreviousMonth() {
-      currentMonth--;
-      if (currentMonth < 0) {
-        currentMonth = 11;
-        currentYear--;
-      }
-      setUp(currentMonth, currentYear);
-    }
-
-    function goToNextMonth() {
-      currentMonth++;
-      if (currentMonth > 11) {
-        currentMonth = 0;
-        currentYear++;
-      }
-      setUp(currentMonth, currentYear);
-    }
-
-    function send(event) {
-      const transition = machine.states[currentState].on[event.type];
-
-      if (typeof transition === "function") {
-        currentState = transition(data, event);
-        updateDOM();
-      } else if (transition) {
-        currentState = transition;
-        updateDOM();
-      }
-    }
-
-    function updateDOM() {
-      document.querySelectorAll("[data-selected]").forEach((el) => {
-        delete el.dataset.selected;
-      });
-
-      const startDate = Math.min(data.firstDate, data.secondDate);
-      const endDate = Math.max(data.firstDate, data.secondDate);
-
-      if (startDate) {
-        const startDateEl = document.querySelector(`[data-day="${startDate}"]`);
-        startDateEl.dataset.selected = "start";
-      }
-
-      if (endDate) {
-        const endDateEl = document.querySelector(`[data-day="${endDate}"]`);
-        endDateEl.dataset.selected = "end";
-      }
-
-      console.log(startDate, endDate);
-    }
-
     setUp(currentMonth, currentYear);
-    prevMonthEl.addEventListener("click", goToPreviousMonth);
-    nextMonthEl.addEventListener("click", goToNextMonth);
-  });
+  }
+
+  function goToNextMonth() {
+    currentMonth++;
+    if (currentMonth > 11) {
+      currentMonth = 0;
+      currentYear++;
+    }
+    setUp(currentMonth, currentYear);
+  }
+
+  function send(event) {
+    const transition = machine.states[currentState].on[event.type];
+
+    if (typeof transition === "function") {
+      currentState = transition(data, event);
+      updateDOM();
+    } else if (transition) {
+      currentState = transition;
+      updateDOM();
+    }
+  }
+
+  function updateDOM() {
+    document.querySelectorAll("[data-selected]").forEach((el) => {
+      delete el.dataset.selected;
+    });
+
+    const startDate = Math.min(data.firstDate, data.secondDate);
+    const endDate = Math.max(data.firstDate, data.secondDate);
+
+    if (startDate) {
+      const startDateEl = document.querySelector(`[data-day="${startDate}"]`);
+      startDateEl.dataset.selected = "start";
+    }
+
+    if (endDate) {
+      const endDateEl = document.querySelector(`[data-day="${endDate}"]`);
+      endDateEl.dataset.selected = "end";
+    }
+
+    console.log(startDate, endDate);
+  }
+
+  setUp(currentMonth, currentYear);
+  prevMonthEl.addEventListener("click", goToPreviousMonth);
+  nextMonthEl.addEventListener("click", goToNextMonth);
+});
 </script>

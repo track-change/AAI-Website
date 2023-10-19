@@ -137,6 +137,7 @@ const fileLink = chooseFile && (await getFileLink(chooseFile.asset._ref));
     text-transform: capitalize;
 
     margin: -1px 0 0 -1px;
+    transition: all 100ms;
 
     @media screen and (max-width: 1024px) {
       max-width: 320px;
@@ -147,6 +148,11 @@ const fileLink = chooseFile && (await getFileLink(chooseFile.asset._ref));
     @media screen and (max-width: 390px) {
       width: 100%;
       max-width: 100%;
+    }
+
+    &:hover {
+      box-shadow: 0 10px 20px 0 var(--gray);
+      /* transform: translateY(-1px); */
     }
   }
   /* .CTA-default:hover {

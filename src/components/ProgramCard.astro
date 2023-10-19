@@ -1,31 +1,86 @@
 ---
-import CTA from "./CTA.astro";
+import { getProgramByRef } from "../data/api";
+import { formatDateRange } from "../utils/dateFormatting";
+import { urlFor } from "../utils/image";
+
+interface Param {
+  pgRef: string;
+  key: number;
+}
+
+const { pgRef }: Param = Astro.props as Param;
+const { name, coverImage, eventTypes, type, startDateTime, endDateTime, slug } =
+  await getProgramByRef(pgRef);
+
+function toTitleCase(str: string) {
+  const titleCase = str
+    .toLowerCase()
+    .split("-")
+    .map((word: string) => {
+      return word.charAt(0).toUpperCase() + word.slice(1);
+    })
+    .join(" ");
+  return titleCase;
+}
 ---
-<div class="program-card">
 
-    <img src="src/assets/img/video.png" alt="">
-    <p class="small-caption">
-        Event, Screening
-    </p>
-    <h4>
-        The Erotic Project: Short Film Screening
-    </h4>
-    <p>
-        April 14
-    </p>
-<CTA  type="default" text="See All Programs" linkHref="/programs/"/>
-</div>
-
-<style type="scss">
-    .program-card {
-        max-width: 800px;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 1rem;
-
-        img {
-            width: 800px;
-        }
+<a class="program-card" href=`/programs/${slug.current}`>
+  <img class="card-img" src={urlFor(coverImage).url()} alt={name} />
+  <p class="caption gray-out event-type">
+    {type}
+    {
+      eventTypes?.map((eventType, index) => (
+        <>
+          <span>,</span>
+          <span>
+            {toTitleCase(eventType)}
+            {index !== eventTypes.length - 1 ? ", " : ""}
+          </span>
+        </>
+      ))
     }
+  </p>
+  <h4>{name}</h4>
+  <p>
+    {formatDateRange(`${startDateTime}—${endDateTime}`)}
+  </p>
+</a>
+<style type="scss">
+  .program-card {
+    max-width: 800px;
+    // height: fit-content;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 1rem;
+
+    &:hover .card-img{
+        box-shadow: 0 1px 30px 0 var(--gray);
+      }
+
+    .card-img {
+      object-fit: contain;
+      max-width: 800px;
+      height: fit-content;
+      max-height: 60vh;
+      transition: all 150ms ease-out;
+    }
+  }
+
+  @keyframes focus {
+    0% {
+    //   transform: scale(1);
+      filter: blur(0);
+    }
+    35% {
+    //   transform: scale(1.02);
+      filter: blur(2px);
+    }
+    100% {
+    //   transform: scale(1);
+      filter: blur(0);
+
+    }
+  }
 </style>

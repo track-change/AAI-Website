@@ -2,34 +2,32 @@
 import Layout from "../layouts/Layout.astro";
 import ProgramCard from "../components/ProgramCard.astro";
 import { getHome } from "../data/api";
+import { PortableText } from "astro-portabletext";
+import CTA from "../components/CTA.astro";
 
 const homeData = await getHome();
-console.log(homeData);
+console.log(homeData.content);
+const hpPrograms = homeData.programs;
 ---
 
 <Layout title="Homepage">
   <main>
-    <section>
+    <section class="program">
       <h1>Programs: On Now</h1>
 
-      <div class="program-carousel">
-        <div class="card-wrapper">
-          <ProgramCard />
-        </div>
-        <div class="card-wrapper">
-          <ProgramCard />
-        </div>
-        <div class="card-wrapper">
-          <ProgramCard />
-        </div>
+      <div class="program-carousel disable-scrollbars">
+        {
+          hpPrograms.map((program) => (
+            <div class="card-wrapper">
+              <ProgramCard pgRef={program._ref} />
+            </div>
+          ))
+        }
       </div>
+      <CTA type="default" text="See All Programs" linkHref="/programs" />
     </section>
-    <section>
-      <h2 id="blurb">
-        asian arts initiative is a multidisciplinary arts center offering
-        exhibitions, performances, artist residencies, youth workshops, and a
-        community gathering space.
-      </h2>
+    <section class="blurb">
+        <PortableText value={homeData.content} />
     </section>
     <section>
       <h2>About Us</h2>
@@ -45,40 +43,86 @@ console.log(homeData);
     </section>
   </main>
 
-  <style type="scss">
-    .program-carousel {
+  <style lang="scss">
+    section.program {
+      padding-bottom: 2rem;
+      height: fit-content;
       display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+
+      h1 {
+        // position: sticky;
+        width: 100%;
+        // top: 44px;
+      }
+    }
+
+    .program-carousel {
+      z-index: 1;
+      display: flex;
+      height: fit-content;
       width: 100vw;
-      overflow: scroll;
+      overflow: auto;
       scroll-behavior: smooth;
-      padding-bottom: 2.5rem;
+      scroll-snap-type: x mandatory;
+      padding-bottom: 4rem;
 
       .card-wrapper {
-        width: fit-content;
-        min-width: 100vw;
+        flex: 0 0 100%;
+        width: 100vw;
+        height: fit-content;
         display: flex;
         justify-content: center;
       }
     }
-    #blurb {
-      padding: 2.5rem;
-      background-color: var(--orange);
+
+    .blurb {
+      padding: 2.5rem 22px;
+      background-color: var(--yellow);
+
+      p {
+        font-size: var(--h2-font-size);
+        line-height: 105%;
+
+        a {
+          font-size: var(--h2-font-size);
+          line-height: 90%;
+          height: fit-content;
+          border-bottom: 4px black solid;
+          display: inline-block;
+          transition: all 100ms ease-out;
+
+          &:hover{
+            // box-shadow: 0 20px 10px -10px var(--yellow);
+            transform: translateY(-2px);
+            border-bottom: 8px black solid;
+
+          }
+        }
+      }
+
     }
   </style>
 </Layout>
 
-<script>
-  const carousel = document.querySelector(".program-carousel") as HTMLElement;
-  let currentPos = 0;
+<script async>
+const carousel = document.querySelector(".program-carousel");
+let currentPos = 0;
 
-  function scrollCarousel() {
+function scrollCarousel() {
+  currentPos += window.innerWidth;
+
+  window.addEventListener("resize", () => {
     currentPos += window.innerWidth;
+  });
 
-    if (currentPos > carousel.scrollWidth - window.innerWidth) {
-      currentPos = 0;
-    }
-
-    carousel.scrollTo(currentPos, 0);
+  if (currentPos > carousel.scrollWidth - window.innerWidth) {
+    currentPos = 0;
   }
-  setInterval(scrollCarousel, 2000);
+
+  carousel.scrollTo(currentPos, 0);
+}
+setInterval(scrollCarousel, 4000);
 </script>
