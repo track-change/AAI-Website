@@ -159,6 +159,8 @@ export interface Ticket {
   };
   price: string;
   getTicket: string;
+  startDateTime: string;
+  endDateTime: string;
 }
 
 export interface About {
@@ -181,13 +183,9 @@ export interface Home{
   programs: {
     _ref: string;
   }[];
-  aboutUs: {
-    _key: string;
-    _type: string;
-    value: string;
-  }[];
+  aboutUs: AboutUsElement[] | Banner[];
   content: PortableTextBlock[];
-  education: {
+  educations: {
     _ref: string;
   }[];
   mediaLibrary: {
@@ -198,6 +196,25 @@ export interface Home{
   }[];
   banners: {
     _ref: string;
+    _type: string;
   }[];
+}
 
+export interface AboutUsElement{
+    _key: string;
+    _ref: string;
+    _type: string;
+    _id: string;
+    asset: ImageAsset;
+  }
+
+export interface Banner {
+  _type: string;
+  _ref: string;
+  _id: string;
+  info: string;
+  link: {
+    text: string;
+    value: string;
+  };
 }

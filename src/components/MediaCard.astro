@@ -1,0 +1,56 @@
+---
+import type { ImageAsset } from "@sanity/types";
+import { urlFor } from "../utils/image";
+import Tag from "./Tag.astro";
+import type { Media } from "../data/types";
+
+interface Props {
+  media: Media;
+}
+
+const { media } = Astro.props as Props;
+---
+
+<div class="media__card">
+  <a href={`/media/${media.slug.current}`}>
+    {
+      media.thumbnail && (
+        <img
+          class="media-thumbnail"
+          src={urlFor(media.thumbnail).url()}
+          alt=""
+        />
+      )
+    }
+    <h6 class="media-item-title">{media.title}</h6>
+
+    <div class="caption">
+      {media.mediaType}, {media.date}
+    </div>
+    <div class="tag-wrapper caption">
+      {media.tags && media.tags.map((tag) => <Tag tagRef={tag._ref} />)}
+    </div>
+  </a>
+</div>
+
+<style lang="scss">
+  .caption {
+    text-transform: capitalize;
+  }
+
+  .media-thumbnail {
+    height: fit-content;
+    object-fit: cover;
+    aspect-ratio: 3 / 2;
+    width: 100%;
+
+    box-shadow: 0 0 10px 10px rgba(255, 255, 255, 0.3);
+  }
+
+  .media-thumbnail:hover {
+    box-shadow: 0 0 10px 12px white;
+  }
+  .media-item-title {
+    margin: 20px 0;
+  }
+</style>
