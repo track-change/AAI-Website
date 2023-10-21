@@ -1,13 +1,47 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import ProgramCard from "../components/ProgramCard.astro";
-import { getHome, getBannerByRef } from "../data/api";
+import MediaCard from "../components/MediaCard.astro";
+import TicketCard from "../components/TicketCard.astro";
+import {
+  getHome,
+  getBannerByRef,
+  getEducationByRef,
+  getMediaByRef,
+  getTicketsByRef,
+} from "../data/api";
 import { PortableText } from "astro-portabletext";
 import CTA from "../components/CTA.astro";
+import { urlFor } from "../utils/image";
+import type { Banner, AboutUsElement, Ticket } from "../data/types";
 
 const homeData = await getHome();
-console.log(homeData.content);
 const hpPrograms = homeData.programs;
+const aboutUsSec = await Promise.all(
+  homeData.aboutUs.map((banner) => {
+    if (banner._type === "banner") {
+      return getBannerByRef((banner as Banner)._ref);
+    } else {
+      return banner;
+    }
+  })
+);
+
+//TODO: Create a UI component for education and add them to the homepage
+const educationBlocks = await Promise.all(
+  homeData.educations.map((block) => getEducationByRef(block._ref))
+);
+const mediaBlocks = await Promise.all(
+  homeData.mediaLibrary.map((block) => getMediaByRef(block._ref))
+);
+
+const tickets = await Promise.all(
+  homeData.tickets.map((block) => getTicketsByRef(block._ref))
+);
+
+const banners = await Promise.all(
+  homeData.banners.map((block) => getBannerByRef((block as Banner)._ref))
+);
 ---
 
 <Layout title="Homepage">
@@ -31,96 +65,149 @@ const hpPrograms = homeData.programs;
     </section>
     <section>
       <h2>About Us</h2>
+      {
+        aboutUsSec.map((banner) => (
+          <div class="card-wrapper">
+            {banner._type === "banner" ? (
+              <CTA
+                type="outstanding"
+                text={(banner as Banner)?.link.text}
+                linkHref={(banner as Banner)?.link.value}
+              />
+            ) : (
+              <img
+                src={
+                  (banner as AboutUsElement).asset
+                    ? urlFor((banner as AboutUsElement).asset).url()
+                    : ""
+                }
+                alt=""
+              />
+            )}
+          </div>
+        ))
+      }
     </section>
     <section>
       <h2>Education</h2>
     </section>
     <section>
       <h2>Media Library</h2>
+      <div class="media__library">
+        {
+          mediaBlocks.map((block) => (
+            <div class="card-wrapper">
+              <MediaCard media={block} />
+            </div>
+          ))
+        }
+      </div>
     </section>
     <section>
       <h2>Tickets</h2>
-    </section>
-  </main>
+      <div class="tickets">
+        {
+          tickets.map((ticket) => (
+            <div class="card-wrapper">
+              <TicketCard ticket={ticket} />
+            </div>
+          ))
+        }
+      </div>
+      <section>
+        <div class="banners">
+          {
+            banners.map((banner) => (
+              <CTA
+                type="outstanding"
+                text={banner.link.text}
+                linkHref={banner.link.value}
+              />
+            ))
+          }
+        </div>
+      </section>
 
-  <style lang="scss">
-    section.program {
-      padding-bottom: 2rem;
-      height: fit-content;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      position: relative;
-
-      h1 {
-        // position: sticky;
-        width: 100%;
-        // top: 44px;
-      }
-    }
-
-    .program-carousel {
-      z-index: 1;
-      display: flex;
-      height: fit-content;
-      width: 100vw;
-      overflow: auto;
-      scroll-behavior: smooth;
-      scroll-snap-type: x mandatory;
-      padding-bottom: 4rem;
-
-      .card-wrapper {
-        flex: 0 0 100%;
-        width: 100vw;
-        height: fit-content;
-        display: flex;
-        justify-content: center;
-      }
-    }
-
-    .blurb {
-      padding: 2.5rem 22px;
-      background-color: var(--yellow);
-
-      p {
-        font-size: var(--h2-font-size);
-        line-height: 105%;
-
-        a {
-          font-size: var(--h2-font-size);
-          line-height: 90%;
+      <style lang="scss">
+        section.program {
+          padding-bottom: 2rem;
           height: fit-content;
-          border-bottom: 4px black solid;
-          display: inline-block;
-          transition: all 100ms ease-out;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          position: relative;
 
-          &:hover {
-            // box-shadow: 0 20px 10px -10px var(--yellow);
-            transform: translateY(-2px);
-            border-bottom: 8px black solid;
+          h1 {
+            // position: sticky;
+            width: 100%;
+            // top: 44px;
           }
         }
+
+        .program-carousel {
+          z-index: 1;
+          display: flex;
+          height: fit-content;
+          width: 100vw;
+          overflow: auto;
+          scroll-behavior: smooth;
+          scroll-snap-type: x mandatory;
+          padding-bottom: 4rem;
+
+          .card-wrapper {
+            flex: 0 0 100%;
+            width: 100vw;
+            height: fit-content;
+            display: flex;
+            justify-content: center;
+          }
+        }
+
+        .blurb {
+          padding: 2.5rem 22px;
+          background-color: var(--yellow);
+
+          p {
+            font-size: var(--h2-font-size);
+            line-height: 105%;
+
+            a {
+              font-size: var(--h2-font-size);
+              line-height: 90%;
+              height: fit-content;
+              border-bottom: 4px black solid;
+              display: inline-block;
+              transition: all 100ms ease-out;
+
+              &:hover {
+                // box-shadow: 0 20px 10px -10px var(--yellow);
+                transform: translateY(-2px);
+                border-bottom: 8px black solid;
+              }
+            }
+          }
+        }
+      </style>
+    </section>
+
+    <script async>
+    const carousel = document.querySelector(".program-carousel");
+    let currentPos = 0;
+
+    function scrollCarousel() {
+      currentPos += window.innerWidth;
+
+      window.addEventListener("resize", () => {
+        currentPos += window.innerWidth;
+      });
+
+      if (currentPos > carousel.scrollWidth - window.innerWidth) {
+        currentPos = 0;
       }
+
+      carousel.scrollTo(currentPos, 0);
     }
-  </style>
+    setInterval(scrollCarousel, 4000);
+    </script>
+  </main>
 </Layout>
-
-<script async>
-const carousel = document.querySelector(".program-carousel");
-let currentPos = 0;
-
-function scrollCarousel() {
-  currentPos += window.innerWidth;
-
-  window.addEventListener("resize", () => {
-    currentPos += window.innerWidth;
-  });
-
-  if (currentPos > carousel.scrollWidth - window.innerWidth) {
-    currentPos = 0;
-  }
-
-  carousel.scrollTo(currentPos, 0);
-}
-setInterval(scrollCarousel, 4000);
-</script>

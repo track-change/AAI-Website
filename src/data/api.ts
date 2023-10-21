@@ -51,6 +51,12 @@ export async function getEducationBySlug(slug: string): Promise<Education> {
   return fetchData("education", slug);
 }
 
+export async function getEducationByRef(ref: string): Promise<Education> {
+  const query = groq`*[_type == "education" && _id == $ref][0]`;
+  const education = await useSanityClient().fetch(query, {ref});
+  return education;
+}
+
 export async function getVenue(): Promise<Venue[]> {
   return fetchData("venue");
 }
@@ -129,10 +135,22 @@ export async function getMediaBySlug(slug: string): Promise<Media> {
   return media;
 }
 
+export async function getMediaByRef(ref: string): Promise<Media> {
+  const query = groq`*[_type == "media" && _id == $ref][0]`;
+  const media = await useSanityClient().fetch(query, { ref });
+  return media;
+}
+
 export async function getTickets(): Promise<Ticket[]> {
   const query = groq`*[_type == "ticket"]`;
   const tickets = await useSanityClient().fetch(query);
   return tickets;
+}
+
+export async function getTicketsByRef(ref: string): Promise<Ticket> {
+  const query = groq`*[_type == "ticket" && _id == $ref][0]`;
+  const ticket = await useSanityClient().fetch(query, { ref });
+  return ticket;
 }
 
 
