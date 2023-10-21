@@ -3,7 +3,7 @@
 -----
 ## Front-End
 - [ ] Image carousel
-- [ ] Calendar 
+- [ ] Calendar
 - [ ] Homepage
 - [ ] Venue
 - [ ] Donate

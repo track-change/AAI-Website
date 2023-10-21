@@ -199,5 +199,14 @@ export interface Home{
   banners: {
     _ref: string;
   }[];
+}
 
+export interface Banner {
+  _type: string;
+  _id: string;
+  info: string;
+  link: {
+    text: string;
+    value: string;
+  };
 }

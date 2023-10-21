@@ -12,6 +12,7 @@ import type {
   About,
   Venue,
   Home,
+  Banner
 } from "./types";
 
 import groq from "groq";
@@ -129,4 +130,11 @@ export async function getTickets(): Promise<Ticket[]> {
   const query = groq`*[_type == "ticket"]`;
   const tickets = await useSanityClient().fetch(query);
   return tickets;
+}
+
+
+export async function getBannerByRef(ref: string): Promise<Banner> {
+  const query = groq`*[_type == "banner" && _id == $ref][0]`;
+  const banner = await useSanityClient().fetch(query, {ref});
+  return banner;
 }
