@@ -8,8 +8,8 @@ import type { Entry, Artist } from "../data/types";
 
 interface Props {
   pageTitle: string;
-  bannerSrc: string;
-  credits: string;
+  bannerSrc?: string;
+  credits?: string;
   ctas: Entry[] | any[];
 }
 
@@ -19,7 +19,6 @@ const {
   credits,
   ctas,
 } = Astro.props as Props;
-console.log(ctas);
 ---
 
 <BasicLayout title={pageTitle}>
