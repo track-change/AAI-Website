@@ -31,16 +31,6 @@ const {
         <div class="small-caption">
           {credits}
         </div>
-        <div class="CTA-wrapper">
-          {
-            ctas.map(
-              (cta: Entry) =>
-                cta && (
-                  <CTA type="default" text={cta._type} linkHref={cta.url} />
-                )
-            )
-          }
-        </div>
       </div>
       <slot />
     </main>
