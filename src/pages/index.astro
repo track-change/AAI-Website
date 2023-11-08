@@ -148,11 +148,7 @@ const banners = await Promise.all(
       linkHref="/tickets"
     />
   </SectionLayout>
-  <!-- three situations: 
-1. banner.info = true, banner.link = true
-2. banner.info = false, banner.link = true
-3. banner.info = true, banner.link = false
--->
+
   <SectionLayout>
     <div class="banners">
       {
@@ -182,16 +178,16 @@ const banners = await Promise.all(
     </div>
   </SectionLayout>
 
-  <style lang="scss">
+  <style lang="scss" is:global>
     body {
       display: flex;
       flex-direction: column;
       transition: background-color 300ms var(--ease);
     }
-    .program,
-    .education,
-    .ticket,
-    .media-library {
+    main.program,
+    main.education,
+    main.ticket,
+    main.media-library {
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -285,10 +281,15 @@ const banners = await Promise.all(
     .ticket {
       padding: 5rem;
 
-      @media screen and (max-width: 1440px) {padding: 3rem;}
-      @media screen and (max-width: 1024px) {padding: 2rem;}
-      @media screen and (max-width: 390px) {padding: 1rem;}
-
+      @media screen and (max-width: 1440px) {
+        padding: 3rem;
+      }
+      @media screen and (max-width: 1024px) {
+        padding: 2rem;
+      }
+      @media screen and (max-width: 390px) {
+        padding: 1rem;
+      }
     }
     .edu-list {
       max-width: 100%;
