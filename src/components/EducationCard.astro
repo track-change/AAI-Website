@@ -1,0 +1,47 @@
+---
+import type { ImageAsset } from "@sanity/types";
+import { getEducations, getEducationBySlug } from "../data/api";
+import { urlFor } from "../utils/image";
+import type { Education } from "../data/types";
+import EducationLayout from "../layouts/EducationLayout.astro";
+
+interface Props {
+  education: Education;
+}
+
+const { education } = Astro.props as Props;
+---
+
+<div class="education__card">
+  <a href={`/education/${education.slug.current}`}>
+    {
+      education.coverImage && (
+        <img
+          class="education-coverImage"
+          src={urlFor(education.coverImage).url()}
+          alt=""
+        />
+      )
+    }
+    <h6 class="education-item-title">{education.title}</h6>
+  </a>
+</div>
+
+<style lang="scss">
+  .education__card {
+    a {
+        max-height: 60vh;
+        @media screen and (max-width: 768px) {
+        max-height: 300px;
+        }
+      .education-coverImage {
+        max-width: 880px;
+        height: 60vh;
+        object-fit: cover;
+      }
+      h6 {
+        padding-top: 1rem;
+      }
+    }
+  }
+</style>

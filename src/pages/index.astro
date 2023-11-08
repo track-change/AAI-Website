@@ -1,8 +1,10 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import SectionLayout from "../layouts/SectionLayout.astro";
 import ProgramCard from "../components/ProgramCard.astro";
 import MediaCard from "../components/MediaCard.astro";
 import TicketCard from "../components/TicketCard.astro";
+import EducationCard from "../components/EducationCard.astro";
 import {
   getHome,
   getBannerByRef,
@@ -27,7 +29,6 @@ const aboutUsSec = await Promise.all(
   })
 );
 
-//TODO: Create a UI component for education and add them to the homepage
 const educationBlocks = await Promise.all(
   homeData.educations.map((block) => getEducationByRef(block._ref))
 );
@@ -45,33 +46,37 @@ const banners = await Promise.all(
 ---
 
 <Layout title="Homepage">
-  <main>
-    <section class="program">
-      <h1>Programs: On Now</h1>
+  <SectionLayout className="program">
+    <h1>Programs: On Now</h1>
 
-      <div class="program-carousel disable-scrollbars">
-        {
-          hpPrograms.map((program) => (
-            <div class="card-wrapper">
-              <ProgramCard pgRef={program._ref} />
-            </div>
-          ))
-        }
-      </div>
-      <CTA type="default" text="See All Programs" linkHref="/programs" />
-    </section>
-    <section class="blurb">
-      <PortableText value={homeData.content} />
-    </section>
-    <section>
-      <h2>About Us</h2>
+    <div class="program-carousel disable-scrollbars">
+      {
+        hpPrograms.map((program) => (
+          <div class="card-wrapper">
+            <ProgramCard pgRef={program._ref} />
+          </div>
+        ))
+      }
+    </div>
+    <CTA type="default" text="See All Programs" linkHref="/programs" />
+  </SectionLayout>
+
+  <section class="blurb">
+    <p id="overview">About AAI</p>
+    <PortableText value={homeData.content} />
+    <CTA type="default" text="More about us" linkHref="/about" />
+  </section>
+
+  <SectionLayout className="about">
+    <ul class="about-list">
       {
         aboutUsSec.map((banner) => (
           <div class="card-wrapper">
             {banner._type === "banner" ? (
               <CTA
                 type="outstanding"
-                text={(banner as Banner)?.link.text}
+                action
+                linkText={(banner as Banner)?.link.text}
                 linkHref={(banner as Banner)?.link.value}
               />
             ) : (
@@ -81,133 +86,293 @@ const banners = await Promise.all(
                     ? urlFor((banner as AboutUsElement).asset).url()
                     : ""
                 }
-                alt=""
+                alt="about us"
               />
             )}
           </div>
         ))
       }
-    </section>
-    <section>
-      <h2>Education</h2>
-    </section>
-    <section>
-      <h2>Media Library</h2>
-      <div class="media__library">
-        {
-          mediaBlocks.map((block) => (
-            <div class="card-wrapper">
-              <MediaCard media={block} />
-            </div>
-          ))
-        }
-      </div>
-    </section>
-    <section>
-      <h2>Tickets</h2>
-      <div class="tickets">
-        {
-          tickets.map((ticket) => (
-            <div class="card-wrapper">
-              <TicketCard ticket={ticket} />
-            </div>
-          ))
-        }
-      </div>
-      <section>
-        <div class="banners">
-          {
-            banners.map((banner) => (
+    </ul>
+  </SectionLayout>
+
+  <SectionLayout className="education">
+    <h2>Education</h2>
+    <ul class="edu-list disable-scrollbars">
+      {
+        educationBlocks.map((block) => (
+          <div class="card-wrapper">
+            <EducationCard education={block} />
+          </div>
+        ))
+      }
+    </ul>
+    <CTA type="default" text="See All Workshops" linkHref="/education" />
+  </SectionLayout>
+
+  <SectionLayout backGround="var(--gray)" className="media-library">
+    <h2>Media Library</h2>
+    <ul class="media-list">
+      {
+        mediaBlocks.map((block) => (
+          <div class="card-wrapper">
+            <MediaCard media={block} />
+          </div>
+        ))
+      }
+    </ul>
+    <CTA
+      type="default"
+      text="See all media archive"
+      linkHref="/archive#media"
+    />
+  </SectionLayout>
+  <SectionLayout
+    backGround="var(--black)"
+    textColor="var(--white)"
+    className="ticket"
+  >
+    <h2>Tickets</h2>
+    <ul class="ticket-list">
+      {
+        tickets.map((ticket) => (
+          <div class="card-wrapper">
+            <TicketCard ticket={ticket} />
+          </div>
+        ))
+      }
+    </ul>
+    <CTA
+      type="default"
+      invert
+      text="See all ticketed Events"
+      linkHref="/tickets"
+    />
+  </SectionLayout>
+  <!-- three situations: 
+1. banner.info = true, banner.link = true
+2. banner.info = false, banner.link = true
+3. banner.info = true, banner.link = false
+-->
+  <SectionLayout>
+    <div class="banners">
+      {
+        banners.map((banner) =>
+          banner.info ? (
+            banner.link ? (
               <CTA
                 type="outstanding"
-                text={banner.link.text}
+                action
+                text={banner.info}
+                linkText={banner.link.text}
                 linkHref={banner.link.value}
               />
-            ))
-          }
-        </div>
-      </section>
+            ) : (
+              <CTA type="outstanding" text={banner.info} />
+            )
+          ) : banner.link ? (
+            <CTA
+              type="outstanding"
+              action
+              linkText={banner.link.text}
+              linkHref={banner.link.value}
+            />
+          ) : null
+        )
+      }
+    </div>
+  </SectionLayout>
 
-      <style lang="scss">
-        section.program {
-          padding-bottom: 2rem;
+  <style lang="scss">
+    body {
+      display: flex;
+      flex-direction: column;
+      transition: background-color 300ms var(--ease);
+    }
+    .program,
+    .education,
+    .ticket,
+    .media-library {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      h1,
+      h2 {
+        width: 100%;
+      }
+    }
+
+    .program-carousel {
+      z-index: 1;
+      display: flex;
+      height: fit-content;
+      max-width: 100vw;
+      overflow: auto;
+      scroll-behavior: smooth;
+      scroll-snap-type: x mandatory;
+      padding: 0;
+
+      .card-wrapper {
+        flex: 0 0 100%;
+        width: 100vw;
+        height: fit-content;
+        display: flex;
+        justify-content: center;
+      }
+    }
+
+    .blurb {
+      margin: 80px auto;
+      width: 100%;
+      padding: 5rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      transition: all 500ms ease-in-out;
+      gap: var(--h2-font-size);
+
+      p {
+        font-size: var(--h2-font-size);
+        line-height: 105%;
+        max-width: 17em;
+
+        a {
+          font-size: var(--h2-font-size);
+          line-height: 90%;
           height: fit-content;
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          position: relative;
+          display: inline-block;
+          transition: all 100ms ease-out;
 
-          h1 {
-            // position: sticky;
-            width: 100%;
-            // top: 44px;
+          &:hover {
+            transform: translateY(-8%);
           }
         }
+      }
+    }
+    .about-list,
+    .banners {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      grid-template-rows: repeat(2, 1fr);
+      gap: 64px;
 
-        .program-carousel {
-          z-index: 1;
-          display: flex;
-          height: fit-content;
-          width: 100vw;
-          overflow: auto;
-          scroll-behavior: smooth;
-          scroll-snap-type: x mandatory;
-          padding-bottom: 4rem;
-
-          .card-wrapper {
-            flex: 0 0 100%;
-            width: 100vw;
-            height: fit-content;
-            display: flex;
-            justify-content: center;
-          }
-        }
-
-        .blurb {
-          padding: 2.5rem 22px;
-          background-color: var(--yellow);
-
-          p {
-            font-size: var(--h2-font-size);
-            line-height: 105%;
-
-            a {
-              font-size: var(--h2-font-size);
-              line-height: 90%;
-              height: fit-content;
-              border-bottom: 4px black solid;
-              display: inline-block;
-              transition: all 100ms ease-out;
-
-              &:hover {
-                // box-shadow: 0 20px 10px -10px var(--yellow);
-                transform: translateY(-2px);
-                border-bottom: 8px black solid;
-              }
-            }
-          }
-        }
-      </style>
-    </section>
-
-    <script async>
-    const carousel = document.querySelector(".program-carousel");
-    let currentPos = 0;
-
-    function scrollCarousel() {
-      currentPos += window.innerWidth;
-
-      window.addEventListener("resize", () => {
-        currentPos += window.innerWidth;
-      });
-
-      if (currentPos > carousel.scrollWidth - window.innerWidth) {
-        currentPos = 0;
+      @media screen and (max-width: 90rem) {
+        gap: 40px;
+      }
+      @media screen and (max-width: 64rem) {
+        gap: 32px;
+      }
+      @media screen and (max-width: 48rem) {
+        gap: 16px;
       }
 
-      carousel.scrollTo(currentPos, 0);
+      .card-wrapper {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
     }
-    setInterval(scrollCarousel, 4000);
-    </script>
-  </main>
+
+    main.education,
+    .media-library,
+    .ticket {
+      padding: 5rem;
+
+      @media screen and (max-width: 1440px) {padding: 3rem;}
+      @media screen and (max-width: 1024px) {padding: 2rem;}
+      @media screen and (max-width: 390px) {padding: 1rem;}
+
+    }
+    .edu-list {
+      max-width: 100%;
+      overflow-x: scroll;
+      display: flex;
+      flex-wrap: nowrap;
+      gap: 4rem;
+      flex-shrink: 0;
+    }
+    .media-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(calc(33% - 80px), 1fr));
+      column-gap: 80px;
+      row-gap: 80px;
+
+      @media screen and (max-width: 64rem) {
+        grid-template-columns: repeat(3, 1fr);
+        column-gap: 32px;
+      }
+
+      @media screen and (max-width: 48rem) {
+        grid-template-columns: repeat(2, 1fr);
+        column-gap: 16px;
+      }
+    }
+
+    .ticket-list {
+      width: 100%;
+      margin: 5rem 0 !important;
+      display: flex;
+      flex-direction: column;
+      gap: 10rem;
+
+      @media screen and (max-width: 1440px) {
+        margin: 32px 0 !important;
+      }
+      @media screen and (max-width: 1024px) {
+        margin: 32px 0 !important;
+      }
+      @media screen and (max-width: 768px) {
+        margin: 24px 0 !important;
+        gap: 5rem;
+      }
+    }
+  </style>
 </Layout>
+
+<script async>
+  const carousel = document.querySelector(".program-carousel");
+  const blurb = document.querySelector(".blurb");
+  const bodyTag = document.querySelector("body");
+  const blurbTop = blurb.offsetTop;
+  const blurbBottom = blurbTop + blurb.offsetHeight;
+
+  let currentPos = 0;
+
+  function scrollCarousel() {
+    currentPos += window.innerWidth;
+
+    window.addEventListener("resize", () => {
+      currentPos += window.innerWidth;
+    });
+
+    if (currentPos > carousel.scrollWidth - window.innerWidth) {
+      currentPos = 0;
+    }
+
+    carousel.scrollTo(currentPos, 0);
+  }
+  setInterval(scrollCarousel, 4000);
+
+  function handleScroll() {
+    const pixels = window.scrollY;
+    const windowHeight = window.innerHeight;
+
+    if (
+      blurbTop - 0.5 * windowHeight <= pixels &&
+      blurbBottom > pixels + 0.5 * windowHeight
+    ) {
+      bodyTag.style.backgroundColor = "var(--orange)";
+    } else {
+      bodyTag.style.backgroundColor = "";
+    }
+  }
+
+  window.addEventListener("scroll", handleScroll);
+</script>

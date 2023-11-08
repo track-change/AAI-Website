@@ -24,7 +24,7 @@ const { media } = Astro.props as Props;
     }
     <h6 class="media-item-title">{media.title}</h6>
 
-    <div class="caption">
+    <div class="caption gray-out">
       {media.mediaType}, {media.date}
     </div>
     <div class="tag-wrapper caption">
@@ -43,13 +43,17 @@ const { media } = Astro.props as Props;
     object-fit: cover;
     aspect-ratio: 3 / 2;
     width: 100%;
+    transition: transform 100ms var(--ease);
 
-    box-shadow: 0 0 10px 10px rgba(255, 255, 255, 0.3);
+    &:hover {
+    // box-shadow: 0 0 10px 12px white;
+    transform: translateY(-2%);
+  }
+    // box-shadow: 0 0 10px 10px rgba(255, 255, 255, 0.3);
+
   }
 
-  .media-thumbnail:hover {
-    box-shadow: 0 0 10px 12px white;
-  }
+
   .media-item-title {
     margin: 20px 0;
   }

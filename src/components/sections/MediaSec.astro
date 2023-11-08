@@ -13,7 +13,7 @@ const medias = await getMedia();
     <h2>Media Library</h2>
   </div>
 
-  <ul class="list">
+  <ul class="media-list">
     {
       medias.map((media) => (
         <li class="media-list-item">
@@ -52,7 +52,7 @@ const medias = await getMedia();
       max-width: 30rem;
     }
   }
-  .list {
+  .media-list {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(calc(33% - 80px), 1fr));
     column-gap: 80px;

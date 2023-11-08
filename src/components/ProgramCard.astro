@@ -55,15 +55,11 @@ function toTitleCase(str: string) {
     text-align: center;
     gap: 1rem;
 
-    &:hover .card-img{
-        box-shadow: 0 1px 30px 0 var(--gray);
-      }
-
     .card-img {
       object-fit: contain;
       max-width: 800px;
-      height: fit-content;
-      max-height: 60vh;
+      height: auto;
+      max-height: 400px;
       transition: all 150ms ease-out;
     }
   }
