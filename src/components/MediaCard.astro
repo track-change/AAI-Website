@@ -24,18 +24,25 @@ const { media } = Astro.props as Props;
     }
     <h6 class="media-item-title">{media.title}</h6>
 
-    <div class="caption gray-out">
+    <div class="small-caption">
       {media.mediaType}, {media.date}
     </div>
-    <div class="tag-wrapper caption">
+    <!-- <div class="tag-wrapper caption">
       {media.tags && media.tags.map((tag) => <Tag tagRef={tag._ref} />)}
-    </div>
+    </div> -->
   </a>
 </div>
 
-<style lang="scss">
-  .caption {
-    text-transform: capitalize;
+<style lang="scss" is:global>
+.media__card {
+    &:hover .media-thumbnail {
+      transform: translateY(-2%);
+    }
+
+    .small-caption {
+      text-transform: capitalize;
+      line-height: 1;
+    }
   }
 
   .media-thumbnail {
@@ -45,16 +52,12 @@ const { media } = Astro.props as Props;
     width: 100%;
     transition: transform 100ms var(--ease);
 
-    &:hover {
-    // box-shadow: 0 0 10px 12px white;
-    transform: translateY(-2%);
-  }
     // box-shadow: 0 0 10px 10px rgba(255, 255, 255, 0.3);
-
   }
-
 
   .media-item-title {
-    margin: 20px 0;
+    margin: 0.5em 0;
+    display: flex;
+    gap: 0.25em;
   }
 </style>

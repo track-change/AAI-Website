@@ -4,10 +4,12 @@
 ## Front-End
 - [ ] Image carousel
 - [ ] Calendar
-- [ ] Homepage
-- [ ] Venue
+- [x] Homepage
+- [x] Venue
 - [ ] Donate
 - [ ] CSS variables clean-up
+- [x] margin variables clean-up
+- [ ] responsive
 
 ## Back-End
 - [ ] Reference (related programs)
@@ -42,10 +44,10 @@ Reorganization of Past Programs: just by year, not season? Search by event type 
 How useful is it? 
 
 
-- Add more Event Types
-Fundraiser
-Panel / Conversation 
-Community Event 
+[x] Add more Event Types
+    Fundraiser
+    Panel / Conversation 
+    Community Event 
 
 
 Artist Directory has to have a better description of what it is and how it’s made and a contact for “if you want any change”

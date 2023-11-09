@@ -1,5 +1,4 @@
 ---
-import { string } from "astro/zod";
 import "../scss/main.scss";
 
 interface Prop {
@@ -31,29 +30,12 @@ const { backGround, textColor, className } = Astro.props as Prop
   main {
     display: flex;
     flex-direction: column;
-    gap: 40px;
+    gap: var(--s-margin);
     flex: 1;
     width: 100%;
-    padding: 40px;
+    padding: var(--l-margin);
     background-color: var(--backGround);
     color: var(--textColor);
-
-    @media screen and (max-width: 64rem) {
-      padding: 32px;
-      gap: 24px;
-    }
-    @media screen and (max-width: 48rem) {
-      padding: 16px;
-    }
-
-    @media screen and (max-width: 35.5rem) {
-      width: calc(100% - 4.4rem);
-      gap: 8px;
-    }
-
-    @media screen and (max-width: 24.375rem) {
-      width: calc(100% - 32px);
-    }
   }
 
   .banner {
@@ -69,7 +51,6 @@ const { backGround, textColor, className } = Astro.props as Prop
   .inline-img {
     max-width: 50rem;
     width: 100%;
-    // height: fit-content;
 
     @media screen and (max-width: 64rem) {
       max-width: 40rem;

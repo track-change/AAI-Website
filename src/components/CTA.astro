@@ -124,7 +124,7 @@ const fileLink = chooseFile && (await getFileLink(chooseFile.asset._ref));
   .CTA-default-inverted {
     cursor: pointer;
     display: inline-flex;
-    padding: 0.75rem 2rem;
+    padding: 6px 18px;
     max-width: 25rem;
     min-width: 10rem;
     /* width: fit-content; */
@@ -210,14 +210,11 @@ const fileLink = chooseFile && (await getFileLink(chooseFile.asset._ref));
       content: url(/arrow-black-20.svg);
       vertical-align: super;
       padding-left: 0.1em;
-    }
-    @media screen and (max-width: 1440px) {
-      .CTA-link > h2::after {
+
+      @media screen and (max-width: 1440px) {
         content: url(/arrow-black-14.svg);
       }
-    }
-    @media screen and (max-width: 768px) {
-      .CTA-link > h2::after {
+      @media screen and (max-width: 768px) {
         content: url(/arrow-black-10.svg);
       }
     }

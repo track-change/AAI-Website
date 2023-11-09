@@ -16,18 +16,20 @@
 
 
   --h1-font-size: 200px;
-  --h2-font-size: 90px;
+  --h2-font-size: 84px;
   --h4-font-size: 44px;
   --caption-font-size: 22px;
   --small-cap-font-size: 17px;
 
   --inner-max-width:  800px;
 
+  --s-margin: 24px;
+  --l-margin: 32px;
 
   @media screen and (max-width: 1440px) {
     --h1-font-size: 140px;
     --h2-font-size: 60px;
-    --h4-font-size: 33px;
+    // --h4-font-size: 33px;
   }
 
   @media screen and (max-width: 1024px) {
@@ -38,6 +40,9 @@
     --small-cap-font-size: 14px;
 
     --inner-max-width: 40rem;
+
+    --s-margin: 16px;
+    --l-margin: 24px;
   }
 
   @media screen and (max-width: 768px) {
@@ -54,6 +59,7 @@
 
     --inner-max-width: calc(100% - 32px);
 
+    --l-margin: 16px;
   }
 }
 

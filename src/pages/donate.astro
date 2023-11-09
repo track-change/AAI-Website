@@ -1,0 +1,36 @@
+---
+import Layout from "../layouts/Layout.astro";
+import SideTab from "../components/SideTab.astro";
+import SectionLayout from "../layouts/SectionLayout.astro";
+---
+
+<Layout title="Donate">
+  <div data-top>
+    <SideTab
+      text="Donate"
+      href="/donate/"
+      style="department"
+      classes="is-major"
+    />
+
+    <SectionLayout>
+        <h1>Support AAI with Donation</h1>
+
+    </SectionLayout>
+  </div>
+</Layout>
+
+<style lang="scss">
+  [data-top] {
+    position: relative;
+    display: flex;
+    flex-grow: 1;
+
+    .department{
+      flex-shrink: 0;
+      position: sticky;
+      top: 44px;
+      cursor: pointer;
+    }
+  }
+</style>

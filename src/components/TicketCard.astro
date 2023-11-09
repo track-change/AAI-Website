@@ -20,16 +20,16 @@ const tagFecteched = await getTagByRef(ticket.eventType._ref);
   <div class="ticket__left">
     <div>
       <h4>{ticket.title}</h4>
-      <p class="gray-out caption">{tagFecteched.tag}</p>
-      <div class="caption">
-        {formatDateRange(`${ticket.startDateTime}—${ticket.endDateTime}`)}
-      </div>
+      <!-- <p class="gray-out ">{tagFecteched.tag}</p> -->
     </div>
     <div>
-      <div class="caption">{ticket.price}</div>
-      <br />
+      <p class="small-caption">
+        {formatDateRange(`${ticket.startDateTime}—${ticket.endDateTime}`)}
+        <br />
+        {ticket.price}
+      </p>
       <CTA
-        invert="true"
+        invert
         type="default"
         text="Get Tickets"
         linkHref={ticket.getTicket}
@@ -44,19 +44,18 @@ const tagFecteched = await getTagByRef(ticket.eventType._ref);
   />
 </div>
 
-<style type="scss">
+<style lang="scss">
   .ticket-card {
     display: flex;
-    flex-direction: row;
     justify-content: space-between;
     flex-wrap: nowrap;
-    gap: 5rem;
     height: 320px;
+    padding: var(--s-margin) 0;
+    gap: var(--l-margin);
 
     @media screen and (max-width: 768px) {
       flex-direction: column;
       height: fit-content;
-      gap: 1rem;
     }
   }
 
@@ -72,7 +71,9 @@ const tagFecteched = await getTagByRef(ticket.eventType._ref);
       width: 100%;
     }
   }
-
+  .small-caption {
+    margin: var(--s-margin) 0;
+  }
   img {
     max-width: 480px;
     max-height: 320px;

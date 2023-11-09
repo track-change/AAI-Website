@@ -24,59 +24,45 @@ function toTitleCase(str: string) {
 }
 ---
 
-<a class="program-card" href=`/programs/${slug.current}`>
+<a class="program-card" href={`/programs/${slug.current}`}>
   <img class="card-img" src={urlFor(coverImage).url()} alt={name} />
-  <p class="caption gray-out event-type">
+  <p class="caption event-type">
     {type}
-    {
-      eventTypes?.map((eventType, index) => (
-        <>
-          <span>,</span>
-          <span>
-            {toTitleCase(eventType)}
-            {index !== eventTypes.length - 1 ? ", " : ""}
-          </span>
-        </>
-      ))
-    }
+    {eventTypes?.length > 0 && eventTypes.map((eventType, index) => (
+      <span>
+        {index === 0 && <span> | </span>}
+        {toTitleCase(eventType)}
+        {index !== eventTypes.length - 1 && <span>, </span>}
+      </span>
+    ))}
   </p>
-  <h4>{name}</h4>
-  <p>
+  <h4 class="program-card-title">{name}</h4>
+  <p class="caption">
     {formatDateRange(`${startDateTime}—${endDateTime}`)}
   </p>
 </a>
+
 <style type="scss">
   .program-card {
     max-width: 800px;
-    // height: fit-content;
+    height: fit-content;
+    overflow: hidden;
     display: flex;
     flex-direction: column;
     align-items: center;
     text-align: center;
-    gap: 1rem;
+    gap: 16px;
 
+    .caption {line-height: 1;}
+    .program-card-title {
+      max-width: 17em;
+      line-height: 100%;
+    }
     .card-img {
-      object-fit: contain;
-      max-width: 800px;
+      max-width: var(--inner-max-width);
+      max-height: 600px;
       height: auto;
-      max-height: 400px;
-      transition: all 150ms ease-out;
-    }
-  }
-
-  @keyframes focus {
-    0% {
-    //   transform: scale(1);
-      filter: blur(0);
-    }
-    35% {
-    //   transform: scale(1.02);
-      filter: blur(2px);
-    }
-    100% {
-    //   transform: scale(1);
-      filter: blur(0);
-
+      object-fit: contain;
     }
   }
 </style>

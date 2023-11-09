@@ -3,7 +3,7 @@ import SideTab from "../components/SideTab.astro";
 import Layout from "../layouts/Layout.astro";
 import { getTickets } from "../data/api";
 import TicketCard from "../components/TicketCard.astro";
-
+import SectionLayout from "../layouts/SectionLayout.astro";
 const tickets = await getTickets();
 
 // console.log(tickets[0]);
@@ -11,59 +11,69 @@ const tickets = await getTickets();
 
 <Layout title="Ticket">
   <div data-top>
-    <article data-wrapper>
-      <SideTab text="Tickets" href="/tickets/" style="department" />
+    <SideTab
+      text="Tickets"
+      href="/tickets"
+      style="department"
+      classes="is-major"
+    />
 
-      <main data-main>
-        <h2 class="title">Ticketed Events</h2>
+    <SectionLayout
+    backGround="var(--black)"
+    textColor="var(--white)"
+    className = "tickets"
+    >
+      <!-- <h2 class="title">Ticketed Events</h2> -->
 
-        <ul class="ticket-list">
-          {
-            tickets.map((ticket) => (
-              <li class="list-item">
-                <TicketCard ticket={ticket} />
-              </li>
-            ))
-          }
-        </ul>
-      </main>
-    </article>
+      <ul class="ticket-list">
+        {
+          tickets.map((ticket) => (
+            <li class="card-wrapper">
+              <TicketCard ticket={ticket} />
+            </li>
+          ))
+        }
+      </ul>
+    </SectionLayout>
   </div>
 </Layout>
 
-<style type="scss">
+<style lang="scss">
+  body {
+    position: sticky;
+    top: 0;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+
   [data-top] {
-    background-color: var(--black);
-    color: var(--white);
+    position: relative;
+    display: flex;
+    flex-grow: 1;
 
-    [data-wrapper] {
-      width: 100vw;
-      min-height: 100vh;
-
-      display: flex;
-      flex-direction: row;
+    .department {
+      flex-shrink: 0;
       position: sticky;
-      top: 45px;
-      left: 0;
+      top: 44px;
+      cursor: pointer;
+    }
 
-      [data-main] {
-        padding: 40px;
-        width: 100%;
-
-        display: flex;
-        flex-direction: column;
-
-        .ticket-list {
-          padding: 4rem 0;
-          display: flex;
-          flex-direction: column;
-          gap: 10rem;
-
-          @media screen and (max-width: 768px) {
-            gap: 6rem;
-          }
-        }
+    .ticket-list {
+      width: 100%;
+      margin: var(--l-margin) 0;
+      display: flex;
+      flex-direction: column;
+      .card-wrapper {
+        border-bottom: 1px solid white;
+      }
+      .card-wrapper:first-child {
+        border-top: 1px solid white;      
       }
     }
   }
+
+
 </style>

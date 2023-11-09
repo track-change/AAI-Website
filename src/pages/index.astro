@@ -58,7 +58,7 @@ const banners = await Promise.all(
         ))
       }
     </div>
-    <CTA type="default" text="See All Programs" linkHref="/programs" />
+    <!-- <CTA type="default" text="See All Programs" linkHref="/programs" /> -->
   </SectionLayout>
 
   <section class="blurb">
@@ -135,9 +135,9 @@ const banners = await Promise.all(
     <ul class="ticket-list">
       {
         tickets.map((ticket) => (
-          <div class="card-wrapper">
+          <li class="card-wrapper">
             <TicketCard ticket={ticket} />
-          </div>
+          </li>
         ))
       }
     </ul>
@@ -196,7 +196,6 @@ const banners = await Promise.all(
         width: 100%;
       }
     }
-
     .program-carousel {
       z-index: 1;
       display: flex;
@@ -219,7 +218,7 @@ const banners = await Promise.all(
     .blurb {
       margin: 80px auto;
       width: 100%;
-      padding: 5rem;
+      padding: calc(2 * var(--l-margin));
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -230,17 +229,19 @@ const banners = await Promise.all(
       p {
         font-size: var(--h2-font-size);
         line-height: 105%;
-        max-width: 17em;
+        max-width: 18em;
 
         a {
           font-size: var(--h2-font-size);
           line-height: 90%;
-          height: fit-content;
-          display: inline-block;
+          height: 100%;
+          // display: inline-block;
           transition: all 100ms ease-out;
 
           &:hover {
             transform: translateY(-8%);
+            color: white;
+            cursor: ne-resize;
           }
         }
       }
@@ -250,17 +251,7 @@ const banners = await Promise.all(
       display: grid;
       grid-template-columns: repeat(2, 1fr);
       grid-template-rows: repeat(2, 1fr);
-      gap: 64px;
-
-      @media screen and (max-width: 90rem) {
-        gap: 40px;
-      }
-      @media screen and (max-width: 64rem) {
-        gap: 32px;
-      }
-      @media screen and (max-width: 48rem) {
-        gap: 16px;
-      }
+      gap: var(--l-margin);
 
       .card-wrapper {
         width: 100%;
@@ -276,62 +267,34 @@ const banners = await Promise.all(
       }
     }
 
-    main.education,
-    .media-library,
-    .ticket {
-      padding: 5rem;
-
-      @media screen and (max-width: 1440px) {
-        padding: 3rem;
-      }
-      @media screen and (max-width: 1024px) {
-        padding: 2rem;
-      }
-      @media screen and (max-width: 390px) {
-        padding: 1rem;
-      }
-    }
     .edu-list {
       max-width: 100%;
       overflow-x: scroll;
       display: flex;
       flex-wrap: nowrap;
-      gap: 4rem;
+      gap: var(--s-margin);
       flex-shrink: 0;
     }
     .media-list {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(calc(33% - 80px), 1fr));
-      column-gap: 80px;
-      row-gap: 80px;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--l-margin);
 
-      @media screen and (max-width: 64rem) {
-        grid-template-columns: repeat(3, 1fr);
-        column-gap: 32px;
-      }
-
-      @media screen and (max-width: 48rem) {
+      @media screen and (max-width: 768px) {
         grid-template-columns: repeat(2, 1fr);
-        column-gap: 16px;
       }
     }
 
     .ticket-list {
       width: 100%;
-      margin: 5rem 0 !important;
+      margin: var(--l-margin);
       display: flex;
       flex-direction: column;
-      gap: 10rem;
-
-      @media screen and (max-width: 1440px) {
-        margin: 32px 0 !important;
+      .card-wrapper {
+        border-bottom: 1px solid white;
       }
-      @media screen and (max-width: 1024px) {
-        margin: 32px 0 !important;
-      }
-      @media screen and (max-width: 768px) {
-        margin: 24px 0 !important;
-        gap: 5rem;
+      .card-wrapper:first-child {
+        border-top: 1px solid white;      
       }
     }
   </style>
@@ -372,6 +335,7 @@ const banners = await Promise.all(
       bodyTag.style.backgroundColor = "var(--orange)";
     } else {
       bodyTag.style.backgroundColor = "";
+      blurb.style.color = "";
     }
   }
 

@@ -39,7 +39,7 @@
     </div>
     <div class="info-item">
       <div class="h4-wrapper">
-        <h4>(215)-557-0455</h4>
+        <h4 class="dial-number">(215)-557-0455</h4>
       </div>
       <div class="info-links">
         <a class="small-caption left">Contact Us</a>
@@ -65,7 +65,7 @@
   </div>
 </footer>
 
-<style type="scss">
+<style lang="scss">
   footer {
     /* 1920 footer */
     display: flex;
@@ -147,6 +147,16 @@
 
           h4 > a {
             display: inline-block;
+          }
+
+          .dial-number::after {
+            content: url(/dial-white-15.svg);
+            vertical-align: super;
+            padding-left: 0.1em;
+
+            @media screen and (max-width: 768px) {
+              content: url(/dial-white-8.svg)
+            }
           }
         }
 

@@ -31,15 +31,8 @@ const medias = await getMedia();
     background-size: 224px;
   }
   code {
-    font-family:
-      Menlo,
-      Monaco,
-      Lucida Console,
-      Liberation Mono,
-      DejaVu Sans Mono,
-      Bitstream Vera Sans Mono,
-      Courier New,
-      monospace;
+    font-family: Menlo, Monaco, Lucida Console, Liberation Mono,
+      DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace;
   }
   .title,
   section {
@@ -54,18 +47,11 @@ const medias = await getMedia();
   }
   .media-list {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(calc(33% - 80px), 1fr));
-    column-gap: 80px;
-    row-gap: 80px;
-
-    @media screen and (max-width: 64rem) {
-      grid-template-columns: repeat(3, 1fr);
-      column-gap: 32px;
-    }
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--l-margin);
 
     @media screen and (max-width: 48rem) {
       grid-template-columns: repeat(2, 1fr);
-      column-gap: 16px;
     }
   }
 </style>

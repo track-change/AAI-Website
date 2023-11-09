@@ -12,78 +12,74 @@ const artists = await getArtists();
 ---
 
 <SectionLayout className="artist-directory" backGround="var(--white)">
-        <h2 class="title">Artists Directory</h2>
+  <h2 class="title">Artists Directory</h2>
 
-        <div class="filters caption">
-          <ul>
-            <li>Sort by</li>
-            <li>
-              <ul>
-                <li>Most recent to oldest</li>
-                <li>Oldest to most recent</li>
-                <li>Alphabetical</li>
-              </ul>
-            </li>
-          </ul>
-          <ul>
-            <li>Filter by year of participation</li>
-            <li>
-              <ul>
-                <li>All</li>
-                <li>2023</li>
-                <li>2022</li>
-                <li>2021</li>
-              </ul>
-            </li>
-          </ul>
-
-          <ul>
-            <li>Filter by last name initials</li>
-            <li>
-              <ul>
-                <li>A</li>
-                <li>B</li>
-                <li>C</li>
-                <li>D</li>
-                <li>E</li>
-                <li>F</li>
-              </ul>
-            </li>
-          </ul>
-        </div>
-        <ul class="list">
-          {
-            artists.map((artist) => (
-              <li class="artist-list-item">
-                <a href={`/artists/${artist.slug.current}`}>
-                  <h2>{artist.name}</h2>
-                </a>
-                <img
-                  class="artist-thumbnail"
-                  src={
-                    artist.image
-                    ? urlFor(artist.image).url()
-                    : null}
-                  alt=""
-                />
-              </li>
-            ))
-          }
+  <div class="filters caption">
+    <ul>
+      <li>Sort by</li>
+      <li>
+        <ul>
+          <li>Most recent to oldest</li>
+          <li>Oldest to most recent</li>
+          <li>Alphabetical</li>
         </ul>
+      </li>
+    </ul>
+    <ul>
+      <li>Filter by year of participation</li>
+      <li>
+        <ul>
+          <li>All</li>
+          <li>2023</li>
+          <li>2022</li>
+          <li>2021</li>
+        </ul>
+      </li>
+    </ul>
 
-        <CTA type="text" text="Load more" />
+    <ul>
+      <li>Filter by last name initials</li>
+      <li>
+        <ul>
+          <li>A</li>
+          <li>B</li>
+          <li>C</li>
+          <li>D</li>
+          <li>E</li>
+          <li>F</li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+  <ul class="list">
+    {
+      artists.map((artist) => (
+        <li class="artist-list-item">
+          <a href={`/artists/${artist.slug.current}`}>
+            <h2>{artist.name}</h2>
+          </a>
+          <img
+            class="artist-thumbnail"
+            src={artist.image ? urlFor(artist.image).url() : null}
+            alt=""
+          />
+        </li>
+      ))
+    }
+  </ul>
 
-        <SecHeader title="Artists FAQ" />
-        <div class="caption FAQ">
-          Asian Arts Initiative has supported hundreds of budding, emergent and
-          mid-career artists into local and global prominence. We publish Calls
-          for Artists for thematic seasons several times a year, and provide
-          opportunities for community-based artist residencies, as well as low
-          and no cost studio and performance rental spaces. Here are some common
-          and Frequently Asked Questions (FAQ).
-        </div>
-        <Collapsible />
+  <CTA type="text" text="Load more" />
 
+  <SecHeader title="Artists FAQ" />
+  <div class="caption FAQ">
+    Asian Arts Initiative has supported hundreds of budding, emergent and
+    mid-career artists into local and global prominence. We publish Calls for
+    Artists for thematic seasons several times a year, and provide opportunities
+    for community-based artist residencies, as well as low and no cost studio
+    and performance rental spaces. Here are some common and Frequently Asked
+    Questions (FAQ).
+  </div>
+  <Collapsible />
 </SectionLayout>
 
 <style lang="scss">
@@ -103,27 +99,27 @@ const artists = await getArtists();
   .filters > * {
     flex-direction: column;
   }
-        .list {
-          padding: 4rem 0;
-          display: flex;
-          flex-direction: column;
-        }
-        .artist-list-item:last-child {
-          border-bottom: 1px solid var(--black);
-        }
-        .artist-list-item {
-          border-top: 1px solid var(--black);
-          padding: 0.5rem 0;
-          cursor: pointer;
+  .list {
+    padding: 4rem 0;
+    display: flex;
+    flex-direction: column;
+  }
+  .artist-list-item:last-child {
+    border-bottom: 1px solid var(--black);
+  }
+  .artist-list-item {
+    border-top: 1px solid var(--black);
+    padding: 0.5rem 0;
+    cursor: pointer;
 
-          .artist-thumbnail {
-            position: absolute;
-            display: none;
-            width: 300px;
-            height: auto;
-            pointer-events: none;
-          }
-        }
+    .artist-thumbnail {
+      position: absolute;
+      display: none;
+      width: 300px;
+      height: auto;
+      pointer-events: none;
+    }
+  }
 
   .FAQ {
     max-width: 800px;
@@ -132,30 +128,30 @@ const artists = await getArtists();
 </style>
 
 <script async>
-const listItems = document.querySelectorAll(".artist-list-item");
-const thumbnails = document.querySelectorAll(".artist-thumbnail");
-let scrollY = window.scrollY || window.pageYOffset;
+  const listItems = document.querySelectorAll(".artist-list-item");
+  const thumbnails = document.querySelectorAll(".artist-thumbnail");
 
-window.addEventListener("scroll", () => {
-  let scrollY = window.scrollY;
-});
-listItems.forEach((item, index) => {
-  item.addEventListener("mouseenter", (e) => {
-    // const itemPosition = item.getBoundingClientRect();
-    item.style.color = "var(--orange)";
-    thumbnails[index].style.display = "block";
-    thumbnails[index].style.left = `${e.clientX}px`;
-    thumbnails[index].style.top = `${e.clientY + scrollY}px`;
-  });
+  window.addEventListener("scroll", () => {
+    let scrollY = window.scrollY;
 
-  item.addEventListener("mousemove", (e) => {
-    thumbnails[index].style.left = `${e.clientX}px`;
-    thumbnails[index].style.top = `${e.clientY + scrollY}px`;
-  });
+    listItems.forEach((item, index) => {
+      item.addEventListener("mouseenter", (e) => {
+        // const itemPosition = item.getBoundingClientRect();
+        item.style.color = "var(--orange)";
+        thumbnails[index].style.display = "block";
+        thumbnails[index].style.left = `${e.clientX}px`;
+        thumbnails[index].style.top = `${e.clientY + scrollY}px`;
+      });
 
-  item.addEventListener("mouseleave", () => {
-    item.style.color = "var(--black)";
-    thumbnails[index].style.display = "none";
+      item.addEventListener("mousemove", (e) => {
+        thumbnails[index].style.left = `${e.clientX}px`;
+        thumbnails[index].style.top = `${e.clientY + scrollY}px`;
+      });
+
+      item.addEventListener("mouseleave", () => {
+        item.style.color = "var(--black)";
+        thumbnails[index].style.display = "none";
+      });
+    });
   });
-});
 </script>

@@ -12,16 +12,16 @@ const visit = await getVisit();
 <Layout title="Visit Us">
   <div data-top>
     <article id="none" data-wrapper>
-      <SideTab text="Visit" href="/visit/" style="department" />
+      <SideTab text="Visit" href="/visit/" style="department" classes="is-major" />
 
       <main data-main>
-        <h1 class="title">Plan your visit</h1>
+        <!-- <h1 class="title">Plan your visit</h1> -->
         <ul class="list">
           <li class="list-item">
             <h2>{visit.address}</h2>
           </li>
           <li class="list-item">
-            <h2>{visit.phone}</h2>
+            <h2 class="dial">{visit.phone}</h2>
           </li>
           {
             visit.ctafields.map((cta) => {
@@ -69,7 +69,7 @@ const visit = await getVisit();
     </article>
   </div>
 </Layout>
-<style type="scss">
+<style lang="scss">
   [data-top] {
     [data-wrapper] {
       width: 100vw;
@@ -109,6 +109,11 @@ const visit = await getVisit();
           h2 {
             width: fit-content;
           }
+
+          .dial::after {
+            content: url(/dial-black-30.svg);
+            vertical-align: super;
+            padding-left: 0.1em;
           }
         }
       }

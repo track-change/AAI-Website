@@ -31,6 +31,7 @@ const { text, href, style, classes, shadow, backGround } = Astro.props as Props;
     display: flex;
     justify-content: center;
     background-color: var(--backGround);
+    line-height: 1;
 
     @media screen and (max-width: 64rem) {
       padding: 2rem 0;
@@ -46,7 +47,7 @@ const { text, href, style, classes, shadow, backGround } = Astro.props as Props;
     .vert-text {
       writing-mode: vertical-rl;
       text-orientation: mixed;
-      margin-left: -0.2em;
+      margin-left: -0.33em;
     }
   }
 
