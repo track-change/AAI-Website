@@ -29,13 +29,15 @@ const education = await getEducationBySlug(slug);
   <section class="body-copy">
     <PortableText value={education.body} />
   </section>
-
-  <SecHeader title = "Archive" />
+  
+{education.images && (
+    <SecHeader title = "Archive" />
   <Carousel
   images={education.images}
   alt={education.images.map((image) => image.alt)}
   >
   </Carousel>
+)}
 
 </EducationLayout>
 
