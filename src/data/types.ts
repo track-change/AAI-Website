@@ -78,6 +78,7 @@ export interface Education {
   title: string;
   slug: Slug;
   coverImage: ImageAsset;
+  images: Array<ImageAsset>;
   cta: Array<Entry>;
   frontCaptions: Array<Entry>;
   body: PortableTextBlock[];

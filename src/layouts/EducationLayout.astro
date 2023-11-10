@@ -57,6 +57,7 @@ const { pageTitle, bannerSrc, ctas, frontCaptions } = Astro.props as Props;
   }
   main {
     flex: 1;
+    padding: var(--l-margin);
   }
 
   .banner,
@@ -84,18 +85,6 @@ const { pageTitle, bannerSrc, ctas, frontCaptions } = Astro.props as Props;
 
     display: flex;
     flex-direction: column;
-  }
-  .title {
-    margin: 40px;
-    @media screen and (max-width: 64rem) {
-      margin: 32px;
-    }
-    @media screen and (max-width: 48rem) {
-      margin: 16px;
-    }
-    @media screen and (max-width: 24.375rem) {
-      margin: 16px;
-    }
   }
 
   .banner {

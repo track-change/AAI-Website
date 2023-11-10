@@ -1,20 +1,59 @@
 ---
 import { urlFor } from "../utils/image";
-import type { ImageAsset} from "@sanity/types";
+import type { ImageAsset } from "@sanity/types";
 
 interface Prop {
   asset: ImageAsset;
   alt: string;
+  images: Array<ImageAsset>;
 }
 
-const {asset, alt } = Astro.props as Prop
+const { asset, alt, images } = Astro.props as Prop;
 ---
 
-<img src={asset ? urlFor(asset).url() : ""} alt={alt} />
+<!-- <img src={asset ? urlFor(asset).url() : ""} alt={alt} /> -->
+<section class="carousel disable-scrollbars">
+  {images && images.map((image) => <img src={urlFor(image).url()} alt={alt} />)}
+</section>
 
-<style>
-    img {
-        height: 500px;
+<style lang="scss">
+  .carousel {
+    max-width: 100%;
+    overflow: hidden;
+    display: flex;
+    flex-wrap: nowrap;
+    padding: var(--l-margin) 0;
+
+    &:hover {
+      img {
+        margin-right: -8%;
+      }
     }
-
+    img {
+      max-height: 500px;
+      width: auto;
+      object-fit: cover;
+      margin-right: -10%;
+      filter: drop-shadow(-10px 0px 10px rgba(0, 0, 0, 0.15));
+      transition: margin 100ms;
+    }
+  }
+  .expanded {
+    overflow-x: scroll;
+    img {
+      margin-right: 40px;
+      filter: none;
+    }
+    &:hover {
+      img {
+        margin-right: 40px;
+      }
+    }
+  }
 </style>
+<script async>
+  const carousel = document.querySelector(".carousel");
+  carousel.addEventListener("click", () => {
+    carousel.classList.toggle("expanded")
+  });
+</script>

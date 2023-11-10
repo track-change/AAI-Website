@@ -39,7 +39,7 @@ const { pageTitle, bannerSrc, ctas, frontCaptions, tags } =
         {
           ctas?.map((cta: Entry) => (
             <CTA
-              type={cta._type}
+              type="default"
               text={cta.displayTitle}
               value={cta.value}
               chooseFile={cta.chooseFile}

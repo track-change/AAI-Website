@@ -2,12 +2,13 @@
 
 -----
 ## Front-End
-- [ ] Image carousel
+- [x] Image carousel
 - [ ] Calendar
 - [x] Homepage
 - [x] Venue
-- [ ] Donate
-- [ ] CSS variables clean-up
+- [ ] single form pages
+- [ ] Donate embed / need to reach out to Jino
+- [x] CSS variables clean-up
 - [x] margin variables clean-up
 - [ ] responsive
 

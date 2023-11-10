@@ -4,6 +4,8 @@ import { PortableText } from "astro-portabletext";
 import EducationLayout from "../../layouts/EducationLayout.astro";
 import { getEducations, getEducationBySlug } from "../../data/api";
 import { urlFor } from "../../utils/image";
+import Carousel from "../../components/Carousel.astro";
+import SecHeader from "../../components/SecHeader.astro";
 
 export async function getStaticPaths() {
   const education = await getEducations();
@@ -27,4 +29,13 @@ const education = await getEducationBySlug(slug);
   <section class="body-copy">
     <PortableText value={education.body} />
   </section>
+
+  <SecHeader title = "Archive" />
+  <Carousel
+  images={education.images}
+  alt={education.images.map((image) => image.alt)}
+  >
+  </Carousel>
+
 </EducationLayout>
+
