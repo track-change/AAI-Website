@@ -2,6 +2,10 @@
 import Layout from "../layouts/Layout.astro";
 import SideTab from "../components/SideTab.astro";
 import SectionLayout from "../layouts/SectionLayout.astro";
+import { getDonate } from "../data/api";
+
+const donate = await getDonate();
+console.log(donate);
 ---
 
 <Layout title="Donate">
@@ -14,8 +18,7 @@ import SectionLayout from "../layouts/SectionLayout.astro";
     />
 
     <SectionLayout>
-        <h1>Support AAI with Donation</h1>
-
+      <h1>Support AAI with Donation</h1>
     </SectionLayout>
   </div>
 </Layout>
@@ -26,7 +29,7 @@ import SectionLayout from "../layouts/SectionLayout.astro";
     display: flex;
     flex-grow: 1;
 
-    .department{
+    .department {
       flex-shrink: 0;
       position: sticky;
       top: 44px;

@@ -12,7 +12,8 @@ import type {
   About,
   Venue,
   Home,
-  Banner
+  Banner,
+  Donate,
 } from "./types";
 
 import groq from "groq";
@@ -53,7 +54,7 @@ export async function getEducationBySlug(slug: string): Promise<Education> {
 
 export async function getEducationByRef(ref: string): Promise<Education> {
   const query = groq`*[_type == "education" && _id == $ref][0]`;
-  const education = await useSanityClient().fetch(query, {ref});
+  const education = await useSanityClient().fetch(query, { ref });
   return education;
 }
 
@@ -69,7 +70,12 @@ export async function getHome(): Promise<Home> {
   const query = groq`*[_type == "home" && _id == "home"][0]`;
   const home = await useSanityClient().fetch(query);
   return home;
-  // return fetchData("home");
+}
+
+export async function getDonate(): Promise<Donate> {
+  const query = groq`*[_type == "donate" && _id == "donate"][0]`;
+  const donate = await useSanityClient().fetch(query);
+  return donate;
 }
 
 export async function getSiteSettings(): Promise<Settings> {
@@ -113,7 +119,7 @@ export async function getFormByRef(ref: string): Promise<Form> {
 
 export async function getProgramByRef(ref: string): Promise<Program> {
   const query = groq`*[_type == "program" && _id == $ref][0]`;
-  const program = await useSanityClient().fetch(query, {ref});
+  const program = await useSanityClient().fetch(query, { ref });
   return program;
 }
 
@@ -153,9 +159,8 @@ export async function getTicketsByRef(ref: string): Promise<Ticket> {
   return ticket;
 }
 
-
 export async function getBannerByRef(ref: string): Promise<Banner> {
   const query = groq`*[_type == "banner" && _id == $ref][0]`;
-  const banner = await useSanityClient().fetch(query, {ref});
+  const banner = await useSanityClient().fetch(query, { ref });
   return banner;
 }

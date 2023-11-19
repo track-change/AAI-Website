@@ -178,7 +178,7 @@ export interface About {
   }>;
 }
 
-export interface Home{
+export interface Home {
   _type: string;
   _id: string;
   programs: {
@@ -201,13 +201,13 @@ export interface Home{
   }[];
 }
 
-export interface AboutUsElement{
-    _key: string;
-    _ref: string;
-    _type: string;
-    _id: string;
-    asset: ImageAsset;
-  }
+export interface AboutUsElement {
+  _key: string;
+  _ref: string;
+  _type: string;
+  _id: string;
+  asset: ImageAsset;
+}
 
 export interface Banner {
   _type: string;
@@ -218,4 +218,15 @@ export interface Banner {
     text: string;
     value: string;
   };
+}
+
+export interface Donate {
+  _type: string;
+  _id: string;
+  title: string;
+  body: PortableTextBlock[];
+  linkTo: string[];
+  banners: {
+    _ref: string;
+  }[];
 }
