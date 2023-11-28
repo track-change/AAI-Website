@@ -12,21 +12,57 @@ const { asset, alt, images } = Astro.props as Prop;
 ---
 
 <!-- <img src={asset ? urlFor(asset).url() : ""} alt={alt} /> -->
-<section class="carousel disable-scrollbars">
-  {images && images.map((image) => <img src={urlFor(image).url()} alt={alt} />)}
+<section class="carouselContainer">
+  <div class="scrollUi hidden">
+    <p class="hidden small-caption left"><– scroll left</p>
+    <p class="small-caption right">scroll right –></p>
+  </div>
+  <div class="carousel disable-scrollbars">
+    {
+      images &&
+        images.map((image) => <img src={urlFor(image).url()} alt={alt} />)
+    }
+  </div>
 </section>
 
 <style lang="scss">
+  .hidden {
+    opacity: 0;
+  }
+
+  .scrollUi {
+    display: flex;
+    justify-content: space-between;
+    transition: opacity 200ms;
+    padding-top: calc(var(--l-margin) / 2);
+
+    .small-caption {
+      transition: opacity 200ms;
+    }
+  }
+
   .carousel {
     max-width: 100%;
     overflow: hidden;
     display: flex;
     flex-wrap: nowrap;
-    padding: var(--l-margin) 0;
+    padding-top: calc(var(--l-margin) / 2);
+    padding-bottom: var(--l-margin);
+
+    // &:hover {
+    //   img {
+    //     margin-right: -8%;
+    //   }
+    // }
 
     &:hover {
+      overflow-x: scroll;
       img {
-        margin-right: -8%;
+        margin-right: 40px;
+        filter: none;
+      }
+      img:last-child {
+        margin-right: 0;
       }
     }
     img {
@@ -35,25 +71,48 @@ const { asset, alt, images } = Astro.props as Prop;
       object-fit: cover;
       margin-right: -10%;
       filter: drop-shadow(-10px 0px 10px rgba(0, 0, 0, 0.15));
-      transition: margin 100ms;
+      transition: margin 200ms;
     }
   }
-  .expanded {
-    overflow-x: scroll;
-    img {
-      margin-right: 40px;
-      filter: none;
-    }
-    &:hover {
-      img {
-        margin-right: 40px;
-      }
-    }
-  }
+  // .expanded {
+  //   overflow-x: scroll;
+  //   img {
+  //     margin-right: 40px;
+  //     filter: none;
+  //   }
+  //   &:hover {
+  //     img {
+  //       margin-right: 40px;
+  //     }
+  //   }
+  // }
 </style>
 <script async>
-  const carousel = document.querySelector(".carousel");
-  carousel.addEventListener("click", () => {
-    carousel.classList.toggle("expanded")
-  });
+const carousel = document.querySelector(".carousel");
+const scrollUi = document.querySelector(".scrollUi");
+const left = document.querySelector(".left");
+const right = document.querySelector(".right");
+let containerWidth = document.querySelector(".carouselContainer").offsetWidth;
+
+carousel.addEventListener("mouseenter", function () {
+  scrollUi.classList.remove("hidden");
+});
+carousel.addEventListener("mouseleave", function () {
+  scrollUi.classList.add("hidden");
+});
+
+carousel.addEventListener("scroll", function () {
+  let width = carousel.scrollWidth - containerWidth;
+  if (carousel.scrollLeft >= width - 5) {
+    left.classList.remove("hidden");
+    right.classList.add("hidden");
+  } else if (carousel.scrollLeft <= 5) {
+    left.classList.add("hidden");
+    right.classList.remove("hidden");
+  }
+});
+
+  // carousel.addEventListener("click", () => {
+  //   carousel.classList.toggle("expanded");
+  // });
 </script>

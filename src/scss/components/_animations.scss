@@ -27,3 +27,9 @@
     left: 100%;
   }
 }
+
+@keyframes slideHalf {
+  to {
+    left: 50%;
+  }
+}

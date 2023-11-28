@@ -7,7 +7,12 @@ import PastPrograms from "../../components/sections/PastPrograms.astro";
 
 <Layout title="Programs">
   <div data-top>
-    <SideTab text="Programs" href="/programs" style="department" classes="is-major"/>
+    <SideTab
+      text="Programs"
+      href="/programs"
+      style="department"
+      classes="is-major"
+    />
     <SideTab
       text="Current and Upcoming"
       style="subpage"
@@ -100,7 +105,7 @@ const pastTab = document.querySelector(".past-tab");
 const wrapper = document.querySelector(".wrapper");
 const leftCol = document.querySelector(".left-col");
 const rightCol = document.querySelector(".right-col");
-const department = document.querySelector(".department")
+const department = document.querySelector(".department");
 
 function updateWrapperHeight() {
   const maxHeight = Math.max(leftCol.offsetHeight, rightCol.offsetHeight);
@@ -120,7 +125,7 @@ function showLeft() {
   rightCol.style.animation = "slideOut 0.4s linear forwards";
   pastTab.classList.add("is-shown");
   currentTab.classList.remove("is-shown");
-  department.classList.remove("is-major")
+  department.classList.remove("is-major");
   window.history.pushState({}, "", "#current-upcoming");
 
   rightCol.addEventListener(
@@ -142,7 +147,7 @@ function showRight() {
   rightCol.style.animation = "slideIn 0.4s linear forwards";
   currentTab.classList.add("is-shown");
   pastTab.classList.remove("is-shown");
-  department.classList.remove("is-major")
+  department.classList.remove("is-major");
   window.history.pushState({}, "", "#past-season");
 
   rightCol.addEventListener(
@@ -157,17 +162,35 @@ function showRight() {
   currentTab.addEventListener("click", showLeft);
 }
 
-// Event listeners
-leftCol.addEventListener("click", showLeft);
-rightCol.addEventListener("click", showRight);
-window.addEventListener("scroll", showLeft);
-
-// Check the URL hash when the page loads
-window.addEventListener("load", () => {
-  if (window.location.hash === "#current-upcoming") {
-    showLeft();
-  } else if (window.location.hash === "#past-season") {
-    showRight();
-  }
+//back function WIP!!!
+department.querySelector("a").addEventListener("click", function (e) {
+  e.preventDefault();
 });
+
+function backToProgram() {
+  window.removeEventListener("scroll", showLeft);
+  window.scroll(0, 0);
+
+  leftCol.querySelector(".current").style.display = "flex";
+  rightCol.querySelector(".past").style.display = "flex";
+  updateWrapperHeight();
+
+  currentTab.classList.remove("is-shown");
+  pastTab.classList.remove("is-shown");
+  department.classList.add("is-major");
+
+  rightCol.style.animation = "slideHalf 0.4s linear forwards";
+
+  setTimeout(() => {
+    window.addEventListener("scroll", showLeft);
+  }, "1200");
+
+  window.history.pushState({}, "", "/programs");
+}
+
+// Event listeners
+  leftCol.addEventListener("click", showLeft);
+  rightCol.addEventListener("click", showRight);
+  window.addEventListener("scroll", showLeft);
+  department.addEventListener("click", backToProgram);
 </script>
