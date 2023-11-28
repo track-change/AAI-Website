@@ -44,8 +44,15 @@ import ArtistSec from "../components/sections/ArtistSec.astro";
     background: var(--white);
   }
   code {
-    font-family: Menlo, Monaco, Lucida Console, Liberation Mono,
-      DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace;
+    font-family:
+      Menlo,
+      Monaco,
+      Lucida Console,
+      Liberation Mono,
+      DejaVu Sans Mono,
+      Bitstream Vera Sans Mono,
+      Courier New,
+      monospace;
   }
 
   body {
@@ -126,8 +133,8 @@ function updateWrapperHeight() {
 
 function handleAnimationEnd(displayElement, hideElement) {
   return () => {
-    hideElement.style.display = "none";
-    displayElement.style.display = "flex";
+    // hideElement.style.display = "none";
+    // displayElement.style.display = "flex";
     updateWrapperHeight();
   };
 }
@@ -135,7 +142,8 @@ function handleAnimationEnd(displayElement, hideElement) {
 function showLeft() {
   document.querySelector("body").style.backgroundColor = "var(--gray)";
 
-  leftCol.querySelector(".media-library").style.display = "flex";
+  // leftCol.querySelector(".media-library").style.display = "flex";
+  leftCol.querySelector(".media-library").classList.remove("hidden");
   rightCol.style.animation = "slideOut 0.4s linear forwards";
   rightTab.classList.add("is-shown");
   leftTab.classList.remove("is-shown");
@@ -150,14 +158,15 @@ function showLeft() {
     ),
     { once: true }
   );
-
+  rightTab.style.zIndex = 10;
   rightTab.addEventListener("click", showRight);
 }
 
 function showRight() {
   window.removeEventListener("scroll", showLeft);
-
-  rightCol.querySelector(".artist-directory").style.display = "flex";
+  document.querySelector("body").style.backgroundColor = "var(--gray)";
+  // rightCol.querySelector(".artist-directory").style.display = "flex";
+  rightCol.querySelector(".artist-directory").classList.remove("hidden");
   rightCol.style.animation = "slideIn 0.4s linear forwards";
   leftTab.classList.add("is-shown");
   rightTab.classList.remove("is-shown");
@@ -176,11 +185,38 @@ function showRight() {
 
   leftTab.addEventListener("click", showLeft);
 }
+//back function WIP!!!
+department.querySelector("a").addEventListener("click", function (e) {
+  e.preventDefault();
+});
+
+function backToArchive() {
+  document.querySelector("body").style.backgroundColor = "var(--gray)";
+  window.removeEventListener("scroll", showLeft);
+  window.scroll(0, 0);
+
+  rightCol.style.animation = "slideHalf 0.4s linear forwards";
+
+  leftCol.querySelector(".media-library").classList.remove("hidden");
+  rightCol.querySelector(".artist-directory").classList.remove("hidden");
+  updateWrapperHeight();
+
+  leftTab.classList.remove("is-shown");
+  rightTab.classList.remove("is-shown");
+  department.classList.add("is-major");
+
+  setTimeout(() => {
+    window.addEventListener("scroll", showLeft);
+  }, "1200");
+
+  window.history.pushState({}, "", "/archive");
+}
 
 // Event listeners
 leftCol.addEventListener("click", showLeft);
 rightCol.addEventListener("click", showRight);
 window.addEventListener("scroll", showLeft);
+department.addEventListener("click", backToArchive);
 
 // Check the URL hash when the page loads
 window.addEventListener("load", () => {

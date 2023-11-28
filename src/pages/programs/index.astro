@@ -52,16 +52,20 @@ import PastPrograms from "../../components/sections/PastPrograms.astro";
     display: flex;
     flex-grow: 1;
 
+    .hidden {
+      visibility: hidden;
+    }
+
     .department,
     .subpage {
       flex-shrink: 0;
       position: sticky;
       top: 44px;
       cursor: pointer;
+      z-index: 10;
     }
     .subpage {
       visibility: hidden;
-      background-color: var(--white), #fff;
     }
     .is-shown {
       visibility: visible;
@@ -114,17 +118,23 @@ function updateWrapperHeight() {
 
 function handleAnimationEnd(displayElement, hideElement) {
   return () => {
-    hideElement.style.display = "none";
-    displayElement.style.display = "flex";
+    // hideElement.style.boxShadow = "none";
+    // displayElement.style.display = "flex";
+    // hideElement.classList.add("hidden");
+    // displayElement.classList.remove("hidden");
     updateWrapperHeight();
   };
 }
 
 function showLeft() {
-  leftCol.querySelector(".current").style.display = "flex";
+  // leftCol.querySelector(".current").style.display = "flex";
+  window.removeEventListener("scroll", showLeft);
+  window.scroll(0, 0);
+  leftCol.querySelector(".current").classList.remove("hidden");
   rightCol.style.animation = "slideOut 0.4s linear forwards";
   pastTab.classList.add("is-shown");
   currentTab.classList.remove("is-shown");
+  currentTab.style.zIndex = 0;
   department.classList.remove("is-major");
   window.history.pushState({}, "", "#current-upcoming");
 
@@ -138,12 +148,17 @@ function showLeft() {
   );
 
   pastTab.addEventListener("click", showRight);
+
+  setTimeout(() => {
+    window.addEventListener("scroll", showLeft);
+  }, "1200");
 }
 
 function showRight() {
   window.removeEventListener("scroll", showLeft);
-
-  rightCol.querySelector(".past").style.display = "flex";
+  window.scroll(0, 0);
+  // rightCol.querySelector(".past").style.display = "flex";
+  rightCol.querySelector(".past").classList.remove("hidden");
   rightCol.style.animation = "slideIn 0.4s linear forwards";
   currentTab.classList.add("is-shown");
   pastTab.classList.remove("is-shown");
@@ -171,15 +186,15 @@ function backToProgram() {
   window.removeEventListener("scroll", showLeft);
   window.scroll(0, 0);
 
-  leftCol.querySelector(".current").style.display = "flex";
-  rightCol.querySelector(".past").style.display = "flex";
+  rightCol.style.animation = "slideHalf 0.4s linear forwards";
+
+  leftCol.querySelector(".current").classList.remove("hidden");
+  rightCol.querySelector(".past").classList.remove("hidden");
   updateWrapperHeight();
 
   currentTab.classList.remove("is-shown");
   pastTab.classList.remove("is-shown");
   department.classList.add("is-major");
-
-  rightCol.style.animation = "slideHalf 0.4s linear forwards";
 
   setTimeout(() => {
     window.addEventListener("scroll", showLeft);
@@ -189,8 +204,8 @@ function backToProgram() {
 }
 
 // Event listeners
-  leftCol.addEventListener("click", showLeft);
-  rightCol.addEventListener("click", showRight);
-  window.addEventListener("scroll", showLeft);
-  department.addEventListener("click", backToProgram);
+leftCol.addEventListener("click", showLeft);
+rightCol.addEventListener("click", showRight);
+window.addEventListener("scroll", showLeft);
+department.addEventListener("click", backToProgram);
 </script>
