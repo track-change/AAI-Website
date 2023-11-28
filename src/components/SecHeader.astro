@@ -8,17 +8,13 @@ const { title,color } = Astro.props;
 ---
 
 <div class="section-header">
-    <p data-sec-title>{title}</p>
+    <div class="caption">{title}</p>
 </div>
 
 <style lang="scss" is:global define:vars={{ color }}>
     .section-header {
         width: 100%;
-        padding: 40px 0;
-        [data-sec-title] {
-            padding-top: 4px;
-            border-top: 1px solid var(--color, #000);
-            color: var(--color, #000);
-        }
+        border-top: 1px solid var(--color, #000);
+        color: var(--color, #000);
     }
 </style>

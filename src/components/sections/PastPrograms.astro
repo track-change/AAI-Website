@@ -46,11 +46,11 @@ const sortedSeasons = Object.entries(programsBySeason).sort(
 
 <SectionLayout className="past" backGround="var(--white)">
   <h2 class="title">Past Seasons</h2>
-  <div class="filters caption">
-    <ul class="caption">
+  <div class="filters">
+    <ul>
       <li>Sort by</li>
       <li>
-        <ul class="caption">
+        <ul>
           <li>Most recent to oldest</li>
           <li>Oldest to most recent</li>
           <li>Alphabetical</li>
@@ -83,12 +83,11 @@ const sortedSeasons = Object.entries(programsBySeason).sort(
       </li>
     </ul>
   </div>
-
-  <div>
+  <div class="seasons-wrapper">
     {
       sortedSeasons.map(([season, programs]) => (
         <section id={season} class="past-seasons">
-          <h4 class="season-title">{season}</h4>
+          <h2 class="season-title gray-out">{season}</h2>
           <ul class="list is-hidden">
             {programs.map((program) => (
               <li class="list-item">
@@ -99,11 +98,11 @@ const sortedSeasons = Object.entries(programsBySeason).sort(
                       alt={program.name}
                     />
                   )}
-                  <h4>{program.name}</h4>
+                  <h6>{program.name}</h6>
 
-                  <ul class="caption">
-                    <li class="grayout">{program.type}</li>
-                    <li>
+                  <ul>
+                    <li class="caption">{program.type}</li>
+                    <li class="caption">
                       {formatDateRange(
                         `${program.startDateTime}—${program.endDateTime}`
                       )}
@@ -120,46 +119,63 @@ const sortedSeasons = Object.entries(programsBySeason).sort(
 </SectionLayout>
 
 <style lang="scss">
-  section:last-child {
-    border-bottom: 1px solid var(--black);
+  h2.title {
+    line-height: 0.75;
+  }
+  .seasons-wrapper {
+    display: flex; 
+    flex-wrap: wrap;
+    column-gap: var(--l-margin);
+    // row-gap: var(--s-margin);
   }
   section {
-    width: 100%;
-
+    gap: 0;
+    width: fit-content;
+    height: fit-content;
     display: flex;
     flex-direction: column;
 
-    border-top: 1px solid var(--black);
-
+    // border-top: 1px solid var(--black); 
+    // &:last-child {
+    //   border-bottom: 1px solid var(--black);
+    // }
     .season-title {
-      padding: 8px 0;
+      // padding: 8px 0;
+      margin-bottom:0.25em;
       cursor: pointer;
+      transition: all 100ms ;
     }
 
     .list {
-      padding: 4rem 0;
+      padding: 0;
       display: flex;
       flex-direction: row;
       flex-wrap: wrap;
-      justify-content: space-around;
+      justify-content: flex-start;
       align-items: flex-start;
-      gap: 4rem;
+      gap: var(--s-margin);
+      margin-bottom: var(--l-margin);
+      // margin: var(--l-margin) 0;
+      padding-bottom: var(--l-margin);
 
       .list-item {
-        max-width: 45%;
+        max-width: 480px;
+        h6 {
+          line-height: 1;
+          margin-top: 0.5em;
+        }
 
-        // display: flex;
-        // flex-direction: column;
-        // text-align: center;
         [data-link] {
           display: flex;
           flex-direction: column;
-          // align-items: center;
-          gap: 0.5rem;
-          text-align: center;
-          .grayout {
-            margin-bottom: 0.5rem;
-            color: var(--darkGray);
+          // gap: 1rem;
+          // text-align: center;
+          transition: color 100ms var(--ease);
+          &:hover {
+            img {transform: translateY(-5px);}
+            img {transition: transform 100ms var(--ease);}
+          }
+          .caption {
             text-transform: capitalize;
           }
         }
@@ -167,6 +183,9 @@ const sortedSeasons = Object.entries(programsBySeason).sort(
     }
     .is-hidden {
       display: none;
+    }
+    .is-black {
+      color: black;
     }
   }
 
@@ -176,9 +195,8 @@ const sortedSeasons = Object.entries(programsBySeason).sort(
   .filters > * > * > *,
   .filters > * > * > * > * {
     display: flex;
-    gap: 1rem;
-    color: var(--darkGray);
-    font-size: var(--caption-font-size);
+    column-gap: 1rem;
+    font-size: var(--small-caption-font-size);
   }
   .filters {
     justify-content: space-between;
@@ -188,14 +206,15 @@ const sortedSeasons = Object.entries(programsBySeason).sort(
   }
 </style>
 <script async>
-const sections = document.querySelectorAll(".past-seasons");
+  const sections = document.querySelectorAll(".past-seasons");
 
-sections.forEach((section) => {
-  const secHeader = section.querySelector(".season-title");
-  const secPrograms = section.querySelector(".list");
-  secHeader.addEventListener("click", () => {
-    secPrograms.classList.toggle("is-hidden");
-    updateWrapperHeight();
+  sections.forEach((section) => {
+    const secHeader = section.querySelector(".season-title");
+    const secPrograms = section.querySelector(".list");
+    secHeader.addEventListener("click", () => {
+      secPrograms.classList.toggle("is-hidden");
+      secHeader.classList.toggle("is-black");
+      updateWrapperHeight();
+    });
   });
-});
 </script>

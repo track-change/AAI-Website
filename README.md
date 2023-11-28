@@ -3,14 +3,20 @@
 -----
 ## Front-End
 - [x] Image carousel
-- [ ] Calendar
+
 - [x] Homepage
 - [x] Venue
 - [ ] single form pages
-- [ ] Donate embed / need to reach out to Jino
+- [ ] about section 
+- [ ] Donate embed
 - [x] CSS variables clean-up
 - [x] margin variables clean-up
 - [ ] responsive
+- [ ] filtering
+    - [ ] Calendar
+- [ ] search
+- [ ] finish navigation
+
 
 ## Back-End
 - [ ] Reference (related programs)

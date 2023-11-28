@@ -35,20 +35,23 @@ const { pageTitle, bannerSrc, ctas, frontCaptions, tags } =
         {tags?.map((tag) => <Tag tagRef={tag._ref} />)}
       </div>
 
-      <div class="CTA-wrapper">
-        {
-          ctas?.map((cta: Entry) => (
-            <CTA
-              type="default"
-              text={cta.displayTitle}
-              value={cta.value}
-              chooseFile={cta.chooseFile}
-            />
-          ))
-        }
-      </div>
+      {
+        (ctas && ctas.length > 0) ? (
+          <div class="CTA-wrapper">
+            {ctas.map((cta: Entry) => (
+              <CTA
+                type="default"
+                text={cta.displayTitle}
+                value={cta.value}
+                chooseFile={cta.chooseFile}
+              />
+            ))}
+          </div>
+        ) : null
+      }
 
-      <FrontCaption frontCaptions={frontCaptions} />
+
+      {frontCaptions? (<FrontCaption frontCaptions={frontCaptions} />) : null}
       <slot />
     </main>
   </div>
@@ -71,40 +74,29 @@ const { pageTitle, bannerSrc, ctas, frontCaptions, tags } =
   }
   main {
     flex: 1;
+    padding: var(--l-margin);
+
+    .title {
+      line-height: 0.75;
+    }
   }
 
   .banner,
   .body-copy {
     width: 100%;
     max-width: var(--inner-max-width);
-    margin: 0 16px;
+    // margin: 0 16px;
     display: flex;
     flex-direction: column;
   }
-  .title {
-    margin: 40px;
-    @media screen and (max-width: 64rem) {
-      margin: 32px;
-    }
-    @media screen and (max-width: 48rem) {
-      margin: 16px;
-    }
-    @media screen and (max-width: 24.375rem) {
-      margin: 16px;
-    }
-  }
 
   .banner {
-    margin: 6.25rem auto;
-    gap: 1.25rem;
-
-    @media screen and (max-width: 24.375rem) {
-      margin: 2.5rem auto;
-    }
+    margin: var(--s-margin) auto;
+    gap: var(--s-margin);
   }
 
   .body-copy {
-    margin: 6.25rem auto;
+    margin: var(--s-margin) auto;
     display: flex;
     flex-direction: column;
     gap: 2em 0;
@@ -112,29 +104,11 @@ const { pageTitle, bannerSrc, ctas, frontCaptions, tags } =
 
   .CTA-wrapper {
     width: 100%;
-    max-width: 800px;
-
-    @media screen and (max-width: 64rem) {
-      max-width: 40rem;
-    }
-    @media screen and (max-width: 48rem) {
-      max-width: 30rem;
-      // margin: 0 16px;
-    }
-
-    @media screen and (max-width: 35.5rem) {
-      background-color: red;
-      width: calc(100% - 4.4rem);
-      // margin: 0 16px;
-    }
-    @media screen and (max-width: 24.375rem) {
-      width: calc(100% - 32px);
-      // margin: 0 16px;
-    }
+    max-width: var(--inner-max-width);
 
     display: grid;
     grid-template-columns: 1fr 1fr;
-    margin: 6.25rem auto;
+    margin: var(--s-margin) auto;
 
     * {
       width: 100%;
