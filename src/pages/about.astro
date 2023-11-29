@@ -1,47 +1,53 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import AboutSec from "../components/sections/AboutSec.astro";
 import SideTab from "../components/SideTab.astro";
+import Funder from "../components/sections/Funder.astro";
+import People from "../components/sections/People.astro";
+import AboutSec from "../components/sections/AboutSec.astro";
+import ContactUs from "../components/sections/ContactUs.astro";
+
 ---
 
 <Layout title="About">
   <div data-top>
+    <SideTab text="About" href="#" style="department" />
     <article data-wrapper>
-      <SideTab text="About" href="#" style="department" />
       <AboutSec />
+      <div class="vert-tabs">
+        <ContactUs />
+        <Funder />
+        <People />
+
+      </div>
     </article>
   </div>
 </Layout>
 <style type="scss">
-  [data-wrapper] {
+  .about-sec {
+    position: absolute;
+    top: 0;
+  }
+  [data-top] {
     width: 100vw;
     min-height: 100vh;
 
     display: flex;
     flex-direction: row;
-    position: sticky;
     top: 45px;
     left: 0;
 
-    .list {
-      display: grid;
-      grid-template-columns: 1fr 1fr 1fr;
-      white-space: nowrap;
-      position: relative;
+    [data-wrapper] {
       width: 100%;
+      display: flex;
+      flex-direction: column;
 
-      .list-item {
-        writing-mode: vertical-rl;
-        text-orientation: mixed;
-        width: 100%;
-        box-shadow: -10px 0px 14px 0px rgba(0, 0, 0, 0.2);
+      .vert-tabs {
         display: flex;
-        align-items: flex-end;
-        padding: 40px;
+        flex-direction: column;
+
       }
     }
   }
-
 </style>
 
 <script async></script>

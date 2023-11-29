@@ -39,12 +39,14 @@ const { backGround, textColor, className } = Astro.props as Prop
   }
 
   .banner {
-    padding: 6.25rem auto;
-    gap: 1.25rem;
+    width: 100%;
+    max-width: var(--inner-max-width);
 
-    @media screen and (max-width: 24.375rem) {
-      padding: 2.5rem auto;
-    }
+    display: flex;
+    flex-direction: column;
+
+    margin: var(--s-margin) auto;
+    gap: var(--l-margin);
   }
 
   .text,

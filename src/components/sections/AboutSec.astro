@@ -3,15 +3,13 @@ import SecHeader from "../SecHeader.astro";
 import SectionLayout from "../../layouts/SectionLayout.astro";
 import { getAboutSec } from "../../data/api";
 import { urlFor } from "../../utils/image";
+import { PortableText } from "astro-portabletext";
 
 const about = await getAboutSec();
 
-interface AboutSec {
-  invert?: boolean;
-}
 ---
 
-<SectionLayout backGround="black" textColor="white" title="About section">
+<SectionLayout backGround="black" textColor="white" className="about-sec">
   <div class="title">
     <h2>{about.title}</h2>
   </div>
@@ -21,6 +19,7 @@ interface AboutSec {
       (entry) =>
         entry._type === "body" ? (
           <p class="text">{entry.value}</p>
+          // <PortableText value={entry.value}></PortableText>
         ) : entry._type === "subheading" ? (
           <SecHeader color="white" title={entry.value} />
         ) : entry._type === "image" ? (

@@ -10,6 +10,9 @@ import type {
   Ticket,
   Visit,
   About,
+  Contact,
+  Funder,
+  People,
   Venue,
   Home,
   Banner,
@@ -96,6 +99,24 @@ export async function getAboutSec(): Promise<About> {
   return about;
 }
 
+export async function getContactUs(): Promise<Contact> {
+  const query = groq`*[_type == "contactUs" && _id == "contactUs"][0]`;
+  const contact = await useSanityClient().fetch(query);
+  return contact
+}
+
+export async function getFunder(): Promise<Funder> {
+  const query = groq`*[_type == "support" && _id == "support"][0]`;
+  const funder = await useSanityClient().fetch(query);
+  return funder
+}
+
+export async function getPeople(): Promise<People> {
+  const query = groq`*[_type == "people" && _id == "people"][0]`;
+  const people = await useSanityClient().fetch(query);
+  return people
+}
+
 export async function getFileLink(fileRef: string): Promise<string | null> {
   try {
     const file = await useSanityClient().getDocument(fileRef);
@@ -110,6 +131,13 @@ export async function getFileLink(fileRef: string): Promise<string | null> {
     return null;
   }
 }
+
+export async function getPersonByRef(ref: string): Promise<People> {
+  const query = groq`*[_type == "person" && _id == $ref][0]`;
+  const people = await useSanityClient().fetch(query, { ref });
+  return people;
+}
+
 
 export async function getFormByRef(ref: string): Promise<Form> {
   const query = groq`*[_type == "form" && _id == $ref][0]`;

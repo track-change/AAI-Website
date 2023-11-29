@@ -58,7 +58,7 @@ export interface Program {
   curator: string;
   artists: Artist[];
   description: PortableTextBlock[];
-  images: ImageAsset[];
+  images: Array<ImageAsset>;
   tags: {
     _ref: string;
   }[];
@@ -72,6 +72,7 @@ export interface Tag {
   _ref: string;
   tag: string;
 }
+
 export interface Education {
   _type: string;
   _id: string;
@@ -171,11 +172,96 @@ export interface About {
   content: Array<{
     _key: string;
     _type: string;
-    value?: string;
+    value?: PortableTextBlock[];
     asset?: ImageAsset;
     alt?: string;
     caption?: string;
   }>;
+}
+
+export interface Contact {
+  _type: string;
+  _id: string;
+  title: string;
+  content: Array<{
+    _type: string;
+    _key: string;
+    sectionTitle?: string;
+    value: PortableTextBlock[];
+  }>;
+  banners: {
+    _ref: string;
+    _type: string;
+    _key: string;
+  }[];
+}
+
+export interface Funder {
+  _type: string;
+  _id: string;
+  title: string;
+  coverImage?: ImageAsset;
+  body: PortableTextBlock[];
+  funders: Array<{
+    _key: string;
+    _type: string;
+    name: string;
+    isMajorFunder: boolean;
+    logo?: {
+      _type: string;
+      alt?: string;
+      asset: ImageAsset | undefined;
+    };
+  }>
+}
+
+export interface People {
+  _type: string;
+  _id: string;
+  title: string;
+  name: string;
+  affiliations: string;
+  pronouns: string;
+  role: string;
+  ext: string;
+  bio: PortableTextBlock[];
+  profileImage: ImageAsset;
+  coverImage: {
+    asset: ImageAsset | undefined;
+    alt: string;
+    _ref: string;
+    _type: string;
+  };
+  body: PortableTextBlock[];
+  jobTitle: PortableTextBlock[];
+  boardOfDirectors: {
+    name: string;
+    _ref: string;
+  }[];
+  staff: {
+    name: string;
+    _ref: string;
+  }[];
+  banners: {
+    _ref: string;
+    _type: string;
+  }[];
+}
+
+
+export interface Person {
+  name: string;
+  _type: string;
+  _id: string;
+  _ref: string;
+  profileImage: ImageAsset;
+  pronouns: string;
+  role: string;
+  ext: string;
+  isBoardMember: boolean;
+  affiliations: string;
+  bio: PortableTextBlock[];
+  jobTitle: PortableTextBlock[];
 }
 
 export interface Home {
