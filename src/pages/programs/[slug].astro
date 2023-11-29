@@ -4,6 +4,8 @@ import { PortableText } from "astro-portabletext";
 import ProgramLayout from "../../layouts/ProgramLayout.astro";
 import { getPrograms, getProgramBySlug } from "../../data/api";
 import { urlFor } from "../../utils/image";
+import Carousel from "../../components/Carousel.astro";
+import SecHeader from "../../components/SecHeader.astro";
 
 export async function getStaticPaths() {
   const programs = await getPrograms();
@@ -29,4 +31,16 @@ const program = await getProgramBySlug(slug);
     <!-- <h1>{program.name}</h1> -->
     <PortableText value={program.description} />
   </section>
+
+  {
+    program.images && (
+      <>
+        <SecHeader title="Installation View" />
+        <Carousel
+          images={program.images}
+          alt={program.images.map((image) => image.alt)}
+        />
+      </>
+    )
+  }
 </ProgramLayout>

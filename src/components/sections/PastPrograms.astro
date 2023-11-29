@@ -14,6 +14,9 @@ const pastPrograms = programs.filter(
 const programsBySeason: { [key: string]: Program[] } = {};
 pastPrograms.forEach((program) => {
   const season = program.season;
+  if (season != undefined) {
+    const year = season.split(" ").pop();
+  }
   if (!programsBySeason[season]) {
     programsBySeason[season] = [];
   }
@@ -86,9 +89,9 @@ const sortedSeasons = Object.entries(programsBySeason).sort(
   <div class="seasons-wrapper">
     {
       sortedSeasons.map(([season, programs]) => (
-        <section id={season} class="past-seasons">
-          <h2 class="season-title gray-out">{season}</h2>
-          <ul class="list is-hidden">
+        <section id={season.split(" ").pop()} class="past-seasons">
+          <h2 class="season-title gray-out">{season.split(" ").pop()}</h2>
+          <ul class="list">
             {programs.map((program) => (
               <li class="list-item">
                 <a data-link href={`/programs/${program.slug.current}`}>
@@ -123,7 +126,7 @@ const sortedSeasons = Object.entries(programsBySeason).sort(
     line-height: 0.75;
   }
   .seasons-wrapper {
-    display: flex; 
+    display: flex;
     flex-wrap: wrap;
     column-gap: var(--l-margin);
     // row-gap: var(--s-margin);
@@ -135,15 +138,15 @@ const sortedSeasons = Object.entries(programsBySeason).sort(
     display: flex;
     flex-direction: column;
 
-    // border-top: 1px solid var(--black); 
+    // border-top: 1px solid var(--black);
     // &:last-child {
     //   border-bottom: 1px solid var(--black);
     // }
     .season-title {
       // padding: 8px 0;
-      margin-bottom:0.25em;
+      margin-bottom: 0.25em;
       cursor: pointer;
-      transition: all 100ms ;
+      transition: all 100ms;
     }
 
     .list {
@@ -172,8 +175,12 @@ const sortedSeasons = Object.entries(programsBySeason).sort(
           // text-align: center;
           transition: color 100ms var(--ease);
           &:hover {
-            img {transform: translateY(-5px);}
-            img {transition: transform 100ms var(--ease);}
+            img {
+              transform: translateY(-5px);
+            }
+            img {
+              transition: transform 100ms var(--ease);
+            }
           }
           .caption {
             text-transform: capitalize;
@@ -206,15 +213,15 @@ const sortedSeasons = Object.entries(programsBySeason).sort(
   }
 </style>
 <script async>
-  const sections = document.querySelectorAll(".past-seasons");
+const sections = document.querySelectorAll(".past-seasons");
 
-  sections.forEach((section) => {
-    const secHeader = section.querySelector(".season-title");
-    const secPrograms = section.querySelector(".list");
-    secHeader.addEventListener("click", () => {
-      secPrograms.classList.toggle("is-hidden");
-      secHeader.classList.toggle("is-black");
-      updateWrapperHeight();
-    });
+sections.forEach((section) => {
+  const secHeader = section.querySelector(".season-title");
+  const secPrograms = section.querySelector(".list");
+  secHeader.addEventListener("click", () => {
+    secPrograms.classList.toggle("is-hidden");
+    secHeader.classList.toggle("is-black");
+    updateWrapperHeight();
   });
+});
 </script>
