@@ -1,0 +1,128 @@
+---
+import SecHeader from "../SecHeader.astro";
+import SectionLayout from "../../layouts/SectionLayout.astro";
+import { getPeople, getPersonByRef } from "../../data/api";
+import { urlFor } from "../../utils/image";
+import { PortableText } from "astro-portabletext";
+
+const people = await getPeople();
+
+const boardMembers = await Promise.all(
+  people.boardOfDirectors.map((block) => getPersonByRef(block._ref))
+);
+const staff = await Promise.all(
+  people.staff.map((block) => getPersonByRef(block._ref))
+);
+console.log(staff[0]);
+---
+
+<SectionLayout
+  backGround="var(--white)"
+  textColor="var(--black)"
+  className="people"
+>
+  <div class="title">
+    <h1>{people.title}</h1>
+  </div>
+
+  <div class="banner">
+    {
+      people.coverImage.asset && (
+        <img
+          class="cover-image"
+          src={urlFor(people.coverImage.asset).url()}
+          alt={people.coverImage.alt}
+        />
+      )
+    }
+    <PortableText value={people.body} />
+  </div>
+  <SecHeader title="Board of Directors" />
+
+  <div class="list-profile">
+    {
+      boardMembers.map((entry) => (
+        <div class="item-profile">
+          <div class="profile-title">
+            <p>{entry.name}</p>
+            {entry.affiliations ? (
+              <em class="caption"> {entry.affiliations} </em>
+            ) : null}
+          </div>
+
+          <PortableText value={entry.jobTitle} class="caption" />
+        </div>
+      ))
+    }
+  </div>
+  <SecHeader title="Staff" />
+
+  <div class="list-staff-profile">
+    {
+      staff.map((staff) => (
+        <div class="item-profile">
+          {staff.profileImage ? (
+            <img
+              src={urlFor(staff.profileImage).url()}
+              alt={staff.name}
+              class="profile-image"
+            />
+          ) : null}
+
+          <div class="profile-title">
+            <p>{staff.name}</p>
+            <div class="small-caption">({staff.pronouns})</div>
+
+            <div class="caption">
+            {staff.role} | {staff.ext}
+          </div>
+
+          <div class="collapsible">
+            <PortableText value={staff.bio} class="caption" />
+          </div>
+          </div>
+
+
+        </div>
+      ))
+    }
+  </div>
+</SectionLayout>
+<style lang="scss">
+  .list-profile {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 100px;
+    max-width: var(--inner-max-width);
+    margin: var(--l-margin) auto;
+
+    .item-profile {
+      display: flex;
+      flex-direction: column;
+      gap: var(--s-margin);
+    }
+  }
+  .list-staff-profile {
+    gap: 100px;
+    margin: var(--l-margin) auto;
+
+    .item-profile {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--l-margin);
+    }
+  }
+
+  .is-hidden {
+    display: none;
+  }
+</style>
+<script async>
+  const profiles = document.querySelector(".staff").querySelector(".item-profile");
+  const profileImage = profiles.querySelector(".profile-image");
+  const collapsible = profiles.querySelector(".collapsible")
+  console.log(profiles)
+  profileImage.addEventListener("click", ()=>{
+    collapsible.classList.toggle("is-hidden")
+  } )
+</script>

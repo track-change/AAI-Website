@@ -1,0 +1,31 @@
+---
+import SecHeader from "../SecHeader.astro";
+import SectionLayout from "../../layouts/SectionLayout.astro";
+import { getContactUs } from "../../data/api";
+import { urlFor } from "../../utils/image";
+import { PortableText } from "astro-portabletext";
+
+const contact = await getContactUs();
+---
+<SectionLayout backGround="var(--yellow)" textColor="var(--black)" className="contact-us">
+    <div class="title">
+        <h1>{contact.title}</h1>
+      </div>
+<div class="banner">
+
+      <div class="list-contact">
+      {contact.content.map((entry)=> (
+       <p> {entry.sectionTitle} </p>
+       <PortableText value={entry.value}  class="caption"></PortableText>
+      ))}
+      </div>
+    </div>
+
+</SectionLayout>
+<style lang="scss">
+    .list-contact {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 100px;
+    }
+</style>

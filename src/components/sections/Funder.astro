@@ -1,0 +1,58 @@
+---
+import SecHeader from "../SecHeader.astro";
+import SectionLayout from "../../layouts/SectionLayout.astro";
+import { getFunder } from "../../data/api";
+import { urlFor } from "../../utils/image";
+import { PortableText } from "astro-portabletext";
+
+const funder = await getFunder();
+---
+
+<SectionLayout
+  backGround="var(--purple)"
+  textColor="var(--black)"
+  className="funder"
+>
+  <div class="title">
+    <h1>{funder.title}</h1>
+  </div>
+  <div class="banner">
+    <PortableText value={funder.body} />
+
+
+    {
+      funder.funders && (
+        <SecHeader title="Major Funders" />
+        <div class="list-funders">
+        {funder.funders.map((entry) =>
+            entry.isMajorFunder && (
+              entry.logo && (
+                  <img class="funder-logo" src={urlFor(entry.logo).url()} alt={entry.logo.alt} />
+                  <p>{entry.name}</p>
+              )
+            )
+        )}
+        </div>
+      )
+     }
+     
+      
+      {
+        funder.funders && (
+        <SecHeader title="Funders" />
+            <div class="list-funders">
+                {funder.funders.map((entry) => !entry.isMajorFunder && <p>{entry.name}</p>)}
+            </div>
+        )
+     }
+    
+  </div>
+</SectionLayout>
+<style lang="scss">
+  .list-funders {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 100px;
+
+  }
+</style>
