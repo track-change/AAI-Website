@@ -14,9 +14,20 @@ const funder = await getFunder();
   className="funder"
 >
   <div class="title">
-    <h1>{funder.title}</h1>
+    <!-- <h1>{funder.title}</h1> -->
+    <h1>Partnership</h1>
   </div>
+
   <div class="banner">
+    {
+      funder.coverImage.asset && (
+        <img
+          class="cover-image"
+          src={urlFor(funder.coverImage.asset).url()}
+          alt={funder.coverImage.alt}
+        />
+      )
+    }
     <PortableText value={funder.body} />
 
 
@@ -26,8 +37,8 @@ const funder = await getFunder();
         <div class="list-funders">
         {funder.funders.map((entry) =>
             entry.isMajorFunder && (
-              entry.logo && (
-                  <img class="funder-logo" src={urlFor(entry.logo).url()} alt={entry.logo.alt} />
+              entry.logo.asset && (
+                  <img class="funder-logo" src={urlFor(entry.logo.asset).url()} alt={entry.logo.alt} />
                   <p>{entry.name}</p>
               )
             )

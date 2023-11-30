@@ -13,6 +13,8 @@ import type {
   Contact,
   Funder,
   People,
+  Person,
+  Opportunities,
   Venue,
   Home,
   Banner,
@@ -117,6 +119,12 @@ export async function getPeople(): Promise<People> {
   return people
 }
 
+export async function getOpportunities(): Promise<Opportunities> {
+  const query = groq`*[_type == "opportunities" && _id == "opportunities"][0]`;
+  const opportunities = await useSanityClient().fetch(query);
+  return opportunities
+}
+
 export async function getFileLink(fileRef: string): Promise<string | null> {
   try {
     const file = await useSanityClient().getDocument(fileRef);
@@ -132,7 +140,7 @@ export async function getFileLink(fileRef: string): Promise<string | null> {
   }
 }
 
-export async function getPersonByRef(ref: string): Promise<People> {
+export async function getPersonByRef(ref: string): Promise<Person> {
   const query = groq`*[_type == "person" && _id == $ref][0]`;
   const people = await useSanityClient().fetch(query, { ref });
   return people;

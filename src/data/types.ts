@@ -200,14 +200,19 @@ export interface Funder {
   _type: string;
   _id: string;
   title: string;
-  coverImage?: ImageAsset;
+  coverImage: {
+    asset: ImageAsset | undefined;
+    alt: string;
+    _ref: string;
+    _type: string;
+  };
   body: PortableTextBlock[];
   funders: Array<{
     _key: string;
     _type: string;
     name: string;
     isMajorFunder: boolean;
-    logo?: {
+    logo: {
       _type: string;
       alt?: string;
       asset: ImageAsset | undefined;
@@ -219,13 +224,6 @@ export interface People {
   _type: string;
   _id: string;
   title: string;
-  name: string;
-  affiliations: string;
-  pronouns: string;
-  role: string;
-  ext: string;
-  bio: PortableTextBlock[];
-  profileImage: ImageAsset;
   coverImage: {
     asset: ImageAsset | undefined;
     alt: string;
@@ -233,7 +231,6 @@ export interface People {
     _type: string;
   };
   body: PortableTextBlock[];
-  jobTitle: PortableTextBlock[];
   boardOfDirectors: {
     name: string;
     _ref: string;
@@ -262,6 +259,18 @@ export interface Person {
   affiliations: string;
   bio: PortableTextBlock[];
   jobTitle: PortableTextBlock[];
+}
+
+export interface Opportunities {
+  _type: string;
+  _id: string;
+  name: string;
+  title: string;
+  coverImage: {
+    asset: ImageAsset | undefined;
+    alt: string;
+  };
+  body: PortableTextBlock[];
 }
 
 export interface Home {

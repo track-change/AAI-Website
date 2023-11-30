@@ -7,13 +7,12 @@ import { PortableText } from "astro-portabletext";
 
 const people = await getPeople();
 
-const boardMembers = await Promise.all(
+const board = await Promise.all(
   people.boardOfDirectors.map((block) => getPersonByRef(block._ref))
 );
 const staff = await Promise.all(
   people.staff.map((block) => getPersonByRef(block._ref))
 );
-console.log(staff[0]);
 ---
 
 <SectionLayout
@@ -41,7 +40,7 @@ console.log(staff[0]);
 
   <div class="list-profile">
     {
-      boardMembers.map((entry) => (
+      board.map((entry) => (
         <div class="item-profile">
           <div class="profile-title">
             <p>{entry.name}</p>
@@ -57,10 +56,10 @@ console.log(staff[0]);
   </div>
   <SecHeader title="Staff" />
 
-  <div class="list-staff-profile">
+  <div class="list-staff">
     {
       staff.map((staff) => (
-        <div class="item-profile">
+        <div class="item-profile is-collapsed">
           {staff.profileImage ? (
             <img
               src={urlFor(staff.profileImage).url()}
@@ -71,18 +70,17 @@ console.log(staff[0]);
 
           <div class="profile-title">
             <p>{staff.name}</p>
-            <div class="small-caption">({staff.pronouns})</div>
+            <div class="caption">{staff.pronouns}</div>
 
             <div class="caption">
-            {staff.role} | {staff.ext}
-          </div>
+              {staff.role}
+              {staff.ext && `| ${staff.ext}`}
+            </div>
 
-          <div class="collapsible">
-            <PortableText value={staff.bio} class="caption" />
+            <div class="profile-bio">
+              <PortableText value={staff.bio} />
+            </div>
           </div>
-          </div>
-
-
         </div>
       ))
     }
@@ -100,29 +98,61 @@ console.log(staff[0]);
       display: flex;
       flex-direction: column;
       gap: var(--s-margin);
+
+      .profile-bio {
+        display: block;
+      }
     }
   }
-  .list-staff-profile {
-    gap: 100px;
-    margin: var(--l-margin) auto;
+  .list-staff {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--s-margin);
+    width: fit-content;
 
     .item-profile {
+      max-width: 100%;
+      height: fit-content;
       display: grid;
       grid-template-columns: repeat(2, 1fr);
-      gap: var(--l-margin);
+      gap: var(--s-margin);
+      padding: calc(2 * var(--l-margin)) 0;
+
+      .profile-image {
+        object-fit: cover;
+        aspect-ratio: 2 / 3;
+        cursor: pointer;
+      }
+      .profile-bio {
+        max-width: var(--inner-max-width);
+        margin-top: 2em;
+      }
     }
   }
-
-  .is-hidden {
-    display: none;
+  .is-collapsed {
+    max-width: calc((100% - 2 * var(--s-margin))/3) !important;
+    grid-template-columns: repeat(1, 1fr) !important;
+    .profile-bio {
+      display: none !important;
+    }
   }
 </style>
 <script async>
-  const profiles = document.querySelector(".staff").querySelector(".item-profile");
-  const profileImage = profiles.querySelector(".profile-image");
-  const collapsible = profiles.querySelector(".collapsible")
-  console.log(profiles)
-  profileImage.addEventListener("click", ()=>{
-    collapsible.classList.toggle("is-hidden")
-  } )
+  const profiles = document
+    .querySelector(".list-staff")
+    .querySelectorAll(".item-profile");
+
+  profiles.forEach((p) => {
+    const image = p.querySelector(".profile-image");
+    const bio = p.querySelector(".profile-bio");
+    image.addEventListener("click", () => {
+      bio.classList.toggle("is-hidden");
+      p.classList.toggle("is-collapsed");
+      p.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+        inline: "nearest"
+      })
+    });
+  });
 </script>

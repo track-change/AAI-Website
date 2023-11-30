@@ -20,10 +20,10 @@ export function formatDateRange(dateRange: string): string {
   };
   
   if (startDay === endDay && startMonth === endMonth && startYear === endYear) {
-    return `${formatTime(startDate)}–${formatTime(endDate)}, ${startMonth} ${startDay}, ${startYear}`;
+    return `${formatTime(startDate)} &ndash; ${formatTime(endDate)}, ${startMonth} ${startDay}, ${startYear}`;
   } else if (startYear === endYear) {
-    return `${startMonth} ${startDay}–${endMonth} ${endDay}, ${startYear}`;
+    return `${startMonth} ${startDay}  &ndash; ${endMonth} ${endDay}, ${startYear}`;
   } else {
-    return `${startMonth} ${startDay}, ${startYear}–${endMonth} ${endDay}, ${endYear}`;
+    return `${startMonth} ${startDay}, ${startYear}  &ndash; ${endMonth} ${endDay}, ${endYear}`;
   }
 }
