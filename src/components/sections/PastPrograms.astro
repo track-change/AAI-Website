@@ -11,45 +11,25 @@ const pastPrograms = programs.filter(
   (program) => new Date(program.endDateTime) < currentDate
 );
 
-const programsBySeason: { [key: string]: Program[] } = {};
+const programsByYear: { [key: string]: Program[] } = {};
 pastPrograms.forEach((program) => {
-  const season = program.season;
-  if (season != undefined) {
-    const year = season.split(" ").pop();
+  const endDate = new Date(program.endDateTime);
+  const year = endDate.getFullYear();
+
+  if (!programsByYear[year]) {
+    programsByYear[year] = [];
   }
-  if (!programsBySeason[season]) {
-    programsBySeason[season] = [];
-  }
-  programsBySeason[season].push(program);
+  programsByYear[year].push(program);
 });
 
-const seasonValue = {
-  Winter: 1,
-  Spring: 2,
-  Summer: 3,
-  Fall: 4,
-};
-
-const sortedSeasons = Object.entries(programsBySeason).sort(
-  ([seasonA], [seasonB]) => {
-    const [seasonNameA, yearA] = seasonA.split(" ");
-    const [seasonNameB, yearB] = seasonB.split(" ");
-
-    if (yearA !== yearB) {
-      return parseInt(yearB) - parseInt(yearA);
-    } else {
-      return (
-        seasonValue[seasonNameB as keyof typeof seasonValue] -
-        seasonValue[seasonNameA as keyof typeof seasonValue]
-      );
-    }
-  }
+const sortedYears = Object.entries(programsByYear).sort(
+  ([yearA], [yearB]) => parseInt(yearB) - parseInt(yearA)
 );
 ---
 
 <SectionLayout className="past" backGround="var(--white)">
-  <h2 class="title">Past Seasons</h2>
-  <div class="filters">
+  <h1 class="title">Past Seasons</h1>
+  <!-- <div class="filters">
     <ul>
       <li>Sort by</li>
       <li>
@@ -85,115 +65,112 @@ const sortedSeasons = Object.entries(programsBySeason).sort(
         </ul>
       </li>
     </ul>
-  </div>
+  </div> -->
   <div class="seasons-wrapper">
-    {
-      sortedSeasons.map(([season, programs]) => (
-        <section id={season.split(" ").pop()} class="past-seasons">
-          <h2 class="season-title gray-out">{season.split(" ").pop()}</h2>
-          <ul class="list">
-            {programs.map((program) => (
-              <li class="list-item">
-                <a data-link href={`/programs/${program.slug.current}`}>
-                  {program.coverImage && (
-                    <img
-                      src={urlFor(program.coverImage).url()}
-                      alt={program.name}
-                    />
-                  )}
-                  <h6>{program.name}</h6>
+    <ul class="list-season-title">
+      {
+        sortedYears.map(([season, programs]) => (
+          <li class="season-title gray-out">
+            <h3>{season.split(" ").pop()}</h3>
+          </li>
+        ))
+      }
+    </ul>
 
-                  <ul>
-                    <li class="caption">{program.type}</li>
-                    <li class="caption">
-                      {formatDateRange(
-                        `${program.startDateTime}—${program.endDateTime}`
-                      )}
-                    </li>
-                  </ul>
-                </a>
-              </li>
-            ))}
-          </ul>
-        </section>
+    {
+      sortedYears.map(([season, programs]) => (
+        <ul id={season.split(" ").pop()} class="list-past-programs is-hidden">
+          {programs.map((program) => (
+            <li class="list-item">
+              <a data-link href={`/programs/${program.slug.current}`}>
+                {program.coverImage && (
+                  <img
+                    src={urlFor(program.coverImage).url()}
+                    alt={program.name}
+                  />
+                )}
+                <h4>{program.name}</h4>
+
+                <ul>
+                  <li class="caption gray-out">{program.type}</li>
+                  <li class="caption">
+                    {formatDateRange(
+                      `${program.startDateTime}—${program.endDateTime}`
+                    )}
+                  </li>
+                </ul>
+              </a>
+            </li>
+          ))}
+        </ul>
       ))
     }
   </div>
 </SectionLayout>
 
 <style lang="scss">
-  h2.title {
-    line-height: 0.75;
-  }
   .seasons-wrapper {
-    display: flex;
-    flex-wrap: wrap;
-    column-gap: var(--l-margin);
-    // row-gap: var(--s-margin);
-  }
-  section {
-    gap: 0;
-    width: fit-content;
-    height: fit-content;
-    display: flex;
-    flex-direction: column;
+    min-height: 100vh;
+    padding: var(--l-margin);
 
-    // border-top: 1px solid var(--black);
-    // &:last-child {
-    //   border-bottom: 1px solid var(--black);
-    // }
-    .season-title {
-      // padding: 8px 0;
-      margin-bottom: 0.25em;
-      cursor: pointer;
-      transition: all 100ms;
-    }
-
-    .list {
-      padding: 0;
+    .list-season-title {
+      padding: 4rem 0;
       display: flex;
-      flex-direction: row;
       flex-wrap: wrap;
-      justify-content: flex-start;
-      align-items: flex-start;
-      gap: var(--s-margin);
-      margin-bottom: var(--l-margin);
-      // margin: var(--l-margin) 0;
-      padding-bottom: var(--l-margin);
+      gap: 1rem;
 
-      .list-item {
-        max-width: 480px;
-        h6 {
-          line-height: 1;
-          margin-top: 0.5em;
-        }
-
-        [data-link] {
-          display: flex;
-          flex-direction: column;
-          // gap: 1rem;
-          // text-align: center;
-          transition: color 100ms var(--ease);
-          &:hover {
-            img {
-              transform: translateY(-5px);
-            }
-            img {
-              transition: transform 100ms var(--ease);
-            }
-          }
-          .caption {
-            text-transform: capitalize;
-          }
+      .season-title {
+        padding: 4px 8px;
+        cursor: pointer;
+        transition: all 100ms;
+        &:hover {
+          transform: translateY(-2px);
+          box-shadow: 2px 2px 0 2px black;
         }
       }
     }
-    .is-hidden {
-      display: none;
+  }
+
+  .list-past-programs {
+    padding: 0;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    // align-items: center;
+    gap: calc(2 * var(--l-margin));
+    margin-bottom: var(--l-margin);
+
+    .list-item {
+      max-width: 440px;
+
+      margin: var(--l-margin) 0;
+
+      [data-link] {
+        display: flex;
+        flex-direction: column;
+        text-align: center;
+        transition: color 100ms var(--ease);
+        img {
+          object-fit: contain;
+          width: auto;
+          height: auto;
+          max-height: 440px;
+          transition: transform 100ms var(--ease);
+          padding-bottom: 12px;
+          &:hover {
+            transform: translateY(-5px);
+          }
+        }
+      }
+      .caption {
+        text-transform: capitalize;
+      }
     }
-    .is-black {
-      color: black;
-    }
+  }
+
+  .is-hidden {
+    display: none;
   }
 
   .filters,
@@ -213,15 +190,35 @@ const sortedSeasons = Object.entries(programsBySeason).sort(
   }
 </style>
 <script async>
-const sections = document.querySelectorAll(".past-seasons");
+  const seasonTitle = document.querySelectorAll(".season-title");
+  const seasonList = document.querySelectorAll(".list-past-programs");
 
-sections.forEach((section) => {
-  const secHeader = section.querySelector(".season-title");
-  const secPrograms = section.querySelector(".list");
-  secHeader.addEventListener("click", () => {
-    secPrograms.classList.toggle("is-hidden");
-    secHeader.classList.toggle("is-black");
-    updateWrapperHeight();
+  // Hide all lists
+  seasonList.forEach((list) => {
+    list.classList.add("is-hidden");
   });
-});
+
+  // Show the first season list by default
+  seasonList[0].classList.remove("is-hidden");
+  seasonTitle[0].classList.remove("gray-out");
+
+  seasonTitle.forEach((title, i) => {
+    title.addEventListener("click", () => {
+      // Hide all lists
+      seasonList.forEach((list) => {
+        list.classList.add("is-hidden");
+      });
+
+      // Show the clicked list
+      seasonList[i].classList.remove("is-hidden");
+
+      // Remove 'gray-out' class from all titles
+      seasonTitle.forEach((title) => {
+        title.classList.add("gray-out");
+      });
+
+      // Remove 'gray-out' class from clicked title
+      title.classList.remove("gray-out");
+    });
+  });
 </script>

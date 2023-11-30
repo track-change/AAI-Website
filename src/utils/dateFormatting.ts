@@ -18,12 +18,12 @@ export function formatDateRange(dateRange: string): string {
     hours = hours ? hours : 12;
     return minutes === 0 ? `${hours} ${ampm}` : date.toLocaleTimeString("en-US", { hour: "numeric", minute: "numeric", hour12: true });
   };
-  
+
   if (startDay === endDay && startMonth === endMonth && startYear === endYear) {
-    return `${formatTime(startDate)} &ndash; ${formatTime(endDate)}, ${startMonth} ${startDay}, ${startYear}`;
+    return `${formatTime(startDate)} \u2013 ${formatTime(endDate)}, ${startMonth} ${startDay}, ${startYear}`;
   } else if (startYear === endYear) {
-    return `${startMonth} ${startDay}  &ndash; ${endMonth} ${endDay}, ${startYear}`;
+    return `${startMonth} ${startDay} \u2013 ${endMonth} ${endDay}, ${startYear}`;
   } else {
-    return `${startMonth} ${startDay}, ${startYear}  &ndash; ${endMonth} ${endDay}, ${endYear}`;
+    return `${startMonth} ${startDay}, ${startYear} \u2013 ${endMonth} ${endDay}, ${endYear}`;
   }
 }
