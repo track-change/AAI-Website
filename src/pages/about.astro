@@ -23,7 +23,8 @@ import Opportunities from "../components/sections/Opportunities.astro";
       </div>
       <div class="people hidden">
         <People />
-
+      </div>
+      <div class="opportunities hidden">
         <Opportunities />
       </div>
     </article>
@@ -55,7 +56,7 @@ import Opportunities from "../components/sections/Opportunities.astro";
     }
     .list {
       display: grid;
-      grid-template-columns: 1fr 1fr 1fr;
+      grid-template-columns: 1fr 1fr 1fr 1fr;
       white-space: nowrap;
       position: relative;
       width: 100%;
@@ -79,13 +80,16 @@ import Opportunities from "../components/sections/Opportunities.astro";
         background-color: var(--yellow);
       }
 
-      .Support,
-      .Funders {
+      .Partnership {
         background-color: var(--purple);
       }
 
       .People {
         background-color: var(--white);
+      }
+
+      .Opportunities {
+        background-color: var(--peach);
       }
     }
   }
