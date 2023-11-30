@@ -96,6 +96,7 @@ export interface Venue {
   frontCaptions: Array<Entry>;
   description: PortableTextBlock[];
   tags: Tag[];
+  matterport: string;
 }
 
 export interface Media {

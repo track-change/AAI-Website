@@ -1,5 +1,6 @@
 ---
 import type { InferGetStaticParamsType } from "astro";
+import SecHeader from "../../components/SecHeader.astro";
 import { PortableText } from "astro-portabletext";
 import VenueLayout from "../../layouts/VenueLayout.astro";
 import { getVenue, getVenueBySlug } from "../../data/api";
@@ -24,7 +25,41 @@ const venue = await getVenueBySlug(slug);
   ctas={venue.cta}
   frontCaptions={venue.frontCaptions}
 >
-  <section class="body-copy">
+  <section class="banner">
     <PortableText value={venue.description} />
   </section>
+<SecHeader title="Virtual Tour" />
+  {
+    venue.matterport && (
+      <div class="matterport">
+
+        <iframe
+          src={venue.matterport}
+          frameborder="0"
+          allowfullscreen
+          allow="xr-spatial-tracking"
+        />
+      </div>
+    )
+  }
 </VenueLayout>
+<style lang="scss">
+  .matterport {
+    padding: var(--l-margin);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    iframe {
+      width: 853px;
+      height: 480px;
+      @media screen and (max-width: 1024px) {
+        width: 600px;
+        height: 338px;
+      }
+      @media screen and (max-width: 680px){
+        width: 390px;
+        height: 220px;
+      }
+    }
+  }
+</style>

@@ -18,7 +18,12 @@ const { pageTitle, bannerSrc, ctas, frontCaptions } = Astro.props as Props;
 
 <BasicLayout title={pageTitle}>
   <div class="top">
-    <SideTab text="Rentals" href="/venue#rentals" style="subpage" shadow="left" />
+    <SideTab
+      text="Rentals"
+      href="/venue#rentals"
+      style="subpage"
+      shadow="left"
+    />
 
     <main>
       <h1 class="title">{pageTitle}</h1>
@@ -27,15 +32,14 @@ const { pageTitle, bannerSrc, ctas, frontCaptions } = Astro.props as Props;
       </div>
 
       <div class="CTA-wrapper">
-      {
-        ctas?.map((cta: Entry) => (
-          <CTA type='default' text={cta.displayTitle} value={cta.value} />
-        ))
-      }
+        {
+          ctas?.map((cta: Entry) => (
+            <CTA type="default" text={cta.displayTitle} value={cta.value} />
+          ))
+        }
       </div>
       <FrontCaption frontCaptions={frontCaptions} />
       <slot />
-
     </main>
   </div>
 </BasicLayout>
@@ -56,66 +60,24 @@ const { pageTitle, bannerSrc, ctas, frontCaptions } = Astro.props as Props;
     display: flex;
   }
   main {
+    display: flex;
+    flex-direction: column;
+    gap: var(--s-margin);
     flex: 1;
+    width: 100%;
+    padding: var(--l-margin);
+    background-color: var(--backGround);
+    color: var(--textColor);
   }
 
   .banner,
   .body-copy {
     width: 100%;
-    max-width: 800px;
-
-    @media screen and (max-width: 64rem) {
-      max-width: 40rem;
-    }
-    @media screen and (max-width: 48rem) {
-      max-width: 30rem;
-      margin: 0 16px;
-    }
-
-    @media screen and (max-width: 35.5rem) {
-      background-color: red;
-      width: calc(100% - 4.4rem);
-      margin: 0 16px;
-    }
-    @media screen and (max-width: 24.375rem) {
-      width: calc(100% - 32px);
-      margin: 0 16px;
-    }
-
+    max-width: var(--inner-max-width);
     display: flex;
     flex-direction: column;
-  }
-  .title {
-    margin: 40px;
-    @media screen and (max-width: 64rem) {
-      margin: 32px;
-    }
-    @media screen and (max-width: 48rem) {
-      margin: 16px;
-    }
-    @media screen and (max-width: 24.375rem) {
-      margin: 16px;
-    }
-  }
-
-  .banner {
-    margin: 6.25rem auto 1.25rem auto;
-    gap: 1.25rem;
-
-    @media screen and (max-width: 24.375rem) {
-      margin: 2.5rem auto;
-    }
-  }
-
-  .body-copy {
-    margin: 6.25rem auto;
-    gap: 2em 0;
-
-    ul,li {
-      list-style: disc;
-      // margin-left: 1.25rem;
-      padding-left: 1.25rem;
-    }
+    margin: var(--s-margin) auto;
+    gap: var(--l-margin);
   }
 
   .CTA-wrapper {
