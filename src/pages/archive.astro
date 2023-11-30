@@ -115,6 +115,10 @@ import ArtistSec from "../components/sections/ArtistSec.astro";
       flex-grow: 1;
       overflow: auto;
     }
+
+    .hidden {
+      height: 100vh;
+    }
   }
 </style>
 
@@ -135,13 +139,15 @@ function handleAnimationEnd(displayElement, hideElement) {
   return () => {
     // hideElement.style.display = "none";
     // displayElement.style.display = "flex";
+    hideElement.classList.add("hidden");
+    displayElement.classList.remove("hidden");
     updateWrapperHeight();
   };
 }
 
 function showLeft() {
   document.querySelector("body").style.backgroundColor = "var(--gray)";
-
+  window.scroll(0, 0);
   // leftCol.querySelector(".media-library").style.display = "flex";
   leftCol.querySelector(".media-library").classList.remove("hidden");
   rightCol.style.animation = "slideOut 0.4s linear forwards";

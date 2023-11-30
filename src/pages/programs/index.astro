@@ -53,7 +53,7 @@ import PastPrograms from "../../components/sections/PastPrograms.astro";
     flex-grow: 1;
 
     .hidden {
-      visibility: hidden;
+      height: 100vh;
     }
 
     .department,
@@ -121,8 +121,8 @@ function handleAnimationEnd(displayElement, hideElement) {
   return () => {
     // hideElement.style.boxShadow = "none";
     // displayElement.style.display = "flex";
-    // hideElement.classList.add("hidden");
-    // displayElement.classList.remove("hidden");
+    hideElement.classList.add("hidden");
+    displayElement.classList.remove("hidden");
     updateWrapperHeight();
   };
 }
@@ -191,11 +191,11 @@ function backToProgram() {
 
   leftCol.querySelector(".current").classList.remove("hidden");
   rightCol.querySelector(".past").classList.remove("hidden");
-  updateWrapperHeight();
 
   currentTab.classList.remove("is-shown");
   pastTab.classList.remove("is-shown");
   department.classList.add("is-major");
+  updateWrapperHeight();
 
   setTimeout(() => {
     window.addEventListener("scroll", showLeft);

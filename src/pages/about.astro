@@ -5,6 +5,7 @@ import Funder from "../components/sections/Funder.astro";
 import People from "../components/sections/People.astro";
 import AboutSec from "../components/sections/AboutSec.astro";
 import ContactUs from "../components/sections/ContactUs.astro";
+
 import Opportunities from "../components/sections/Opportunities.astro";
 ---
 
@@ -13,10 +14,16 @@ import Opportunities from "../components/sections/Opportunities.astro";
     <SideTab text="About" href="#" style="department" />
     <article data-wrapper>
       <AboutSec />
-      <div class="vert-tabs">
+      <ul class="list"></ul>
+      <div class="contactUs hidden">
         <ContactUs />
+      </div>
+      <div class="funder hidden">
         <Funder />
+      </div>
+      <div class="people hidden">
         <People />
+
         <Opportunities />
       </div>
     </article>
@@ -44,10 +51,65 @@ import Opportunities from "../components/sections/Opportunities.astro";
       .vert-tabs {
         display: flex;
         flex-direction: column;
+      }
+    }
+    .list {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      white-space: nowrap;
+      position: relative;
+      width: 100%;
 
+      .list-item {
+        writing-mode: vertical-rl;
+        text-orientation: mixed;
+        width: 100%;
+        box-shadow: -10px 0px 14px 0px rgba(0, 0, 0, 0.2);
+        display: flex;
+        align-items: flex-end;
+        padding: 40px;
+        cursor: pointer;
+
+        h1 {
+          text-transform: capitalize;
+        }
+      }
+
+      .ContactUs {
+        background-color: var(--yellow);
+      }
+
+      .Support,
+      .Funders {
+        background-color: var(--purple);
+      }
+
+      .People {
+        background-color: var(--white);
       }
     }
   }
+
+  .hidden {
+    display: none;
+  }
 </style>
 
-<script async></script>
+<script async>
+const tabs = document.querySelector("ul");
+const sections = document.querySelectorAll("main .title h1");
+let sectionNames = [];
+sections.forEach((section) => {
+  let sectionName = section.textContent;
+  sectionTab = sectionName.replaceAll(" ", "");
+  sectionNames.push(sectionName);
+});
+
+sectionNames.forEach((sectionName) => {
+  tabs.innerHTML += `
+  <li class="list-item ${sectionName.replaceAll(" ", "")}">
+    <h1 class="no-break">${sectionName}</h1>
+  </li>
+  `;
+});
+</script>
