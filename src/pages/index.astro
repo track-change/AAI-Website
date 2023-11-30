@@ -48,16 +48,26 @@ const banners = await Promise.all(
 <Layout title="Homepage">
   <SectionLayout className="program">
     <h1>Programs: On Now</h1>
-
     <div class="program-carousel disable-scrollbars">
+      {hpPrograms.map((program) => <ProgramCard pgRef={program._ref} />)}
+    </div>
+    <div class="description">
+      <p class="caption event-type">
+        <span></span>
+      </p>
+      <h4 class="program-card-title"></h4>
+      <p class="caption date"></p>
+    </div>
+
+    <!-- <div class="program-carousel disable-scrollbars">
       {
         hpPrograms.map((program) => (
-          <div class="card-wrapper">
+          <>
             <ProgramCard pgRef={program._ref} />
-          </div>
+          </>
         ))
-      }
-    </div>
+    }
+    </div> -->
     <!-- <CTA type="default" text="See All Programs" linkHref="/programs" /> -->
   </SectionLayout>
 
@@ -204,16 +214,18 @@ const banners = await Promise.all(
       overflow: auto;
       scroll-behavior: smooth;
       scroll-snap-type: x mandatory;
+      align-items: center;
       padding: 0;
-
-      .card-wrapper {
-        flex: 0 0 100%;
-        width: 100vw;
-        height: fit-content;
-        display: flex;
-        justify-content: center;
-      }
     }
+
+    //   .card-wrapper {
+    //     flex: 0 0 100%;
+    //     width: 100vw;
+    //     height: fit-content;
+    //     display: flex;
+    //     justify-content: center;
+    //   }
+    // }
 
     .blurb {
       margin: 80px auto;
@@ -294,50 +306,116 @@ const banners = await Promise.all(
         border-bottom: 1px solid white;
       }
       .card-wrapper:first-child {
-        border-top: 1px solid white;      
+        border-top: 1px solid white;
+      }
+    }
+
+    .centered {
+    }
+
+    .description {
+      text-align: center;
+      transition: opacity 0.5s;
+
+      .caption {
+        line-height: 1;
+      }
+      .program-card-title {
+        max-width: 24em;
+        line-height: 100%;
+      }
+      .card-img {
+        max-width: var(--inner-max-width);
+        max-height: 600px;
+        height: auto;
+        object-fit: contain;
       }
     }
   </style>
 </Layout>
 
 <script async>
-  const carousel = document.querySelector(".program-carousel");
-  const blurb = document.querySelector(".blurb");
-  const bodyTag = document.querySelector("body");
-  const blurbTop = blurb.offsetTop;
-  const blurbBottom = blurbTop + blurb.offsetHeight;
+const carousel = document.querySelector(".program-carousel");
+const cards = document.querySelectorAll(".program-carousel-container");
+const blurb = document.querySelector(".blurb");
+const bodyTag = document.querySelector("body");
+const blurbTop = blurb.offsetTop;
+const blurbBottom = blurbTop + blurb.offsetHeight;
 
-  let currentPos = 0;
+const description = document.querySelector(".description");
+const eventTypeShown = description.querySelector(".event-type");
+const titleShown = description.querySelector("h4");
+const dateShown = description.querySelector(".date");
 
-  function scrollCarousel() {
+cards[0].classList.add("centered");
+
+let index = 1;
+function recenter() {
+  if (index < cards.length) {
+    document.querySelector(".centered").classList.remove("centered");
+    cards[index].classList.add("centered");
+    index++;
+  } else {
+    index = 0;
+    document.querySelector(".centered").classList.remove("centered");
+    cards[index].classList.add("centered");
+    index++;
+  }
+}
+
+function updateText() {
+  let eventType = document.querySelector(
+    ".centered .description-hidden .event-type"
+  ).textContent;
+  let title = document.querySelector(
+    ".centered .description-hidden .program-card-title"
+  ).textContent;
+  let date = document.querySelector(
+    ".centered .description-hidden .date"
+  ).textContent;
+  eventTypeShown.textContent = eventType;
+  titleShown.textContent = title;
+  dateShown.textContent = date;
+}
+
+let currentPos = 0;
+
+function scrollCarousel() {
+  currentPos += window.innerWidth;
+
+  window.addEventListener("resize", () => {
     currentPos += window.innerWidth;
+  });
 
-    window.addEventListener("resize", () => {
-      currentPos += window.innerWidth;
-    });
-
-    if (currentPos > carousel.scrollWidth - window.innerWidth) {
-      currentPos = 0;
-    }
-
-    carousel.scrollTo(currentPos, 0);
-  }
-  setInterval(scrollCarousel, 4000);
-
-  function handleScroll() {
-    const pixels = window.scrollY;
-    const windowHeight = window.innerHeight;
-
-    if (
-      blurbTop - 0.5 * windowHeight <= pixels &&
-      blurbBottom > pixels + 0.5 * windowHeight
-    ) {
-      bodyTag.style.backgroundColor = "var(--orange)";
-    } else {
-      bodyTag.style.backgroundColor = "";
-      blurb.style.color = "";
-    }
+  if (currentPos > carousel.scrollWidth - window.innerWidth) {
+    currentPos = 0;
   }
 
-  window.addEventListener("scroll", handleScroll);
+  carousel.scrollTo(currentPos, 0);
+}
+
+updateText();
+
+setInterval(() => {
+  scrollCarousel();
+  recenter();
+  updateText();
+}, 4000);
+
+function handleScroll() {
+  const pixels = window.scrollY;
+  const windowHeight = window.innerHeight;
+
+  if (
+    blurbTop - 0.5 * windowHeight <= pixels &&
+    blurbBottom > pixels + 0.5 * windowHeight
+  ) {
+    bodyTag.style.backgroundColor = "var(--orange)";
+  } else {
+    bodyTag.style.backgroundColor = "";
+    blurb.style.color = "";
+  }
+}
+
+window.addEventListener("scroll", handleScroll);
 </script>

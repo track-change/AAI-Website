@@ -130,7 +130,7 @@ function handleAnimationEnd(displayElement, hideElement) {
 function showLeft() {
   // leftCol.querySelector(".current").style.display = "flex";
   window.removeEventListener("scroll", showLeft);
-  window.scroll(0, 0);
+  // window.scroll(0, 0);
   leftCol.querySelector(".current").classList.remove("hidden");
   rightCol.style.animation = "slideOut 0.4s linear forwards";
   pastTab.classList.add("is-shown");
@@ -156,7 +156,7 @@ function showLeft() {
 
 function showRight() {
   window.removeEventListener("scroll", showLeft);
-  window.scroll(0, 0);
+  // window.scroll(0, 0);
   // rightCol.querySelector(".past").style.display = "flex";
   rightCol.querySelector(".past").classList.remove("hidden");
   rightCol.style.animation = "slideIn 0.4s linear forwards";
