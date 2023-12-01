@@ -190,6 +190,9 @@ sectionTabs.forEach((sectionTab) => {
   let sectionClass = sectionTab.className.split(" ")[1];
   sectionTab.addEventListener("click", function () {
     window.scroll(0, 0);
+    aboutSections.forEach((aboutSection) => {
+      aboutSection.classList.add("hidden");
+    });
     subTabs.forEach((subTab) => {
       subTab.style.display = "flex";
     });
