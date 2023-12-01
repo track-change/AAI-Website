@@ -62,14 +62,19 @@ function toTitleCase(str: string) {
       transition: transform 0.5s ease;
 
       .program-card {
-        max-width: 800px;
-        height: fit-content;
+        max-width: 80%;
+        height: 400px;
         overflow: hidden;
         display: flex;
         flex-direction: column;
         align-items: center;
         text-align: center;
         gap: 16px;
+        .card-img {
+          object-fit: contain;
+          height: 100%;
+          width: auto;
+        }
       }
     }
 

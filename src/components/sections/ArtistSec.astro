@@ -57,7 +57,7 @@ artists = artists.map((artist) => ({
   </div>
 
   <div x-data="pagination">
-    <ul class="list">
+    <ul class="list-artist">
       <template x-for="artist in paginatedData" :key="artist._id">
         <li class="artist-list-item">
           <a :href="`/artists/${artist.slug.current}`">
@@ -68,24 +68,25 @@ artists = artists.map((artist) => ({
       </template>
     </ul>
 
-    <div class="pagination-controls">
-      <button @click="prevPage()" :disabled="currentPage === 1">Previous</button
+    <div class="pagination-controls caption">
+      <button @click="prevPage()" :disabled="currentPage === 1"
+        >Previous</button
       >
       <span x-text="currentPage"></span>
       <button @click="nextPage()" :disabled="disableNext">Next</button>
     </div>
   </div>
 
-  <CTA type="text" text="Load more" />
-
-  <SecHeader title="Artists FAQ" />
-  <div class="caption FAQ">
-    Asian Arts Initiative has supported hundreds of budding, emergent and
-    mid-career artists into local and global prominence. We publish Calls for
-    Artists for thematic seasons several times a year, and provide opportunities
-    for community-based artist residencies, as well as low and no cost studio
-    and performance rental spaces. Here are some common and Frequently Asked
-    Questions (FAQ).
+  <!-- <SecHeader title="Artists FAQ" /> -->
+  <div class="banner">
+    <div class="caption FAQ">
+      Asian Arts Initiative has supported hundreds of budding, emergent and
+      mid-career artists into local and global prominence. We publish Calls for
+      Artists for thematic seasons several times a year, and provide
+      opportunities for community-based artist residencies, as well as low and
+      no cost studio and performance rental spaces. Here are some common and
+      Frequently Asked Questions (FAQ).
+    </div>
   </div>
   <Collapsible />
 </SectionLayout>
@@ -107,7 +108,7 @@ artists = artists.map((artist) => ({
   .filters > * {
     flex-direction: column;
   }
-  .list {
+  .list-artist {
     padding: 4rem 0;
     display: flex;
     flex-direction: column;
@@ -131,7 +132,18 @@ artists = artists.map((artist) => ({
 
   .FAQ {
     max-width: 800px;
-    margin: 10rem auto;
+  }
+  .pagination-controls {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 4rem;
+
+    button {
+      border: none;
+      cursor: pointer;
+      background-color: white;
+    }
   }
 </style>
 
