@@ -15,17 +15,43 @@ import Opportunities from "../components/sections/Opportunities.astro";
     <article data-wrapper>
       <AboutSec />
       <ul class="list"></ul>
-      <div class="contactUs hidden">
-        <ContactUs />
-      </div>
-      <div class="funder hidden">
-        <Funder />
-      </div>
-      <div class="people hidden">
-        <People />
-      </div>
-      <div class="opportunities hidden">
-        <Opportunities />
+      <div class="content hidden">
+        <SideTab
+          text="Contact Us"
+          style="subpage"
+          shadow="none"
+          classes="ContactUsTab"
+        />
+        <div class="ContactUsSec wrapper hidden">
+          <ContactUs />
+        </div>
+        <SideTab
+          text="Partnership"
+          style="subpage"
+          shadow="right"
+          classes="PartnershipTab"
+        />
+        <div class="PartnershipSec wrapper hidden">
+          <Funder />
+        </div>
+        <SideTab
+          text="People"
+          style="subpage"
+          shadow="right"
+          classes="PeopleTab"
+        />
+        <div class="PeopleSec wrapper hidden">
+          <People />
+        </div>
+        <SideTab
+          text="Opportunities"
+          style="subpage"
+          shadow="right"
+          classes="OpportunitiesTab"
+        />
+        <div class="OpportunitiesSec wrapper hidden">
+          <Opportunities />
+        </div>
       </div>
     </article>
   </div>
@@ -52,6 +78,10 @@ import Opportunities from "../components/sections/Opportunities.astro";
       .vert-tabs {
         display: flex;
         flex-direction: column;
+      }
+
+      .wrapper {
+        width: 100%;
       }
     }
     .list {
@@ -92,10 +122,44 @@ import Opportunities from "../components/sections/Opportunities.astro";
         background-color: var(--peach);
       }
     }
+
+    .content {
+      position: relative;
+      display: flex;
+      flex-grow: 1;
+
+      .ContactUsTab {
+        background-color: var(--yellow);
+      }
+
+      .PartnershipTab {
+        background-color: var(--purple);
+      }
+
+      .PeopleTab {
+        background-color: var(--white);
+      }
+
+      .OpportunitiesTab {
+        background-color: var(--peach);
+      }
+    }
+
+    .department,
+    .subpage {
+      flex-shrink: 0;
+      position: sticky;
+      top: 44px;
+      cursor: pointer;
+      z-index: 10;
+    }
+    .subpage {
+      display: none;
+    }
   }
 
   .hidden {
-    display: none;
+    display: none !important;
   }
 </style>
 
@@ -103,6 +167,8 @@ import Opportunities from "../components/sections/Opportunities.astro";
 const tabs = document.querySelector("ul");
 const sections = document.querySelectorAll("main .title h1");
 let sectionNames = [];
+let aboutTab = document.querySelector(".department");
+
 sections.forEach((section) => {
   let sectionName = section.textContent;
   sectionTab = sectionName.replaceAll(" ", "");
@@ -115,5 +181,151 @@ sectionNames.forEach((sectionName) => {
     <h1 class="no-break">${sectionName}</h1>
   </li>
   `;
+});
+
+let sectionTabs = document.querySelectorAll("li");
+let aboutSections = document.querySelectorAll(".content .wrapper");
+let subTabs = document.querySelectorAll(".subpage");
+sectionTabs.forEach((sectionTab) => {
+  let sectionClass = sectionTab.className.split(" ")[1];
+  sectionTab.addEventListener("click", function () {
+    window.scroll(0, 0);
+    subTabs.forEach((subTab) => {
+      subTab.style.display = "flex";
+    });
+    document
+      .querySelector(`.${sectionClass}Tab`)
+      .querySelector("a").style.visibility = "hidden";
+    document.querySelector("ul").classList.add("hidden");
+    document.querySelector(".about-sec").style.display = "none";
+    document.querySelector(".content").classList.remove("hidden");
+    document.querySelector(`.${sectionClass}Sec`).classList.remove("hidden");
+
+    document
+      .querySelector(".ContactUsTab")
+      .addEventListener("click", showContact);
+
+    document
+      .querySelector(".PartnershipTab")
+      .addEventListener("click", showPartnership);
+
+    document
+      .querySelector(".PeopleTab")
+      .addEventListener("click", showPeople);
+
+    document
+      .querySelector(".OpportunitiesTab")
+      .addEventListener("click", showOppo);
+  });
+});
+
+function showPartnership() {
+  subTabs.forEach((subTab) => {
+    subTab.querySelector("a").style.visibility = "visible";
+  });
+  document
+    .querySelector(".PartnershipTab")
+    .querySelector("a").style.visibility = "hidden";
+  aboutSections.forEach((aboutSection) => {
+    aboutSection.classList.add("hidden");
+  });
+  document.querySelector(".PartnershipSec").classList.remove("hidden");
+  document.querySelector(".PartnershipSec").style.animation =
+    "slideIn 0.4s linear forwards";
+
+  document
+    .querySelector(".ContactUsTab")
+    .addEventListener("click", showContact);
+
+  document.querySelector(".PeopleTab").addEventListener("click", showPeople);
+
+  document
+    .querySelector(".OpportunitiesTab")
+    .addEventListener("click", showOppo);
+}
+
+function showContact() {
+  subTabs.forEach((subTab) => {
+    subTab.querySelector("a").style.visibility = "visible";
+  });
+  document
+    .querySelector(".ContactUsTab")
+    .querySelector("a").style.visibility = "hidden";
+  aboutSections.forEach((aboutSection) => {
+    aboutSection.classList.add("hidden");
+  });
+  document.querySelector(".ContactUsSec").classList.remove("hidden");
+  document.querySelector(".ContactUsSec").style.animation =
+    "slideIn 0.4s linear forwards";
+
+  document
+    .querySelector(".PartnershipTab")
+    .addEventListener("click", showPartnership);
+
+  document.querySelector(".PeopleTab").addEventListener("click", showPeople);
+
+  document
+    .querySelector(".OpportunitiesTab")
+    .addEventListener("click", showOppo);
+}
+
+function showPeople() {
+  subTabs.forEach((subTab) => {
+    subTab.querySelector("a").style.visibility = "visible";
+  });
+  document.querySelector(".PeopleTab").querySelector("a").style.visibility =
+    "hidden";
+  aboutSections.forEach((aboutSection) => {
+    aboutSection.classList.add("hidden");
+  });
+  document.querySelector(".PeopleSec").classList.remove("hidden");
+  document.querySelector(".PeopleSec").style.animation =
+    "slideIn 0.4s linear forwards";
+
+  document
+    .querySelector(".ContactUsTab")
+    .addEventListener("click", showContact);
+
+  document
+    .querySelector(".PartnershipTab")
+    .addEventListener("click", showPartnership);
+
+  document
+    .querySelector(".OpportunitiesTab")
+    .addEventListener("click", showOppo);
+}
+
+function showOppo() {
+  subTabs.forEach((subTab) => {
+    subTab.querySelector("a").style.visibility = "visible";
+  });
+  document
+    .querySelector(".OpportunitiesTab")
+    .querySelector("a").style.visibility = "hidden";
+  aboutSections.forEach((aboutSection) => {
+    aboutSection.classList.add("hidden");
+  });
+  document.querySelector(".OpportunitiesSec").classList.remove("hidden");
+  document.querySelector(".OpportunitiesSec").style.animation =
+    "slideIn 0.4s linear forwards";
+
+  document
+    .querySelector(".ContactUsTab")
+    .addEventListener("click", showContact);
+
+  document
+    .querySelector(".PartnershipTab")
+    .addEventListener("click", showPartnership);
+}
+
+function backToAbout() {
+  console.log("back!");
+  document.querySelector(".content").classList.add("hidden");
+  document.querySelector("ul").classList.remove("hidden");
+  document.querySelector(".about-sec").style.display = "flex";
+}
+
+aboutTab.addEventListener("click", function () {
+  backToAbout();
 });
 </script>
