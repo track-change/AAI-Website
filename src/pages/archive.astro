@@ -53,6 +53,15 @@ import ArtistSec from "../components/sections/ArtistSec.astro";
       Bitstream Vera Sans Mono,
       Courier New,
       monospace;
+    font-family:
+      Menlo,
+      Monaco,
+      Lucida Console,
+      Liberation Mono,
+      DejaVu Sans Mono,
+      Bitstream Vera Sans Mono,
+      Courier New,
+      monospace;
   }
 
   body {
@@ -123,113 +132,82 @@ import ArtistSec from "../components/sections/ArtistSec.astro";
 </style>
 
 <script async>
-const leftTab = document.querySelector(".left-tab");
-const rightTab = document.querySelector(".right-tab");
-const wrapper = document.querySelector(".wrapper");
-const leftCol = document.querySelector(".left-col");
-const rightCol = document.querySelector(".right-col");
-const department = document.querySelector(".department");
+  const leftTab = document.querySelector(".left-tab");
+  const rightTab = document.querySelector(".right-tab");
+  const wrapper = document.querySelector(".wrapper");
+  const leftCol = document.querySelector(".left-col");
+  const rightCol = document.querySelector(".right-col");
+  const department = document.querySelector(".department");
 
-function updateWrapperHeight() {
-  const maxHeight = Math.max(leftCol.offsetHeight, rightCol.offsetHeight);
-  wrapper.style.height = `${maxHeight}px`;
-}
-
-function handleAnimationEnd(displayElement, hideElement) {
-  return () => {
-    // hideElement.style.display = "none";
-    // displayElement.style.display = "flex";
-    hideElement.classList.add("hidden");
-    displayElement.classList.remove("hidden");
-    updateWrapperHeight();
-  };
-}
-
-function showLeft() {
-  document.querySelector("body").style.backgroundColor = "var(--gray)";
-  window.scroll(0, 0);
-  // leftCol.querySelector(".media-library").style.display = "flex";
-  leftCol.querySelector(".media-library").classList.remove("hidden");
-  rightCol.style.animation = "slideOut 0.4s linear forwards";
-  rightTab.classList.add("is-shown");
-  leftTab.classList.remove("is-shown");
-  department.classList.remove("is-major");
-  window.history.pushState({}, "", "#media-library");
-
-  rightCol.addEventListener(
-    "animationend",
-    handleAnimationEnd(
-      leftCol.querySelector(".media-library"),
-      rightCol.querySelector(".artist-directory")
-    ),
-    { once: true }
-  );
-  rightTab.style.zIndex = 10;
-  rightTab.addEventListener("click", showRight);
-}
-
-function showRight() {
-  window.removeEventListener("scroll", showLeft);
-  document.querySelector("body").style.backgroundColor = "var(--gray)";
-  // rightCol.querySelector(".artist-directory").style.display = "flex";
-  rightCol.querySelector(".artist-directory").classList.remove("hidden");
-  rightCol.style.animation = "slideIn 0.4s linear forwards";
-  leftTab.classList.add("is-shown");
-  rightTab.classList.remove("is-shown");
-  department.classList.remove("is-major");
-  window.history.pushState({}, "", "#artist-directory");
-
-  rightCol.addEventListener(
-    "animationend",
-    handleAnimationEnd(
-      rightCol.querySelector(".artist-directory"),
-      leftCol.querySelector(".media-library"),
-      (document.querySelector("body").style.backgroundColor = "var(--white)")
-    ),
-    { once: true }
-  );
-
-  leftTab.addEventListener("click", showLeft);
-}
-//back function WIP!!!
-department.querySelector("a").addEventListener("click", function (e) {
-  e.preventDefault();
-});
-
-function backToArchive() {
-  document.querySelector("body").style.backgroundColor = "var(--gray)";
-  window.removeEventListener("scroll", showLeft);
-  window.scroll(0, 0);
-
-  rightCol.style.animation = "slideHalf 0.4s linear forwards";
-
-  leftCol.querySelector(".media-library").classList.remove("hidden");
-  rightCol.querySelector(".artist-directory").classList.remove("hidden");
-  updateWrapperHeight();
-
-  leftTab.classList.remove("is-shown");
-  rightTab.classList.remove("is-shown");
-  department.classList.add("is-major");
-
-  setTimeout(() => {
-    window.addEventListener("scroll", showLeft);
-  }, "1200");
-
-  window.history.pushState({}, "", "/archive");
-}
-
-// Event listeners
-leftCol.addEventListener("click", showLeft);
-rightCol.addEventListener("click", showRight);
-window.addEventListener("scroll", showLeft);
-department.addEventListener("click", backToArchive);
-
-// Check the URL hash when the page loads
-window.addEventListener("load", () => {
-  if (window.location.hash === "#media-library") {
-    showLeft();
-  } else if (window.location.hash === "#artist-directory") {
-    showRight();
+  function updateWrapperHeight() {
+    const maxHeight = Math.max(leftCol.offsetHeight, rightCol.offsetHeight);
+    wrapper.style.height = `${maxHeight}px`;
   }
-});
+
+  function handleAnimationEnd(displayElement, hideElement) {
+    return () => {
+      hideElement.style.display = "none";
+      displayElement.style.display = "flex";
+      updateWrapperHeight();
+    };
+  }
+
+  function showLeft() {
+    document.querySelector("body").style.backgroundColor = "var(--gray)";
+
+    leftCol.querySelector(".media-library").style.display = "flex";
+    rightCol.style.animation = "slideOut 0.4s linear forwards";
+    rightTab.classList.add("is-shown");
+    leftTab.classList.remove("is-shown");
+    department.classList.remove("is-major");
+    window.history.pushState({}, "", "#media-library");
+
+    rightCol.addEventListener(
+      "animationend",
+      handleAnimationEnd(
+        leftCol.querySelector(".media-library"),
+        rightCol.querySelector(".artist-directory")
+      ),
+      { once: true }
+    );
+
+    rightTab.addEventListener("click", showRight);
+  }
+
+  function showRight() {
+    window.removeEventListener("scroll", showLeft);
+
+    rightCol.querySelector(".artist-directory").style.display = "flex";
+    rightCol.style.animation = "slideIn 0.4s linear forwards";
+    leftTab.classList.add("is-shown");
+    rightTab.classList.remove("is-shown");
+    department.classList.remove("is-major");
+    window.history.pushState({}, "", "#artist-directory");
+
+    rightCol.addEventListener(
+      "animationend",
+      handleAnimationEnd(
+        rightCol.querySelector(".artist-directory"),
+        leftCol.querySelector(".media-library"),
+        (document.querySelector("body").style.backgroundColor = "var(--white)")
+      ),
+      { once: true }
+    );
+
+    leftTab.addEventListener("click", showLeft);
+  }
+
+  // Event listeners
+  leftCol.addEventListener("click", showLeft);
+  rightCol.addEventListener("click", showRight);
+  window.addEventListener("scroll", showLeft);
+
+  // Check the URL hash when the page loads
+  window.addEventListener("load", () => {
+    if (window.location.hash === "#media-library") {
+      showLeft();
+    } else if (window.location.hash === "#artist-directory") {
+      showRight();
+    }
+  });
 </script>

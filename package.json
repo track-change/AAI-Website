@@ -12,6 +12,7 @@
   "dependencies": {
     "@sanity/astro": "^1.2.1",
     "@sanity/client": "^6.4.12",
+    "alpinejs": "^3.13.3",
     "astro": "^3.1.0",
     "astro-portabletext": "^0.9.4",
     "groq": "^3.16.7",
@@ -37,6 +38,7 @@
     "@portabletext/types": "^2.0.6",
     "@sanity/image-url": "^1.0.2",
     "@sanity/types": "^3.15.1",
+    "@types/alpinejs": "^3.13.5",
     "leading-trim": "^1.0.2"
   }
 }

@@ -17,6 +17,11 @@
 - [ ] search
 - [ ] finish navigation
 
+- [x] FAQ in artist page
+- [x] Footer details in settings
+- [x] Days of the week in Opening hours section in settings
+- [x] Paginate Artists Directory in Frontend
+- [ ] Filter Artists Directory in Frontend
 
 ## Back-End
 - [ ] Reference (related programs)

@@ -8,7 +8,11 @@ import SecHeader from "../SecHeader.astro";
 import CTA from "../CTA.astro";
 import { urlFor } from "../../utils/image";
 
-const artists = await getArtists();
+let artists = await getArtists();
+artists = artists.map((artist) => ({
+  ...artist,
+  imageUrl: artist.image ? urlFor(artist.image).url() : null,
+}));
 ---
 
 <SectionLayout className="artist-directory" backGround="var(--white)">
@@ -51,22 +55,26 @@ const artists = await getArtists();
       </li>
     </ul>
   </div>
-  <ul class="list">
-    {
-      artists.map((artist) => (
+
+  <div x-data="pagination">
+    <ul class="list">
+      <template x-for="artist in paginatedData" :key="artist._id">
         <li class="artist-list-item">
-          <a href={`/artists/${artist.slug.current}`}>
-            <h2>{artist.name}</h2>
+          <a :href="`/artists/${artist.slug.current}`">
+            <h2 x-text="artist.name"></h2>
           </a>
-          <img
-            class="artist-thumbnail"
-            src={artist.image ? urlFor(artist.image).url() : null}
-            alt=""
-          />
+          <img class="artist-thumbnail" :src="artist.imageUrl" alt="" />
         </li>
-      ))
-    }
-  </ul>
+      </template>
+    </ul>
+
+    <div class="pagination-controls">
+      <button @click="prevPage()" :disabled="currentPage === 1">Previous</button
+      >
+      <span x-text="currentPage"></span>
+      <button @click="nextPage()" :disabled="disableNext">Next</button>
+    </div>
+  </div>
 
   <CTA type="text" text="Load more" />
 
@@ -127,7 +135,28 @@ const artists = await getArtists();
   }
 </style>
 
-<script async>
+<script async define:vars={{ artists }}>
+  document.addEventListener("alpine:init", () => {
+    Alpine.data("pagination", () => ({
+      currentPage: 1,
+      itemsPerPage: 10,
+      disableNext: false,
+      get paginatedData() {
+        const start = (this.currentPage - 1) * this.itemsPerPage;
+        const end = start + this.itemsPerPage;
+        return artists.slice(start, end);
+      },
+      nextPage() {
+        this.currentPage++;
+        this.currentPage * this.itemsPerPage >= artists.length
+          ? (this.disableNext = true)
+          : (this.disableNext = false);
+      },
+      prevPage() {
+        if (this.currentPage > 1) this.currentPage--;
+      },
+    }));
+  });
   const listItems = document.querySelectorAll(".artist-list-item");
   const thumbnails = document.querySelectorAll(".artist-thumbnail");
 
