@@ -10,9 +10,14 @@ const educations = await getEducations();
 <Layout title="Education">
   <div data-top>
     <article data-wrapper>
-      <SideTab text="Education" href="#" style="department" />
+      <SideTab text="Education" href="#" style="department" classes="is-major"/>
       <main data-main>
-        <ul class="list">
+        <div class="intro-sec" style="background-color:black; color:white">
+          <p class="body-copy">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+          </p>
+        </div>
+        <!-- <ul class="list">
           {
             educations.map((education: Education) => (
               <li class="list-item">
@@ -22,8 +27,26 @@ const educations = await getEducations();
               </li>
             ))
           }
-        </ul>
+        </ul> -->
       </main>
+      <SideTab
+          text="Camp Bruce Lee"
+          style="subpage"
+          shadow="none"
+          classes="CBLTab"
+        />
+        <SideTab
+          text="Youth Arts Workshop"
+          style="subpage"
+          shadow="right"
+          classes="YAWTab"
+        />
+        <SideTab
+          text="Youth Leadership Workshop"
+          style="subpage"
+          shadow="right"
+          classes="YLWTab"
+        />
     </article>
   </div>
 </Layout>
@@ -39,29 +62,63 @@ const educations = await getEducations();
     top: 45px;
     left: 0;
 
+    // background-color: var(--black);
+
     [data-main] {
       width: calc(100vw - 4rem);
-      height: fit-content;
+      height: 100vh;
 
       position: relative;
+      display: flex;
+      flex-direction: column;
+      gap: var(--s-margin);
+      flex: 1;
+      width: 100%;
+      padding: var(--l-margin);
+      background-color: var(--black);
+      color: var(--textColor);
 
-      .list {
-        display: grid;
-        grid-template-columns: 1fr 1fr 1fr;
-        white-space: nowrap;
-        position: relative;
-        width: 100%;
-
-        .list-item {
-          writing-mode: vertical-rl;
-          text-orientation: mixed;
-          width: 100%;
-          box-shadow: -10px 0px 14px 0px rgba(0, 0, 0, 0.2);
-          display: flex;
-          align-items: flex-end;
-          padding: 40px;
-        }
+      .body-copy {
+        max-width: var(--inner-max-width);
       }
+      
+      .department,
+      .subpage {
+        flex-shrink: 0;
+        position: sticky;
+        top: 44px;
+        cursor: pointer;
+        z-index: 10;
+      }
+
+      .subpage {
+        // transition: visibility 0.4s linear;
+        // display: none;
+        background-color: var(--white);
+      }
+
+      .is-shown {
+        visibility: visible;
+        animation: fadeIn 0.4s linear forwards;
+      }
+
+        // .list {
+      //   display: grid;
+      //   grid-template-columns: 1fr 1fr 1fr;
+      //   white-space: nowrap;
+      //   position: relative;
+      //   width: 100%;
+
+      //   .list-item {
+      //     writing-mode: vertical-rl;
+      //     text-orientation: mixed;
+      //     width: 100%;
+      //     box-shadow: -10px 0px 14px 0px rgba(0, 0, 0, 0.2);
+      //     display: flex;
+      //     align-items: flex-end;
+      //     padding: 40px;
+      //   }
+      // }
     }
   }
   // [data-panel] {
