@@ -11,11 +11,12 @@ import Opportunities from "../components/sections/Opportunities.astro";
 
 <Layout title="About">
   <div data-top>
-    <SideTab text="About" href="#" style="department" />
+    <SideTab text="About" href="#" style="department" classes="is-major" />
     <article data-wrapper>
-      <AboutSec />
-      <ul class="list"></ul>
-      <div class="content hidden">
+      <!-- <AboutSec /> -->
+      <!-- <ul class="list"></ul> -->
+      <div class="content">
+        <AboutSec />
         <SideTab
           text="Contact Us"
           style="subpage"
@@ -153,18 +154,30 @@ import Opportunities from "../components/sections/Opportunities.astro";
       cursor: pointer;
       z-index: 10;
     }
-    .subpage {
-      display: none;
+    .subpage a {
+      // transition: visibility 0.4s linear;
+      // display: none;
+    }
+
+    .is-shown {
+      visibility: visible;
+      animation: fadeIn 0.4s linear forwards;
+    }
+
+    .is-hidden
+    {
+      animation: fadeOut 0.1s linear forwards;
     }
   }
 
   .hidden {
     display: none !important;
+    visibility:hidden;
   }
 </style>
 
 <script async>
-const tabs = document.querySelector("ul");
+// const tabs = document.querySelector("ul");
 const sections = document.querySelectorAll("main .title h1");
 let sectionNames = [];
 let aboutTab = document.querySelector(".department");
@@ -175,67 +188,77 @@ sections.forEach((section) => {
   sectionNames.push(sectionName);
 });
 
-sectionNames.forEach((sectionName) => {
-  tabs.innerHTML += `
-  <li class="list-item ${sectionName.replaceAll(" ", "")}">
-    <h1 class="no-break">${sectionName}</h1>
-  </li>
-  `;
-});
+// sectionNames.forEach((sectionName) => {
+//   tabs.innerHTML += `
+//   <li class="list-item ${sectionName.replaceAll(" ", "")}">
+//     <h1 class="no-break">${sectionName}</h1>
+//   </li>
+//   `;
+// });
 
-let sectionTabs = document.querySelectorAll("li");
+// let sectionTabs = document.querySelectorAll("li");
 let aboutSections = document.querySelectorAll(".content .wrapper");
 let subTabs = document.querySelectorAll(".subpage");
-sectionTabs.forEach((sectionTab) => {
-  let sectionClass = sectionTab.className.split(" ")[1];
-  sectionTab.addEventListener("click", function () {
-    window.scroll(0, 0);
-    aboutSections.forEach((aboutSection) => {
-      aboutSection.classList.add("hidden");
-    });
-    subTabs.forEach((subTab) => {
-      subTab.style.display = "flex";
-    });
-    document
-      .querySelector(`.${sectionClass}Tab`)
-      .querySelector("a").style.visibility = "hidden";
-    document.querySelector("ul").classList.add("hidden");
-    document.querySelector(".about-sec").style.display = "none";
-    document.querySelector(".content").classList.remove("hidden");
-    document.querySelector(`.${sectionClass}Sec`).classList.remove("hidden");
+// sectionTabs.forEach((sectionTab) => {
+//   let sectionClass = sectionTab.className.split(" ")[1];
+//   sectionTab.addEventListener("click", function () {
+//     window.scroll(0, 0);
+//     aboutSections.forEach((aboutSection) => {
+//       aboutSection.classList.add("hidden");
+//     });
+//     subTabs.forEach((subTab) => {
+//       subTab.style.display = "flex";
+//     });
+//     document
+//       .querySelector(`.${sectionClass}Tab`)
+//       .querySelector("a").style.visibility = "hidden";
+//     document.querySelector("ul").classList.add("hidden");
+//     document.querySelector(".about-sec").style.display = "none";
+//     document.querySelector(".content").classList.remove("hidden");
+//     document.querySelector(`.${sectionClass}Sec`).classList.remove("hidden");
 
-    document
-      .querySelector(".ContactUsTab")
-      .addEventListener("click", showContact);
+//     document
+//       .querySelector(".ContactUsTab")
+//       .addEventListener("click", showContact);
 
-    document
-      .querySelector(".PartnershipTab")
-      .addEventListener("click", showPartnership);
+//     document
+//       .querySelector(".PartnershipTab")
+//       .addEventListener("click", showPartnership);
 
-    document
-      .querySelector(".PeopleTab")
-      .addEventListener("click", showPeople);
+//     document
+//       .querySelector(".PeopleTab")
+//       .addEventListener("click", showPeople);
 
-    document
-      .querySelector(".OpportunitiesTab")
-      .addEventListener("click", showOppo);
-  });
-});
+//     document
+//       .querySelector(".OpportunitiesTab")
+//       .addEventListener("click", showOppo);
+//   });
+// });
 
 function showPartnership() {
+  aboutTab.classList.remove("is-major");
+  document.querySelector(".about-sec").style.display = "none";
   subTabs.forEach((subTab) => {
-    subTab.querySelector("a").style.visibility = "visible";
+    if (subTab.querySelector("a").classList.contains("is-hidden")) {
+      subTab.querySelector("a").classList.remove("is-hidden");
+      subTab.querySelector("a").classList.add("is-shown");
+    }
   });
   document
     .querySelector(".PartnershipTab")
-    .querySelector("a").style.visibility = "hidden";
+    .querySelector("a").classList.remove("is-shown");
+  document
+    .querySelector(".PartnershipTab")
+    .querySelector("a").classList.add("is-hidden");
+
   aboutSections.forEach((aboutSection) => {
     aboutSection.classList.add("hidden");
+    // aboutSection.style.animation =
+    //   "slideOut 0.4s linear forwards";
   });
   document.querySelector(".PartnershipSec").classList.remove("hidden");
   document.querySelector(".PartnershipSec").style.animation =
     "slideIn 0.4s linear forwards";
-
   document
     .querySelector(".ContactUsTab")
     .addEventListener("click", showContact);
@@ -248,12 +271,22 @@ function showPartnership() {
 }
 
 function showContact() {
+  aboutTab.classList.remove("is-major");
+  document.querySelector(".about-sec").style.display = "none";
   subTabs.forEach((subTab) => {
-    subTab.querySelector("a").style.visibility = "visible";
+    if (subTab.querySelector("a").classList.contains("is-hidden")) {
+      subTab.querySelector("a").classList.remove("is-hidden");
+      subTab.querySelector("a").classList.add("is-shown");
+    }
   });
   document
     .querySelector(".ContactUsTab")
-    .querySelector("a").style.visibility = "hidden";
+    .querySelector("a").classList.remove("is-shown");
+  document
+    .querySelector(".ContactUsTab")
+    .querySelector("a").classList.add("is-hidden");
+
+
   aboutSections.forEach((aboutSection) => {
     aboutSection.classList.add("hidden");
   });
@@ -273,11 +306,16 @@ function showContact() {
 }
 
 function showPeople() {
+  aboutTab.classList.remove("is-major");
+  document.querySelector(".about-sec").style.display = "none";
   subTabs.forEach((subTab) => {
-    subTab.querySelector("a").style.visibility = "visible";
+    if (subTab.querySelector("a").classList.contains("is-hidden")) {
+      subTab.querySelector("a").classList.remove("is-hidden");
+      subTab.querySelector("a").classList.add("is-shown");
+    }
   });
-  document.querySelector(".PeopleTab").querySelector("a").style.visibility =
-    "hidden";
+  document.querySelector(".PeopleTab").querySelector("a").classList.remove("is-shown");
+  document.querySelector(".PeopleTab").querySelector("a").classList.add("is-hidden");
   aboutSections.forEach((aboutSection) => {
     aboutSection.classList.add("hidden");
   });
@@ -299,12 +337,20 @@ function showPeople() {
 }
 
 function showOppo() {
+  aboutTab.classList.remove("is-major");
+  document.querySelector(".about-sec").style.display = "none";
   subTabs.forEach((subTab) => {
-    subTab.querySelector("a").style.visibility = "visible";
+    if (subTab.querySelector("a").classList.contains("is-hidden")) {
+      subTab.querySelector("a").classList.remove("is-hidden");
+      subTab.querySelector("a").classList.add("is-shown");
+    }
   });
   document
     .querySelector(".OpportunitiesTab")
-    .querySelector("a").style.visibility = "hidden";
+    .querySelector("a").classList.remove("is-shown");
+  document
+    .querySelector(".OpportunitiesTab")
+    .querySelector("a").classList.add("is-hidden");
   aboutSections.forEach((aboutSection) => {
     aboutSection.classList.add("hidden");
   });
@@ -319,14 +365,42 @@ function showOppo() {
   document
     .querySelector(".PartnershipTab")
     .addEventListener("click", showPartnership);
+
+  document.querySelector(".PeopleTab").addEventListener("click", showPeople);
 }
 
 function backToAbout() {
-  console.log("back!");
-  document.querySelector(".content").classList.add("hidden");
-  document.querySelector("ul").classList.remove("hidden");
+  window.scrollTo(0, 0);
+  aboutTab.classList.add("is-major");
+  subTabs.forEach((subTab) => {
+    if (subTab.querySelector("a").classList.contains("is-hidden")) {
+      subTab.querySelector("a").classList.remove("is-hidden");
+      subTab.querySelector("a").classList.add("is-shown");
+    }
+  });
+  aboutSections.forEach((aboutSection) => {
+    aboutSection.classList.add("hidden");
+  })
+  // document.querySelector(".content").classList.add("hidden");
+  // document.querySelector("ul").classList.remove("hidden");
   document.querySelector(".about-sec").style.display = "flex";
 }
+
+// event-listeners
+document
+  .querySelector(".ContactUsTab")
+  .addEventListener("click", showContact);
+
+document
+  .querySelector(".PartnershipTab")
+  .addEventListener("click", showPartnership);
+
+document.querySelector(".PeopleTab").addEventListener("click", showPeople);
+
+document
+  .querySelector(".OpportunitiesTab")
+  .addEventListener("click", showOppo);
+
 
 aboutTab.addEventListener("click", function () {
   backToAbout();
