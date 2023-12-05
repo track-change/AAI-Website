@@ -6,6 +6,12 @@ import SideTab from "../components/SideTab.astro";
 import FrontCaption from "../components/FrontCaption.astro";
 import type { Entry } from "../data/types";
 
+import { getEducations } from "../data/api";
+import type { Education } from "../data/types";
+
+const educations = await getEducations();
+
+
 interface Props {
   pageTitle: string;
   bannerSrc: string;
@@ -19,6 +25,12 @@ const { pageTitle, bannerSrc, ctas, frontCaptions } = Astro.props as Props;
 <BasicLayout title={pageTitle}>
   <div class="top">
     <SideTab text="Education" href="/education/" style="department" />
+    <SideTab 
+    text={education.title}
+    style="subpage"
+    shadow="right"
+    backGround="var(--white)"
+    href={`/education/${education.slug.current}`} />
 
     <main>
       <h1 class="title">{pageTitle}</h1>
