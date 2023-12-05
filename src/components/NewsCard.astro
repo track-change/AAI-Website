@@ -1,0 +1,61 @@
+---
+import type { ImageAsset } from "@sanity/types";
+import { urlFor } from "../utils/image";
+import Tag from "./Tag.astro";
+import type { News } from "../data/types";
+
+interface Props {
+  news: News;
+}
+
+const { news } = Astro.props as Props;
+---
+
+<div class="news__card">
+  <a href={`/news/${news.slug.current}`}>
+    {
+      news.coverImage && (
+        <img
+          class="news-coverImage"
+          src={urlFor(news.coverImage.asset).url()}
+          alt=""
+        />
+      )
+    }
+    <h6 class="news-item-title">{news.title}</h6>
+
+    <div class="small-caption">
+      {news.publishedAt}
+    </div>
+    <!-- <div class="tag-wrapper caption">
+      {news.tags && news.tags.map((tag) => <Tag tagRef={tag._ref} />)}
+    </div> -->
+  </a>
+</div>
+
+<style lang="scss" is:global>
+.news__card {
+    &:hover .news-coverImage {
+      transform: translateY(-2%);
+    }
+
+    .small-caption {
+      text-transform: capitalize;
+      line-height: 1;
+    }
+  }
+
+  .news-coverImage {
+    height: fit-content;
+    object-fit: cover;
+    aspect-ratio: 3 / 2;
+    width: 100%;
+    transition: transform 100ms var(--ease);
+  }
+
+  .news-item-title {
+    margin: 0.5em 0;
+    display: flex;
+    gap: 0.25em;
+  }
+</style>

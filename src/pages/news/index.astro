@@ -1,0 +1,54 @@
+---
+import SectionLayout from "../../layouts/SectionLayout.astro";
+import Layout from "../../layouts/Layout.astro";
+import SideTab from "../../components/SideTab.astro";
+import { getNews } from "../../data/api";
+import type { News } from "../../data/types";
+import NewsCard from "../../components/NewsCard.astro";
+
+const news = await getNews();
+---
+
+<Layout title="News">
+  <SectionLayout>
+    <div class="title">
+        <h1>News</h1>
+      </div>
+    <ul class="news-list">
+      {
+        news.map((news: News) => (
+          <li class="news-list-item">
+            <NewsCard news={news} />
+          </li>
+        ))
+      }
+    </ul>
+  </SectionLayout>
+</Layout>
+<style lang="scss">
+  html {
+    font-family: system-ui, sans-serif;
+    background: var(--white);
+    background-size: 224px;
+  }
+  code {
+    font-family:
+      Menlo,
+      Monaco,
+      Lucida Console,
+      Liberation Mono,
+      DejaVu Sans Mono,
+      Bitstream Vera Sans Mono,
+      Courier New,
+      monospace;
+  }
+  .news-list {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--l-margin);
+
+    @media screen and (max-width: 48rem) {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+</style>

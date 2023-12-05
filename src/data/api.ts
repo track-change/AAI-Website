@@ -14,6 +14,7 @@ import type {
   Funder,
   People,
   Person,
+  News,
   Opportunities,
   Venue,
   Home,
@@ -47,6 +48,14 @@ export async function getPrograms(): Promise<Program[]> {
 
 export async function getProgramBySlug(slug: string): Promise<Program> {
   return fetchData("program", slug);
+}
+
+export async function getNews(): Promise<News[]> {
+  return fetchData("news");
+}
+
+export async function getNewsBySlug(slug: string): Promise<News> {
+  return fetchData("news", slug);
 }
 
 export async function getEducations(): Promise<Education[]> {

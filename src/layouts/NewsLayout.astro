@@ -1,0 +1,68 @@
+---
+import BasicLayout from "./Layout.astro";
+import "../scss/main.scss";
+import SideTab from "../components/SideTab.astro";
+import type { Entry } from "../data/types";
+import type { ImageAsset } from "@sanity/types";
+
+interface Props {
+  pageTitle: string;
+  coverImage: string;
+  coverAlt: string;
+}
+
+const { pageTitle, coverImage, coverAlt } = Astro.props as Props;
+---
+<BasicLayout title={pageTitle}>
+  <div class="top">
+    <SideTab text="News" href="/news" style="subpage" />
+
+    <main>
+      <h2 class="title">{pageTitle}</h2>
+      <div class="banner">
+          <img src={coverImage} alt={coverAlt} />
+          <slot />
+      </div>
+
+    </main>
+  </div>
+</BasicLayout>
+
+<style lang="scss" is:global>
+  html {
+    font-family: system-ui, sans-serif;
+    background: var(--white);
+    background-size: 224px;
+  }
+
+  code {
+    font-family: Menlo, Monaco, Lucida Console, Liberation Mono,
+      DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace;
+  }
+
+  // Side Tab Area
+  .top {
+    display: flex;
+  }
+
+  main {
+    flex: 1;
+    box-shadow: -10px 0px 14px 0px rgba(0, 0, 0, 0.1);
+  }
+
+  .banner {
+    padding: 1rem 2.5rem;
+    max-width: var(--inner-max-width);
+
+    display: flex;
+    flex-direction: column;
+    margin: 4em auto;
+    gap: 2em;
+
+  }
+
+  .title {
+    margin: 40px;
+  }
+
+</style>

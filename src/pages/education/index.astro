@@ -17,19 +17,20 @@ const educations = await getEducations();
             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
           </p>
         </div>
-        <!-- <ul class="list">
-          {
-            educations.map((education: Education) => (
-              <li class="list-item">
-                <a data-panel href={`/education/${education.slug.current}`}>
-                  <h1 class="no-break">{education.title}</h1>
-                </a>
-              </li>
-            ))
-          }
-        </ul> -->
       </main>
-      <SideTab
+      <ul class="imports">
+        {
+          educations.map((education: Education) => (
+            <SideTab 
+            text={education.title}
+            style="subpage"
+            shadow="right"
+            backGround="var(--white)"
+            href={`/education/${education.slug.current}`} />
+          ))
+        }
+      </ul>
+      <!-- <SideTab
           text="Camp Bruce Lee"
           style="subpage"
           shadow="none"
@@ -46,7 +47,7 @@ const educations = await getEducations();
           style="subpage"
           shadow="right"
           classes="YLWTab"
-        />
+        /> -->
     </article>
   </div>
 </Layout>
@@ -102,6 +103,9 @@ const educations = await getEducations();
         animation: fadeIn 0.4s linear forwards;
       }
 
+      .imports {
+        background-color: red;
+      }
         // .list {
       //   display: grid;
       //   grid-template-columns: 1fr 1fr 1fr;

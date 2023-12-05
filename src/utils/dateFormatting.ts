@@ -27,3 +27,18 @@ export function formatDateRange(dateRange: string): string {
     return `${startMonth} ${startDay}, ${startYear} \u2013 ${endMonth} ${endDay}, ${endYear}`;
   }
 }
+
+export function formatDate(dateString: string): string {
+  let date = new Date(dateString);
+  
+  let day = date.getDate();
+  let month = date.getMonth();
+  let year = date.getFullYear();
+
+  let monthNames: string[] = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+  let monthName = monthNames[month];
+
+  let formattedDate = `${monthName} ${day}, ${year}`;
+
+  return formattedDate;
+}

@@ -73,6 +73,23 @@ export interface Tag {
   tag: string;
 }
 
+export interface News {
+  _type: string;
+  _id: string;
+  title: string;
+  slug: Slug;
+  coverImage: {
+    asset: ImageAsset;
+    alt: string;
+    _type: string;
+  };
+  publishedAt: string;
+  body: PortableTextBlock[];
+  tags: {
+    _ref: string;
+  }[];
+}
+
 export interface Education {
   _type: string;
   _id: string;

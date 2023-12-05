@@ -49,7 +49,7 @@ function toTitleCase(str: string) {
     </a>
   </div>
 
-<style type="scss">
+<style lang="scss">
 
     .program-carousel-container {
       flex: 0 0 100%;
@@ -60,7 +60,7 @@ function toTitleCase(str: string) {
       transition: transform 0.5s ease;
 
       .program-card {
-        max-width: 80%;
+        max-width: var(--inner-max-width);
         height: 400px;
         overflow: hidden;
         display: flex;
@@ -79,6 +79,6 @@ function toTitleCase(str: string) {
 .description-hidden{
 display: none;
 }
-  // }
+
 </style>
 

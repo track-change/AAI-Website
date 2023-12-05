@@ -11,11 +11,11 @@ interface Props {
 const { text, href, style, classes, shadow, backGround } = Astro.props as Props;
 ---
 
-<div class:list={["side-tab", classes, style, shadow]}>
-  <a href={href}>
+<a href={href}>
+  <div class:list={["side-tab", classes, style, shadow]}>
     <h6 class="vert-text">{text}</h6>
-  </a>
-</div>
+  </div>
+</a>
 
 <style type="scss" define:vars={{ backGround }}>
   /* 1920 side tab */

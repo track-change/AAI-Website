@@ -19,16 +19,15 @@ const { slug } = Astro.params as Params;
 
 const education = await getEducationBySlug(slug);
 ---
-
 <EducationLayout
   pageTitle={education.title}
   bannerSrc={education.coverImage ? urlFor(education.coverImage).url() : ""}
   ctas={education.cta}
   frontCaptions={education.frontCaptions}
 >
-  <section class="body-copy">
+  <div class="banner">
     <PortableText value={education.body} />
-  </section>
+  </div>
   
 {education.images && (
     <SecHeader title = "Archive" />
