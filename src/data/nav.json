@@ -1,0 +1,141 @@
+[
+        {
+                "page": "programs",
+                "title": "Programs",
+                "slug": "/programs",
+                "subpages": [
+                        {
+                                "page": "overview",
+                                "title": "Overview",
+                                "slug": "/programs"
+                        },
+                        {
+                                "page": "current & upcoming",
+                                "title": "Current & Upcoming",
+                                "slug": "/programs/#current-upcoming"
+                        },
+                        {
+                                "page": "past season",
+                                "title": "Past Season",
+                                "slug": "/programs/#past-season"
+                        }
+                ]
+        },
+        {
+                "page": "education",
+                "title": "Education",
+                "slug": "/education",
+                "subpages": [
+                        {
+                                "page": "overview",
+                                "title": "Overview",
+                                "slug": "/education"
+                        },
+                        {
+                                "page": "youth arts workshop",
+                                "title": "Youth Arts Workshop",
+                                "slug": "/education/youth-arts-workshop"
+                        },
+                        {
+                            "page": "youth leader initiative",
+                            "title": "Youth Leader Initiative",
+                            "slug": "/education/youth-leader-initiative"    
+                        },
+                        {
+                                "page": "camp bruce lee",
+                                "title": "Camp Bruce Lee",
+                                "slug": "/education/camp-bruce-lee"
+                        }
+        
+                ]
+        },
+        {
+                "page": "archive",
+                "title": "Archive",
+                "slug": "/archive",
+                "subpages": [
+                        {
+                                "page": "overview",
+                                "title": "Overview",
+                                "slug": "/archive"
+                        },
+                        {
+                                "page":"media library",
+                                "title": "Media Library",
+                                "slug": "/archive/#media-library"
+                        },
+                        {
+                                "page": "artist directory",
+                                "title": "Artist Directory",
+                                "slug": "/archive/#past-seasons"
+                        }
+                ]
+        },
+        {
+                "page": "about",
+                "title": "About",
+                "slug": "/about",
+                "subpages": [
+                        {
+                                "page": "about us",
+                                "title": "About Us",
+                                "slug": "/about"
+                        },
+                        {
+                                "page": "people",
+                                "title": "People",
+                                "slug": "/about/#people"
+                        },
+                        {
+                                "page": "opportunities",
+                                "title": "Opportunities",
+                                "slug": "/about/#opportunities"
+                        },
+                        {
+                                "page": "partnerships",
+                                "title": "Partnerships",
+                                "slug": "/about/#partnerships"
+                        },
+                        {
+                                "page": "news",
+                                "title": "News",
+                                "slug": "/about/#news"
+                        }
+                ]
+        }, 
+        {
+                "page": "venue",
+                "title": "Venue",
+                "slug": "/venue",
+                "subpages": [
+                        {
+                                "page": "overview",
+                                "title": "Overview",
+                                "slug": "/venue"
+                        },
+                        {
+                                "page": "rental",
+                                "title": "Rental",
+                                "slug": "/venue/#rental"
+                        }
+                ]
+        },
+        {
+                "page": "visit",
+                "title": "Visit",
+                "slug": "/visit",
+                "subpages" : []
+        },
+        {
+                "page": "tickets",
+                "title": "Tickets",
+                "slug": "/tickets",
+                "subpages" : []
+        },
+        {
+                "page": "donate",
+                "title": "Donate",
+                "slug": "/donate",
+                "subpages" : []
+        }
+]

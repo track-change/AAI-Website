@@ -59,18 +59,27 @@ artists = artists.map((artist) => ({
   <div x-data="pagination">
     <ul class="list-artist">
       <template x-for="artist in paginatedData" :key="artist._id">
-        <li class="artist-list-item">
+        <li
+          @mouseenter="handleMouseEnter($event, artist._id)"
+          @mousemove="handleMouseMove($event, artist._id)"
+          @mouseleave="handleMouseLeave(artist._id)"
+          class="artist-list-item"
+        >
           <a :href="`/artists/${artist.slug.current}`">
             <h2 x-text="artist.name"></h2>
           </a>
-          <img class="artist-thumbnail" :src="artist.imageUrl" alt="" />
+          <img
+            :id="`thumbnail${artist._id}`"
+            class="artist-thumbnail"
+            :src="artist.imageUrl"
+            alt=""
+          />
         </li>
       </template>
     </ul>
 
     <div class="pagination-controls caption">
-      <button @click="prevPage()" :disabled="currentPage === 1"
-        >Previous</button
+      <button @click="prevPage()" :disabled="currentPage === 1">Previous</button
       >
       <span x-text="currentPage"></span>
       <button @click="nextPage()" :disabled="disableNext">Next</button>
@@ -160,39 +169,33 @@ artists = artists.map((artist) => ({
       },
       nextPage() {
         this.currentPage++;
-        this.currentPage * this.itemsPerPage >= artists.length
-          ? (this.disableNext = true)
-          : (this.disableNext = false);
+        this.disableNext =
+          this.currentPage * this.itemsPerPage >= artists.length;
       },
       prevPage() {
         if (this.currentPage > 1) this.currentPage--;
       },
+      handleMouseEnter(event, id) {
+        const thumbnail = document.getElementById(`thumbnail${id}`);
+        if (thumbnail) {
+          thumbnail.style.display = "block";
+          thumbnail.style.left = `${event.clientX}px`;
+          thumbnail.style.top = `${event.clientY + window.scrollY}px`;
+        }
+      },
+      handleMouseMove(event, id) {
+        const thumbnail = document.getElementById(`thumbnail${id}`);
+        if (thumbnail) {
+          thumbnail.style.left = `${event.clientX}px`;
+          thumbnail.style.top = `${event.clientY + window.scrollY}px`;
+        }
+      },
+      handleMouseLeave(id) {
+        const thumbnail = document.getElementById(`thumbnail${id}`);
+        if (thumbnail) {
+          thumbnail.style.display = "none";
+        }
+      },
     }));
-  });
-  const listItems = document.querySelectorAll(".artist-list-item");
-  const thumbnails = document.querySelectorAll(".artist-thumbnail");
-
-  window.addEventListener("scroll", () => {
-    let scrollY = window.scrollY;
-
-    listItems.forEach((item, index) => {
-      item.addEventListener("mouseenter", (e) => {
-        // const itemPosition = item.getBoundingClientRect();
-        item.style.color = "var(--orange)";
-        thumbnails[index].style.display = "block";
-        thumbnails[index].style.left = `${e.clientX}px`;
-        thumbnails[index].style.top = `${e.clientY + scrollY}px`;
-      });
-
-      item.addEventListener("mousemove", (e) => {
-        thumbnails[index].style.left = `${e.clientX}px`;
-        thumbnails[index].style.top = `${e.clientY + scrollY}px`;
-      });
-
-      item.addEventListener("mouseleave", () => {
-        item.style.color = "var(--black)";
-        thumbnails[index].style.display = "none";
-      });
-    });
   });
 </script>
