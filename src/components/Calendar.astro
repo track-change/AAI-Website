@@ -24,7 +24,7 @@ import Layout from "../layouts/Layout.astro";
     <div class="calendar" id="calendar-body">
     </div>
 
-    <p>Selected Dates: <span id="selected-dates"></span></p>
+    <p><span id="start-date"></span><span id="end-date"></span></p>
   </div>
 <!-- </Layout> -->
 
@@ -122,7 +122,8 @@ import Layout from "../layouts/Layout.astro";
 
 <script async>
 const calendarBody = document.getElementById("calendar-body");
-const selectedDatesSpan = document.getElementById("selected-dates");
+const startDateSpan = document.getElementById("start-date");
+const endDateSpan = document.getElementById("end-date");
 const currentMonthYearSpan = document.getElementById("current-month-year");
 let startDate = null;
 let endDate = null;
@@ -253,11 +254,14 @@ function highlightSelectedDates() {
 
 function updateSelectedDatesSpan() {
   if (endDate) {
-    selectedDatesSpan.textContent = `${startDate} to ${endDate}`;
+    startDateSpan.textContent = `${startDate}`;
+    endDateSpan.textContent = `${endDate}`;
   } else if (startDate) {
-    selectedDatesSpan.textContent = `${startDate}`;
+    startDateSpan.textContent = `${startDate}`;
+    endDateSpan.textContent = "";
   } else {
-    selectedDatesSpan.textContent = "";
+    startDateSpan.textContent = "";
+    endDateSpan.textContent = "";
   }
 }
 
