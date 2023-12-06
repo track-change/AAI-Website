@@ -171,14 +171,14 @@ const currentPrograms = programs.filter(
   }
 </style>
 <script async>
-const calendar = document.querySelector("#calendar-wrapper");
-const calendarContainer = document.querySelector("#calendar-container");
+let calendar = document.querySelector("#calendar-wrapper");
+let calendarContainer = document.querySelector("#calendar-container");
 
 calendarContainer.style.display = "none";
 calendar.addEventListener("click", function () {
-  if (calendar.classList.contains("expended")) {
+  if (calendar.classList.contains("expanded")) {
     calendar.classList.remove("expanded");
-    calendarContainer.style.display = "none";
+    // calendarContainer.style.display = "none";
   } else {
     calendar.classList.add("expanded");
     calendarContainer.style.display = "block";
