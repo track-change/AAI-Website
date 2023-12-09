@@ -19,7 +19,7 @@ import navs from "../data/nav.json";
                       <a class="sub" href={nav.slug}>
                         {nav.title}
                       </a>
-                      <div class="subpages" hidden>
+                      <div class="subpages" id={nav.title.toLowerCase()} hidden>
                         {nav.subpages.map((subpage) => {
                           return <a href={subpage.slug}>{subpage.title}</a>;
                         })}
@@ -110,7 +110,7 @@ import navs from "../data/nav.json";
 
 <script>
   const hamburger = document.querySelector(
-    ".hamburger-icon",
+    ".hamburger-icon"
   ) as HTMLButtonElement;
   const menu = document.querySelector(".menu") as HTMLDivElement;
   const links = document.querySelector("#toggle-links") as HTMLDivElement;
@@ -134,8 +134,21 @@ import navs from "../data/nav.json";
           links.hidden = true;
         }
       },
-      { once: true },
+      { once: true }
     );
+
+    if (!expanded) {
+      sublinks.forEach((sublink) => {
+        (sublink as HTMLAnchorElement).hidden = false;
+        sublink.classList.remove("active");
+        const subpages = sublink.nextElementSibling as HTMLDivElement;
+        subpages.hidden = true;
+      });
+
+      reglinks.forEach((reglink) => {
+        (reglink as HTMLAnchorElement).hidden = false;
+      });
+    }
   });
 
   sublinks.forEach((sublink) => {
@@ -144,14 +157,20 @@ import navs from "../data/nav.json";
       sublinks.forEach((sublink) => {
         if (sublink !== e.target && window.innerWidth > 768) {
           sublink.toggleAttribute("hidden");
+        }
+
+        if (sublink !== e.target && window.innerWidth <= 768) {
+          sublink.classList.remove("active");
           const subpages = sublink.nextElementSibling as HTMLDivElement;
           subpages.hidden = true;
         }
       });
 
-      reglinks.forEach((reglink) => {
-        reglink.toggleAttribute("hidden");
-      });
+      if (window.innerWidth > 768) {
+        reglinks.forEach((reglink) => {
+          reglink.toggleAttribute("hidden");
+        });
+      }
 
       const subpages = sublink.nextElementSibling as HTMLDivElement;
       subpages.hidden = !subpages.hidden;
@@ -245,14 +264,16 @@ import navs from "../data/nav.json";
       }
 
       .menu-right {
-        align-self: center;
-        display: flex;
+        flex: 2;
+        align-self: flex-end;
+        // display: flex;
         gap: 40px;
 
         .links {
           display: flex;
           flex-direction: column;
-          width: fit-content;
+          width: inherit;
+          padding-inline-end: 1em;
           transition: all 0.3s var(--ease);
 
           &[data-close="true"] {
@@ -315,12 +336,25 @@ import navs from "../data/nav.json";
           }
         }
       }
+
+      @media screen and (max-width: 1288px) {
+        .menu-right {
+          #education {
+            display: flex;
+            flex-wrap: wrap;
+            width: 50%;
+            a {
+              display: inline-block;
+              white-space: nowrap;
+            }
+          }
+        }
+      }
+
       @media screen and (max-width: 768px) {
         display: grid;
         grid-template-columns: 1fr 1fr;
         grid-template-rows: 1fr fit-content;
-
-        // position .menu-right on the second row and stretch it to the end
         .menu-right {
           grid-column: 1 / 3;
           grid-row: 2 / 3;
@@ -335,9 +369,13 @@ import navs from "../data/nav.json";
               display: flex;
 
               .subpages {
+                width: 100% !important;
                 flex-direction: column;
                 align-items: flex-start;
                 gap: 0 !important;
+                position: absolute;
+                top: 0;
+                right: -25%;
               }
             }
 
@@ -350,6 +388,7 @@ import navs from "../data/nav.json";
             .sublinked {
               flex-direction: column;
               justify-content: start;
+              position: relative;
             }
 
             .reg_link {
