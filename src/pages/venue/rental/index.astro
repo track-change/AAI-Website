@@ -1,0 +1,116 @@
+---
+import { getVenue, getVenueBySlug } from "../../../data/api";
+import { urlFor } from "../../../utils/image";
+import Tag from "../../../components/Tag.astro";
+
+import BasicLayout from "../../../layouts/Layout.astro";
+
+import SectionLayout from "../../../layouts/SectionLayout.astro";
+import SideTab from "../../../components/SideTab.astro";
+
+import type { Entry, Venue } from "../../../data/types";
+import SecHeader from "../../../components/SecHeader.astro";
+
+const rentals = await getVenue();
+console.log(rentals)
+
+const rentalsByFloor = rentals.reduce<Record<string, Venue[]>>(
+  (acc, rental) => {
+    const floorCaption = rental.frontCaptions.find(
+      (caption) => caption.displayTitle === "Floor"
+    );
+    const floor = floorCaption ? floorCaption.value : null;
+    if (floor) {
+      if (!acc[floor]) {
+        acc[floor] = [];
+      }
+      acc[floor].push(rental);
+    }
+    return acc;
+  },
+  {}
+);
+
+// Get the floors in ascending order
+const sortedFloors = Object.keys(rentalsByFloor).sort();
+---
+<BasicLayout title="Rental">
+  <div data-top>
+  <SideTab
+    text="Venue"
+    href="/venue/"
+    style="department"
+    />
+<SectionLayout
+  className="rentals"
+  backGround="var(--white)"
+  textColor="var(--black)"
+>
+  <div class="title">
+    <h2>Rentals</h2>
+  </div>
+  {
+    sortedFloors.map((floor) => (
+      <section class="floor">
+        <SecHeader title={floor} />
+        <ul class="rental-list">
+          {rentalsByFloor[floor].map((rental) => {
+            const descriptionCaption = rental.frontCaptions.find(
+              (caption) => caption.displayTitle === "Description"
+            );
+            return (
+              <li class="rental-list-item">
+                <a href={`/venue/rental/${rental.slug.current}`}>
+                  {rental.coverImage && (
+                    <img
+                      class="rental-thumbnail"
+                      src={urlFor(rental.coverImage).url()}
+                      alt={rental.name}
+                    />
+                  )}
+                  <h4 class="rental-item-title">{rental.name}</h4>
+                  {descriptionCaption && <div class="caption">{descriptionCaption.value}</div>}
+                  <div class="tag-wrapper caption">
+                    {rental.tags &&
+                      rental.tags.map((tag) => <Tag tagRef={tag._ref} />)}
+                  </div>
+                </a>
+              </li>
+            );
+          })}
+        </ul>
+      </section>
+    ))
+  }
+</SectionLayout>
+</div>
+</BasicLayout>
+<style lang="scss" is:global>
+  .floor {
+    .rental-list {
+      display: flex;
+      gap: var(--l-margin);
+      justify-content: center;
+      flex-wrap: wrap;
+
+      .rental-list-item {
+        text-align: center;
+        margin: var(--s-margin) 0;
+
+        .rental-thumbnail {
+          max-width: 800px;
+          width: 100%;
+          height: auto;
+          object-fit: contain;
+        }
+        .rental-item-title {
+          margin: 16px 0;
+          line-height: 1;
+        }
+        .caption {
+          line-height: 1;
+        }
+      }
+    }
+  }
+</style>
