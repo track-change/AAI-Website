@@ -1,8 +1,8 @@
 ---
 import Layout from "../../layouts/Layout.astro";
 import SideTab from "../../components/SideTab.astro";
-import CurrentPrograms from "../../components/sections/CurrentPrograms.astro";
-import PastPrograms from "../../components/sections/PastPrograms.astro";
+import CurrentPrograms from "./current-upcoming.astro";
+import PastPrograms from "./past.astro";
 ---
 
 <Layout title="Programs">
@@ -21,10 +21,10 @@ import PastPrograms from "../../components/sections/PastPrograms.astro";
     />
     <article class="wrapper">
       <div class="left-col">
-        <CurrentPrograms />
+        <!-- <CurrentPrograms /> -->
       </div>
       <div class="right-col">
-        <PastPrograms />
+        <!-- <PastPrograms /> -->
       </div>
     </article>
     <SideTab
@@ -104,7 +104,7 @@ import PastPrograms from "../../components/sections/PastPrograms.astro";
   }
 </style>
 
-<script async>
+<!-- <script async>
 const currentTab = document.querySelector(".current-tab");
 const pastTab = document.querySelector(".past-tab");
 const wrapper = document.querySelector(".wrapper");
@@ -178,10 +178,6 @@ function showRight() {
   currentTab.addEventListener("click", showLeft);
 }
 
-//back function WIP!!!
-department.querySelector("a").addEventListener("click", function (e) {
-  e.preventDefault();
-});
 
 function backToProgram() {
   window.removeEventListener("scroll", showLeft);
@@ -210,4 +206,4 @@ rightCol.addEventListener("click", showRight);
 window.addEventListener("scroll", showLeft);
 department.addEventListener("click", backToProgram);
 calendar.addEventListener("click", updateWrapperHeight);
-</script>
+</script> -->

@@ -5,6 +5,7 @@ export interface Entry {
   _type: string;
   _key: string;
   displayTitle: string;
+  coverImage: ImageAsset;
   value: string;
   url: string;
   chooseFile?: {

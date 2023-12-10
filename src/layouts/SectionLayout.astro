@@ -1,17 +1,18 @@
 ---
 import "../scss/main.scss";
+import { slide } from "astro:transitions";
+
 
 interface Prop {
   backGround?: string;
   textColor?: string;
-  className?: string;
+  className?: [];
 }
 
 const { backGround, textColor, className } = Astro.props as Prop
-
 ---
 
-<main class={className}>
+<main class:list={className} transition:animate={slide({ duration: "1s"})}>
   <slot />
 </main>
 

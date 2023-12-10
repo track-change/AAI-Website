@@ -1,4 +1,5 @@
 ---
+import "../scss/main.scss";
 interface Props {
   text: string;
   href?: string;
@@ -32,6 +33,7 @@ const { text, href, style, classes, shadow, backGround } = Astro.props as Props;
     justify-content: center;
     background-color: var(--backGround);
     line-height: 1;
+    z-index: 9;
 
     @media screen and (max-width: 64rem) {
       padding: 2rem 0;
