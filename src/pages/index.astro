@@ -482,8 +482,15 @@ setInterval(() => {
   updateText();
 }, 4000);
 
+if (sessionStorage) {
+  if (JSON.parse(sessionStorage.getItem("visited"))) {
+    animation.style.display = "none";
+  }
+}
+
 setTimeout(() => {
   animation.style.display = "none";
+  sessionStorage.setItem("visited", true);
 }, 5500);
 
 function handleScroll() {
