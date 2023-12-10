@@ -45,6 +45,29 @@ const banners = await Promise.all(
 );
 ---
 
+<div class="animation">
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="276"
+    height="276"
+    viewBox="0 0 276 276"
+    fill="none"
+  >
+    <path d="M0 0C0 50.729 41.271 92 92 92H184V184V276H276V0H0Z" fill="white"
+    ></path>
+    <path
+      d="M92 92C41.271 92 0 133.271 0 184C0 234.729 41.271 276 92 276C142.729 276 184 234.729 184 184L92 184L92 92Z"
+      fill="white"></path>
+  </svg>
+  <div class="animation-text">
+    asian
+    <br />
+     arts
+    <br />
+     initiative
+  </div>
+</div>
+
 <Layout title="Homepage">
   <SectionLayout className="program">
     <h1>Programs: On Now</h1>
@@ -185,6 +208,72 @@ const banners = await Promise.all(
       flex-direction: column;
       transition: background-color 300ms var(--ease);
     }
+
+    .animation {
+      position: absolute;
+      width: 100vw;
+      height: 100vh;
+      background-color: var(--orange);
+      color: var(--white);
+      z-index: 100;
+      animation: disappear 1000ms ease-in-out;
+      animation-delay: 4.5s;
+      animation-fill-mode: forwards;
+
+      svg {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 16rem;
+        height: 16rem;
+        animation: toLeft 500ms ease-in-out;
+        animation-delay: 1.5s;
+        animation-fill-mode: forwards;
+      }
+
+      @keyframes toLeft {
+        from {
+          left: 50%;
+        }
+        to {
+          left: 40%;
+        }
+      }
+
+      .animation-text {
+        opacity: 0;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(10%, -50%);
+        font-size: 5.8rem;
+        line-height: 102%;
+        // transition: opacity 500ms ease-in-out;
+        animation: appear 500ms ease-in-out;
+        animation-delay: 2s;
+        animation-fill-mode: forwards;
+      }
+
+      @keyframes appear {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+    }
+
+    @keyframes disappear {
+      from {
+        opacity: 1;
+      }
+      to {
+        opacity: 0;
+      }
+    }
+
     main.program,
     main.education,
     main.ticket,
@@ -317,6 +406,7 @@ const banners = await Promise.all(
 </Layout>
 
 <script async>
+const animation = document.querySelector(".animation");
 const carousel = document.querySelector(".program-carousel");
 const cards = document.querySelectorAll(".program-carousel-container");
 const blurb = document.querySelector(".blurb");
@@ -361,19 +451,27 @@ function updateText() {
 }
 
 let currentPos = 0;
+let cardWidth = cards[0].offsetWidth;
+
+// Clone the first slide and append it to the end of the carousel
+const clonedCard = cards[0].cloneNode(true);
+clonedCard.classList.remove("centered");
+carousel.appendChild(clonedCard);
 
 function scrollCarousel() {
-  currentPos += window.innerWidth;
+  currentPos += cardWidth;
 
-  window.addEventListener("resize", () => {
-    currentPos += window.innerWidth;
-  });
+  carousel.style.transition = "transform 0.5s linear";
+  carousel.style.transform = `translateX(-${currentPos}px)`;
 
-  if (currentPos > carousel.scrollWidth - window.innerWidth) {
-    currentPos = 0;
+  // When reaching the last cloned slide, reset to the original position
+  if (currentPos >= carousel.scrollWidth - carousel.offsetWidth) {
+    setTimeout(() => {
+      carousel.style.transition = "none";
+      carousel.style.transform = `translateX(0)`;
+      currentPos = 0;
+    }, 500); // Adjust this delay to match your transition duration
   }
-
-  carousel.scrollTo(currentPos, 0);
 }
 
 updateText();
@@ -383,6 +481,10 @@ setInterval(() => {
   recenter();
   updateText();
 }, 4000);
+
+setTimeout(() => {
+  animation.style.display = "none";
+}, 5500);
 
 function handleScroll() {
   const pixels = window.scrollY;
