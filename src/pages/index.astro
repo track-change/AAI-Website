@@ -451,28 +451,41 @@ function updateText() {
 }
 
 let currentPos = 0;
-let cardWidth = cards[0].offsetWidth;
+let cardWidth = window.innerWidth;
 
-// Clone the first slide and append it to the end of the carousel
-const clonedCard = cards[0].cloneNode(true);
-clonedCard.classList.remove("centered");
-carousel.appendChild(clonedCard);
+// const clonedCard = cards[0].cloneNode(true);
+// clonedCard.classList.remove("centered");
+// carousel.appendChild(clonedCard);
 
 function scrollCarousel() {
-  currentPos += cardWidth;
+  currentPos += window.innerWidth;
 
-  carousel.style.transition = "transform 0.5s linear";
-  carousel.style.transform = `translateX(-${currentPos}px)`;
+  window.addEventListener("resize", () => {
+    currentPos += window.innerWidth;
+  });
 
-  // When reaching the last cloned slide, reset to the original position
-  if (currentPos >= carousel.scrollWidth - carousel.offsetWidth) {
-    setTimeout(() => {
-      carousel.style.transition = "none";
-      carousel.style.transform = `translateX(0)`;
-      currentPos = 0;
-    }, 500); // Adjust this delay to match your transition duration
+  if (currentPos > carousel.scrollWidth - window.innerWidth) {
+    currentPos = 0;
   }
+
+  carousel.scrollTo(currentPos, 0);
 }
+
+// function scrollCarousel() {
+//   currentPos += cardWidth;
+
+//   carousel.style.transition = "transform 0.5s linear";
+//   carousel.style.transform = `translateX(-${currentPos}px)`;
+
+//   // When reaching the last cloned slide, reset to the original position
+//   if (currentPos >= carousel.scrollWidth - carousel.offsetWidth) {
+//     setTimeout(() => {
+//       carousel.style.transition = "none";
+//       carousel.style.transform = `translateX(0)`;
+//       currentPos = 0;
+//     }, 500); // Adjust this delay to match your transition duration
+//   }
+// }
 
 updateText();
 
