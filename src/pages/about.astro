@@ -233,17 +233,17 @@ function showPartnership() {
   aboutTab.classList.remove("is-major");
   document.querySelector(".about-sec").style.display = "none";
   subTabs.forEach((subTab) => {
-    if (subTab.querySelector("a").classList.contains("is-hidden")) {
-      subTab.querySelector("a").classList.remove("is-hidden");
-      subTab.querySelector("a").classList.add("is-shown");
+    if (subTab.querySelector("h6").classList.contains("is-hidden")) {
+      subTab.querySelector("h6").classList.remove("is-hidden");
+      subTab.querySelector("h6").classList.add("is-shown");
     }
   });
   document
     .querySelector(".PartnershipTab")
-    .querySelector("a").classList.remove("is-shown");
+    .querySelector("h6").classList.remove("is-shown");
   document
     .querySelector(".PartnershipTab")
-    .querySelector("a").classList.add("is-hidden");
+    .querySelector("h6").classList.add("is-hidden");
 
   aboutSections.forEach((aboutSection) => {
     aboutSection.classList.add("hidden");
@@ -268,17 +268,17 @@ function showContact() {
   aboutTab.classList.remove("is-major");
   document.querySelector(".about-sec").style.display = "none";
   subTabs.forEach((subTab) => {
-    if (subTab.querySelector("a").classList.contains("is-hidden")) {
-      subTab.querySelector("a").classList.remove("is-hidden");
-      subTab.querySelector("a").classList.add("is-shown");
+    if (subTab.querySelector("h6").classList.contains("is-hidden")) {
+      subTab.querySelector("h6").classList.remove("is-hidden");
+      subTab.querySelector("h6").classList.add("is-shown");
     }
   });
   document
     .querySelector(".ContactUsTab")
-    .querySelector("a").classList.remove("is-shown");
+    .querySelector("h6").classList.remove("is-shown");
   document
     .querySelector(".ContactUsTab")
-    .querySelector("a").classList.add("is-hidden");
+    .querySelector("h6").classList.add("is-hidden");
 
 
   aboutSections.forEach((aboutSection) => {
@@ -303,13 +303,13 @@ function showPeople() {
   aboutTab.classList.remove("is-major");
   document.querySelector(".about-sec").style.display = "none";
   subTabs.forEach((subTab) => {
-    if (subTab.querySelector("a").classList.contains("is-hidden")) {
-      subTab.querySelector("a").classList.remove("is-hidden");
-      subTab.querySelector("a").classList.add("is-shown");
+    if (subTab.querySelector("h6").classList.contains("is-hidden")) {
+      subTab.querySelector("h6").classList.remove("is-hidden");
+      subTab.querySelector("h6").classList.add("is-shown");
     }
   });
-  document.querySelector(".PeopleTab").querySelector("a").classList.remove("is-shown");
-  document.querySelector(".PeopleTab").querySelector("a").classList.add("is-hidden");
+  document.querySelector(".PeopleTab").querySelector("h6").classList.remove("is-shown");
+  document.querySelector(".PeopleTab").querySelector("h6").classList.add("is-hidden");
   aboutSections.forEach((aboutSection) => {
     aboutSection.classList.add("hidden");
   });
@@ -334,17 +334,17 @@ function showOppo() {
   aboutTab.classList.remove("is-major");
   document.querySelector(".about-sec").style.display = "none";
   subTabs.forEach((subTab) => {
-    if (subTab.querySelector("a").classList.contains("is-hidden")) {
-      subTab.querySelector("a").classList.remove("is-hidden");
-      subTab.querySelector("a").classList.add("is-shown");
+    if (subTab.querySelector("h6").classList.contains("is-hidden")) {
+      subTab.querySelector("h6").classList.remove("is-hidden");
+      subTab.querySelector("h6").classList.add("is-shown");
     }
   });
   document
     .querySelector(".OpportunitiesTab")
-    .querySelector("a").classList.remove("is-shown");
+    .querySelector("h6").classList.remove("is-shown");
   document
     .querySelector(".OpportunitiesTab")
-    .querySelector("a").classList.add("is-hidden");
+    .querySelector("h6").classList.add("is-hidden");
   aboutSections.forEach((aboutSection) => {
     aboutSection.classList.add("hidden");
   });
@@ -367,9 +367,9 @@ function backToAbout() {
   window.scrollTo(0, 0);
   aboutTab.classList.add("is-major");
   subTabs.forEach((subTab) => {
-    if (subTab.querySelector("a").classList.contains("is-hidden")) {
-      subTab.querySelector("a").classList.remove("is-hidden");
-      subTab.querySelector("a").classList.add("is-shown");
+    if (subTab.querySelector("h6").classList.contains("is-hidden")) {
+      subTab.querySelector("h6").classList.remove("is-hidden");
+      subTab.querySelector("h6").classList.add("is-shown");
     }
   });
   aboutSections.forEach((aboutSection) => {
