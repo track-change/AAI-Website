@@ -18,7 +18,6 @@ const educations = await getEducations();
           </p>
         </div>
       </main>
-      <ul class="imports">
         {
           educations.map((education: Education) => (
             <SideTab 
@@ -29,7 +28,7 @@ const educations = await getEducations();
             href={`/education/${education.slug.current}`} />
           ))
         }
-      </ul>
+
       <!-- <SideTab
           text="Camp Bruce Lee"
           style="subpage"

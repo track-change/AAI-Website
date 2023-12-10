@@ -25,12 +25,17 @@ const { pageTitle, bannerSrc, ctas, frontCaptions } = Astro.props as Props;
 <BasicLayout title={pageTitle}>
   <div class="top">
     <SideTab text="Education" href="/education/" style="department" />
-    <SideTab 
-    text={education.title}
-    style="subpage"
-    shadow="right"
-    backGround="var(--white)"
-    href={`/education/${education.slug.current}`} />
+
+      {
+        educations.map((education: Education) => (
+          <SideTab 
+          text={education.title}
+          style="subpage"
+          shadow="left"
+          backGround="var(--white)"
+          href={`/education/${education.slug.current}`} />
+        ))
+      }
 
     <main>
       <h1 class="title">{pageTitle}</h1>

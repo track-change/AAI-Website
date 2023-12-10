@@ -18,6 +18,7 @@ type Params = InferGetStaticParamsType<typeof getStaticPaths>;
 const { slug } = Astro.params as Params;
 
 const education = await getEducationBySlug(slug);
+console.log(education)
 ---
 <EducationLayout
   pageTitle={education.title}
