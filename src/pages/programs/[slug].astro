@@ -2,7 +2,13 @@
 import type { InferGetStaticParamsType } from "astro";
 import { PortableText } from "astro-portabletext";
 import ProgramLayout from "../../layouts/ProgramLayout.astro";
-import { getPrograms, getProgramBySlug } from "../../data/api";
+import ProgramCard from "../../components/ProgramCard.astro";
+import {
+  getPrograms,
+  getProgramBySlug,
+  getProgramByRef,
+  getArtistByRef,
+} from "../../data/api";
 import { urlFor } from "../../utils/image";
 import Carousel from "../../components/Carousel.astro";
 import SecHeader from "../../components/SecHeader.astro";
@@ -18,8 +24,19 @@ type Params = InferGetStaticParamsType<typeof getStaticPaths>;
 const { slug } = Astro.params as Params;
 
 const program = await getProgramBySlug(slug);
----
 
+program.relatedPrograms = program.relatedPrograms || [];
+const relatedBlocks = await Promise.all(
+  program.relatedPrograms.map(async (block) => {
+    const programResult = await getProgramByRef(block._ref);
+    const artistResult = await getArtistByRef(block._ref);
+    return programResult || artistResult;
+  })
+);
+
+console.log(relatedBlocks);
+---
+ 
 <ProgramLayout
   pageTitle={program.name}
   bannerSrc={program.coverImage ? urlFor(program.coverImage).url() : ""}
@@ -43,4 +60,91 @@ const program = await getProgramBySlug(slug);
       </>
     )
   }
+
+  <div class="related">
+    { relatedBlocks &&
+      relatedBlocks.map((block) => (
+        <div class="leaf-wrapper">
+
+            {block._type === "artist" && (
+            <a href={`/artists/${block.slug.current}`} style={{pointerEvents: "none"}}>
+            <div class="related-leaf">
+            <h1>{block.name}</h1>
+              <img style="object-fit: cover; margin-top: 1em; max-width: 100%; height: 75%; width: auto;" src={urlFor(block.image.asset).url()} alt="" />
+            </div>
+            </a>
+            )} 
+
+            {block._type === "program" && (
+            <a href={`/programs/${block.slug.current}`} style={{pointerEvents: "none"}}>
+            <div class="related-leaf">
+            <h1>{block.name}</h1>
+              <img style="object-fit: cover; margin-top: 1em;" src={urlFor(block.coverImage).url()} alt="" />
+              </div>
+            </a>
+            )}
+          </div>
+
+      ))
+    }
+  </div>
 </ProgramLayout>
+<style lang="scss">
+  .related {
+    position: relative;
+    height: min-content;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    transition: 800ms;
+    margin-left: var(--l-margin);
+    margin-bottom: 4rem;
+
+    .leaf-wrapper {
+      width: 100%;
+      overflow: hidden;
+      box-shadow: -8px 0px 8px 0px rgba(0, 0, 0, 0.1);
+      height: fit-content;
+      cursor: pointer;
+    }
+
+    .related-leaf {
+      background-color: var(--white);
+      width: 100vw;
+      height: fit-content;
+      height: 100vh;
+      overflow: hidden;
+      padding: var(--l-margin);
+      padding-bottom: 0;
+      flex: 1;
+    }
+  }
+</style>
+<script async>
+  const relatedSection = document.querySelector(".related");
+  const leafs = relatedSection.querySelectorAll(".leaf-wrapper");
+
+  leafs.forEach((element, i) => {
+    let columns = '1fr 1fr 1fr';
+    element.addEventListener("click", () => {
+      console.log(i);
+      if (i === 0) {
+        columns = "1.5fr 0.75fr 0.75fr";
+      } else if (i === 1) {
+        columns = "0.75fr 1.5fr 0.75fr";
+      } else if (i === 2) {
+        columns = "0.75fr 0.75fr 1.5fr";
+      }
+      relatedSection.style.gridTemplateColumns = columns;
+      console.log(element.querySelector("a"))
+      element.querySelector("a").style.pointerEvents = "auto"
+    });
+
+    element.addEventListener("mouseleave", () => {
+      columns = '1fr 1fr 1fr';
+      relatedSection.style.gridTemplateColumns = columns;
+      element.querySelector("a").style.pointerEvents = "none"
+    })
+  });
+
+
+</script>

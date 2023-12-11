@@ -36,7 +36,11 @@ export interface Artist {
   _id: string;
   name: string;
   slug: Slug;
-  image: ImageAsset;
+  coverImage: {
+    asset: ImageAsset;
+    alt: string;
+    _type: string;
+  };
   imageCredit: string;
   links: Link[];
   // links: Array<Entry>;
@@ -59,6 +63,11 @@ export interface Program {
   artists: Artist[];
   description: PortableTextBlock[];
   images: Array<ImageAsset>;
+  relatedPrograms: {
+    _ref: string;
+    _type: string;
+    _key: string;
+  }[];
   tags: {
     _ref: string;
   }[];

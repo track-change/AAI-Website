@@ -42,12 +42,24 @@ export async function getArtistBySlug(slug: string): Promise<Artist> {
   return fetchData("artist", slug);
 }
 
+export async function getArtistByRef(ref: string): Promise<Artist> {
+  const query = groq`*[_type == "artist" && _id == $ref][0]`;
+  const artist = await useSanityClient().fetch(query, { ref });
+  return artist;
+}
+
 export async function getPrograms(): Promise<Program[]> {
   return fetchData("program");
 }
 
 export async function getProgramBySlug(slug: string): Promise<Program> {
   return fetchData("program", slug);
+}
+
+export async function getProgramByRef(ref: string): Promise<Program> {
+  const query = groq`*[_type == "program" && _id == $ref][0]`;
+  const program = await useSanityClient().fetch(query, { ref });
+  return program;
 }
 
 export async function getNews(): Promise<News[]> {
@@ -160,12 +172,6 @@ export async function getFormByRef(ref: string): Promise<Form> {
   const query = groq`*[_type == "form" && _id == $ref][0]`;
   const form = await useSanityClient().fetch(query, { ref });
   return form;
-}
-
-export async function getProgramByRef(ref: string): Promise<Program> {
-  const query = groq`*[_type == "program" && _id == $ref][0]`;
-  const program = await useSanityClient().fetch(query, { ref });
-  return program;
 }
 
 export async function getTagByRef(ref: string): Promise<Tag> {

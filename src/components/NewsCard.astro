@@ -3,6 +3,7 @@ import type { ImageAsset } from "@sanity/types";
 import { urlFor } from "../utils/image";
 import Tag from "./Tag.astro";
 import type { News } from "../data/types";
+import { formatDate } from "../utils/dateFormatting";
 
 interface Props {
   news: News;
@@ -25,7 +26,7 @@ const { news } = Astro.props as Props;
     <h6 class="news-item-title">{news.title}</h6>
 
     <div class="small-caption">
-      {news.publishedAt}
+      {formatDate(news.publishedAt)}
     </div>
     <!-- <div class="tag-wrapper caption">
       {news.tags && news.tags.map((tag) => <Tag tagRef={tag._ref} />)}

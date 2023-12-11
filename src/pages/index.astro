@@ -104,7 +104,7 @@ const banners = await Promise.all(
                 linkHref={(banner as Banner)?.link.value}
               />
             ) : (
-              <img
+              <img class="about-img" style="object-fit: contain;"
                 src={
                   (banner as AboutUsElement).asset
                     ? urlFor((banner as AboutUsElement).asset).url()

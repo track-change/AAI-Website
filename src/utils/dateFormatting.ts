@@ -20,11 +20,11 @@ export function formatDateRange(dateRange: string): string {
   };
 
   if (startDay === endDay && startMonth === endMonth && startYear === endYear) {
-    return `${formatTime(startDate)} \u2013 ${formatTime(endDate)}, ${startMonth} ${startDay}, ${startYear}`;
+    return `${formatTime(startDate)} - ${formatTime(endDate)}, ${startMonth} ${startDay}, ${startYear}`;
   } else if (startYear === endYear) {
-    return `${startMonth} ${startDay} \u2013 ${endMonth} ${endDay}, ${startYear}`;
+    return `${startMonth} ${startDay} - ${endMonth} ${endDay}, ${startYear}`;
   } else {
-    return `${startMonth} ${startDay}, ${startYear} \u2013 ${endMonth} ${endDay}, ${endYear}`;
+    return `${startMonth} ${startDay}, ${startYear} - ${endMonth} ${endDay}, ${endYear}`;
   }
 }
 
