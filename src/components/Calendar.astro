@@ -5,9 +5,9 @@ import Layout from "../layouts/Layout.astro";
 <!-- <Layout title="calendar"> -->
   <div id="calendar-container">
     <div id="calendar-navigation">
-      <div class="navigation-btn" onclick="previousMonth()">Previous Month</div>
+      <p class="navigation-btn" onclick="previousMonth()">prev</p>
       <p id="current-month-year"></p>
-      <div class="navigation-btn" onclick="nextMonth()">Next Month</div>
+      <p class="navigation-btn" onclick="nextMonth()">next</p>
       <!-- <svg
         xmlns="http://www.w3.org/2000/svg"
         width="27"
@@ -32,14 +32,17 @@ import Layout from "../layouts/Layout.astro";
   .calendar {
     display: grid;
     grid-template-columns: repeat(7, 1fr);
-    // gap: 1px;
+    justify-items: center;
+    align-items: center;
+    gap: 16px;
+    margin: 0px 144px;
 
     .calendar-day-label {
       position: sticky;
       text-align: center;
       top: 0;
-      padding: 22px;
-      background-color: var(--white);
+      padding: 22px 0px;
+      // background-color: var(--yellow);
       font-size: var(--caption-font-size);
     }
 
@@ -67,13 +70,17 @@ import Layout from "../layouts/Layout.astro";
 
     .calendar-cell {
       position: relative; /* Add position relative to enable positioning day labels */
-      padding: 16px;
+      padding: 15px 0px;
       text-align: center;
-      font-size: var(--caption-font-size);
+      font-size: var(--h4-font-size);
       cursor: pointer;
       border: 1px solid transparent; /* Set transparent border initially */
       background-color: white;
       box-shadow: 0 0 0 2px transparent; /* Reserve space for box shadow */
+      border-radius: 100%;
+      // width: 70px;
+      height: 64px;
+      width: 64px;
     }
     .calendar-cell:not(:empty):hover {
       cursor: pointer;
@@ -102,15 +109,17 @@ import Layout from "../layouts/Layout.astro";
       text-align: center;
       margin-bottom: 10px;
       display: flex;
-      background-color: var(--yellow);
-      padding:16px 0;
+      // background-color: var(--yellow);
+      // color:var(--white);
+      padding:22px 0;
       justify-content: space-between;
+      border-bottom: solid black 2px;
 
       .navigation-btn {
         display: inline-block;
-        padding: 5px 10px;
+        // padding: 5px 10px;
         cursor: pointer;
-        margin: 0 10px;
+        margin: 0 16px;
       }
 
       p {
