@@ -11,7 +11,6 @@ import type { Education } from "../data/types";
 
 const educations = await getEducations();
 
-
 interface Props {
   pageTitle: string;
   bannerSrc: string;
@@ -20,39 +19,59 @@ interface Props {
 }
 
 const { pageTitle, bannerSrc, ctas, frontCaptions } = Astro.props as Props;
+
+const anim = {
+  old: {
+    name: "slideOutToLeft",
+    duration: "0.4s",
+    easing: "linear",
+    fillMode: "forwards",
+  },
+  new: {
+    name: "slideIn",
+    duration: "0.4s",
+    easing: "linear",
+    fillMode: "backwards",
+  },
+};
+
+const mySlideIn = {
+  forwards: anim,
+  backwards: anim,
+};
 ---
 
 <BasicLayout title={pageTitle}>
   <div class="top">
     <SideTab text="Education" href="/education/" style="department" />
 
-      {
-        educations.map((education: Education) => (
-          <SideTab 
+    {
+      educations.map((education: Education) => (
+        <SideTab
           text={education.title}
           style="subpage"
           shadow="left"
           backGround="var(--white)"
-          href={`/education/${education.slug.current}`} />
-        ))
-      }
+          href={`/education/${education.slug.current}`}
+        />
+      ))
+    }
 
-    <main>
+    <main transition:animate={mySlideIn}>
       <h1 class="title">{pageTitle}</h1>
       <div class="banner">
         <img src={bannerSrc} alt="Banner image" />
       </div>
 
       <div class="CTA-wrapper">
-      {
-        ctas?.map((cta: Entry) => (
-          <CTA type='default' text={cta.displayTitle} value={cta.value} />
-        ))
-      }
+        {
+          ctas?.map((cta: Entry) => (
+            <CTA type="default" text={cta.displayTitle} value={cta.value} />
+          ))
+        }
       </div>
       <FrontCaption frontCaptions={frontCaptions} />
       <slot />
-
     </main>
   </div>
 </BasicLayout>
@@ -64,8 +83,15 @@ const { pageTitle, bannerSrc, ctas, frontCaptions } = Astro.props as Props;
     background-size: 224px;
   }
   code {
-    font-family: Menlo, Monaco, Lucida Console, Liberation Mono,
-      DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace;
+    font-family:
+      Menlo,
+      Monaco,
+      Lucida Console,
+      Liberation Mono,
+      DejaVu Sans Mono,
+      Bitstream Vera Sans Mono,
+      Courier New,
+      monospace;
   }
 
   // Side Tab Area

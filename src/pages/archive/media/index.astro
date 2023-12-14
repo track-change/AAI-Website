@@ -3,7 +3,7 @@ import { getMedia } from "../../../data/api";
 import { urlFor } from "../../../utils/image";
 import Tag from "../../../components/Tag.astro";
 import SideTab from "../../../components/SideTab.astro";
-import SectionLayout from "../../../layouts/SectionLayout.astro";
+import SectionLayoutRight from "../../../layouts/SectionLayoutRight.astro";
 import MediaCard from "../../../components/MediaCard.astro";
 import BasicLayout from "../../../layouts/Layout.astro";
 const medias = await getMedia();
@@ -11,35 +11,34 @@ const medias = await getMedia();
 
 <BasicLayout title="Media Library">
   <div data-top>
-  <SideTab
-  text="Archive"
-  href="/archive"
-  style="department"
-/>
+    <SideTab text="Archive" href="/archive" style="department" />
 
-<SectionLayout backGround="var(--gray)" className={["media-library", "hello"]} >
-  <div class="title">
-    <h2>Media Library</h2>
+    <SectionLayoutRight
+      backGround="var(--gray)"
+      className={["media-library", "hello"]}
+    >
+      <div class="title">
+        <h2>Media Library</h2>
+      </div>
+
+      <ul class="media-list">
+        {
+          medias.map((media) => (
+            <li class="media-list-item">
+              <MediaCard media={media} />
+            </li>
+          ))
+        }
+      </ul>
+    </SectionLayoutRight>
+    <SideTab
+      text="Artist Directory"
+      style="subpage"
+      href="/archive/artists"
+      shadow="right"
+      classes="artists-tab"
+    />
   </div>
-
-  <ul class="media-list">
-    {
-      medias.map((media) => (
-        <li class="media-list-item">
-          <MediaCard media={media} />
-        </li>
-      ))
-    }
-  </ul>
-</SectionLayout>
-<SideTab
-  text="Artist Directory"
-  style="subpage"
-  href="/archive/artists"
-  shadow="right"
-  classes="artists-tab"
-/>
-</div>
 </BasicLayout>
 
 <style lang="scss">
@@ -49,8 +48,15 @@ const medias = await getMedia();
     background-size: 224px;
   }
   code {
-    font-family: Menlo, Monaco, Lucida Console, Liberation Mono,
-      DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace;
+    font-family:
+      Menlo,
+      Monaco,
+      Lucida Console,
+      Liberation Mono,
+      DejaVu Sans Mono,
+      Bitstream Vera Sans Mono,
+      Courier New,
+      monospace;
   }
   .title,
   section {
