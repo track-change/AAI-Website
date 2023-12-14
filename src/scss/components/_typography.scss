@@ -1,28 +1,25 @@
 @font-face {
-  font-family: 'founders_groteskregular';
-  src: url('/fonts/foundersgrotesk-regular-webfont.woff2') format('woff2'),
-    url('fonts/foundersgrotesk-regular-webfont.woff') format('woff');
+  font-family: "founders_groteskregular";
+  src: url("/fonts/foundersgrotesk-regular-webfont.woff2") format("woff2"),
+    url("fonts/foundersgrotesk-regular-webfont.woff") format("woff");
   font-weight: normal;
   font-style: normal;
-
 }
 
 @font-face {
-  font-family: 'founders_groteskRgIt';
-  src: url('/fonts/foundersgrotesk-regularitalic-webfont.woff2') format('woff2'),
-    url('fonts/foundersgrotesk-regularitalic-webfont.woff') format('woff');
+  font-family: "founders_groteskRgIt";
+  src: url("/fonts/foundersgrotesk-regularitalic-webfont.woff2") format("woff2"),
+    url("fonts/foundersgrotesk-regularitalic-webfont.woff") format("woff");
   font-weight: normal;
   font-style: normal;
-
 }
 
 * {
-  font-family: 'founders_groteskregular', Helvetica, sans-serif;
+  font-family: "founders_groteskregular", Helvetica, sans-serif;
   &::selection {
     color: whitesmoke;
     background-color: rgb(22, 22, 22);
   }
-
 }
 
 h1,
@@ -43,12 +40,12 @@ input,
 select,
 textarea {
   overflow-wrap: break-word;
-  font-family:   'founders_groteskregular', Helvetica, sans-serif;
+  font-family: "founders_groteskregular", Helvetica, sans-serif;
   /* 1920/Body */
   font-size: 27px;
   font-weight: 400;
   line-height: 120%;
-  word-spacing: .05em;
+  word-spacing: 0.05em;
   /* 37.5px */
   letter-spacing: 0.65px;
 
@@ -67,7 +64,6 @@ textarea {
     /* 22.5px */
     letter-spacing: 0.27px;
   }
-
 }
 
 a,
@@ -91,7 +87,7 @@ strong {
 
 i,
 em {
-  font-family: 'founders_groteskRgIt';
+  font-family: "founders_groteskRgIt";
   font-weight: normal;
 }
 
@@ -165,7 +161,6 @@ h6 {
   @media screen and (max-width: 768px) {
     /* Mobile/H6 */
     font-size: 18px;
-
   }
 }
 
@@ -212,10 +207,9 @@ h6 {
     /* 17.5px */
     letter-spacing: 0.65px;
   }
-
 }
 
-.body-copy>*>a {
+.body-copy > * > a {
   border-bottom: 0.075em solid var(--black) !important;
   line-height: 0.9;
   display: inline-block;
