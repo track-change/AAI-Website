@@ -2,18 +2,14 @@
 import { getVenue, getVenueBySlug } from "../../../data/api";
 import { urlFor } from "../../../utils/image";
 import Tag from "../../../components/Tag.astro";
-
 import BasicLayout from "../../../layouts/Layout.astro";
-
 import SectionLayout from "../../../layouts/SectionLayout.astro";
 import SideTab from "../../../components/SideTab.astro";
-
 import type { Entry, Venue } from "../../../data/types";
 import SecHeader from "../../../components/SecHeader.astro";
 import SectionLayoutRight from "../../../layouts/SectionLayoutRight.astro";
 
 const rentals = await getVenue();
-console.log(rentals);
 
 const rentalsByFloor = rentals.reduce<Record<string, Venue[]>>(
   (acc, rental) => {
