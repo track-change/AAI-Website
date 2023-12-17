@@ -1,182 +1,191 @@
 <header>
-    <div class="menu">
-      <div class="menu-title">
-        <a href="/"><span id="title">asian arts initiative</span></a>
-      </div>
-      <div class="menu-right">
-        <div class="links" id="toggle-links" data-close="true" hidden>
-          <div class="links-wrapper">
+  <div class="menu">
+    <div class="menu-title">
+      <a href="/"><span id="title">asian arts initiative</span></a>
+    </div>
+    <div class="menu-right">
+      <div class="links" id="toggle-links" data-close="true" hidden>
+        <div class="links-wrapper">
+          <div class="line">
             <a class="link" href="/programs">Programs</a>
             <a class="link" href="/education">Education</a>
             <a class="link" href="/archive">Archive</a>
             <a class="link" href="/about">About</a>
-            <a class="link" href="/venue">Venue</a>
+          </div>
+          <div class="line">
             <a class="link" href="/visit">Visit</a>
+            <a class="link" href="/venue">Venue</a>
             <a class="link" href="/tickets">Tickets</a>
+            <a class="link" href="/news">News</a>
             <a class="link" href="/donate">Donate</a>
           </div>
         </div>
-        <div class="menu-icons">
-          <button class="search-icon icon" aria-label="Search">
-            <svg
-              width="25"
-              height="25"
-              viewBox="0 0 25 25"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M20.3044 10.3192C20.3044 15.6041 16.0201 19.8884 10.7352 19.8884C5.45029 19.8884 1.16602 15.6041 1.16602 10.3192C1.16602 5.03427 5.45029 0.75 10.7352 0.75C16.0201 0.75 20.3044 5.03427 20.3044 10.3192Z"
-                stroke="black"
-                stroke-width="1.5"></path>
-              <line
-                x1="17.1807"
-                y1="18.1193"
-                x2="23.531"
-                y2="24.4696"
-                stroke="black"
-                stroke-width="1.5"></line>
-            </svg>
-          </button>
-          <button
-            class="hamburger-icon icon"
-            aria-expanded="false"
-            aria-label="Toggle links"
+      </div>
+      <div class="menu-icons">
+        <button class="search-icon icon" aria-label="Search">
+          <svg
+            width="25"
+            height="25"
+            viewBox="0 0 25 25"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
           >
-            <svg
-              class="hamburger"
-              width="25"
-              height="20"
-              viewBox="0 0 25 20"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <line
-                class="line"
-                y1="0.75"
-                x2="25"
-                y2="0.75"
-                stroke="black"
-                stroke-width="1.5"></line>
-              <line
-                class="line"
-                y1="9.75"
-                x2="25"
-                y2="9.75"
-                stroke="black"
-                stroke-width="1.5"></line>
-              <line
-                class="line"
-                y1="18.75"
-                x2="25"
-                y2="18.75"
-                stroke="black"
-                stroke-width="1.5"></line>
-            </svg>
-          </button>
-        </div>
+            <path
+              d="M20.3044 10.3192C20.3044 15.6041 16.0201 19.8884 10.7352 19.8884C5.45029 19.8884 1.16602 15.6041 1.16602 10.3192C1.16602 5.03427 5.45029 0.75 10.7352 0.75C16.0201 0.75 20.3044 5.03427 20.3044 10.3192Z"
+              stroke="black"
+              stroke-width="1.5"></path>
+            <line
+              x1="17.1807"
+              y1="18.1193"
+              x2="23.531"
+              y2="24.4696"
+              stroke="black"
+              stroke-width="1.5"></line>
+          </svg>
+        </button>
+        <button
+          class="hamburger-icon icon"
+          aria-expanded="false"
+          aria-label="Toggle links"
+        >
+          <svg
+            class="hamburger"
+            width="25"
+            height="20"
+            viewBox="0 0 25 20"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <line
+              class="line"
+              y1="0.75"
+              x2="25"
+              y2="0.75"
+              stroke="black"
+              stroke-width="1.5"></line>
+            <line
+              class="line"
+              y1="9.75"
+              x2="25"
+              y2="9.75"
+              stroke="black"
+              stroke-width="1.5"></line>
+            <line
+              class="line"
+              y1="18.75"
+              x2="25"
+              y2="18.75"
+              stroke="black"
+              stroke-width="1.5"></line>
+          </svg>
+        </button>
       </div>
     </div>
-  </header>
-  
-  <script>
-    const hamburger = document.querySelector(
-      ".hamburger-icon"
-    ) as HTMLButtonElement;
-    const menu = document.querySelector(".menu") as HTMLDivElement;
-    const links = document.querySelector("#toggle-links") as HTMLDivElement;
-    const search = document.querySelector(".search-icon") as HTMLButtonElement;
-  
-    hamburger.addEventListener("click", () => {
-      search.toggleAttribute("hidden");
-      links.toggleAttribute("hidden");
-      menu.classList.toggle("active");
-      const expanded =
-        hamburger.getAttribute("aria-expanded") === "true" || false;
-      hamburger.setAttribute("aria-expanded", !expanded + "");
-  
-      links.dataset.close = expanded + "";
-      links.addEventListener(
-        "animationend",
-        () => {
-          if (links.dataset.close === "true") {
-            links.hidden = true;
-          }
-        },
-        { once: true }
-      );
-    });
-  </script>
-  
-  <style lang="scss">
-    header {
-      position: sticky;
-      z-index: 99;
-      width: 100%;
-      background-color: var(--white, #fff);
-      top: 0;
-      .menu {
-        padding-block: 8px;
-        &.active {
-          padding-block: 21px;
-          align-items: start;
-  
-          .menu-right {
-            align-items: start;
-          }
+  </div>
+</header>
+
+<script>
+  const hamburger = document.querySelector(
+    ".hamburger-icon"
+  ) as HTMLButtonElement;
+  const menu = document.querySelector(".menu") as HTMLDivElement;
+  const links = document.querySelector("#toggle-links") as HTMLDivElement;
+  const search = document.querySelector(".search-icon") as HTMLButtonElement;
+
+  hamburger.addEventListener("click", () => {
+    search.toggleAttribute("hidden");
+    links.toggleAttribute("hidden");
+    menu.classList.toggle("active");
+    const expanded =
+      hamburger.getAttribute("aria-expanded") === "true" || false;
+    hamburger.setAttribute("aria-expanded", !expanded + "");
+
+    links.dataset.close = expanded + "";
+    links.addEventListener(
+      "animationend",
+      () => {
+        if (links.dataset.close === "true") {
+          links.hidden = true;
         }
-        display: flex;
-        padding-inline: 22px;
-        justify-content: space-between;
-        align-items: center;
-        // height: 45px;
-        // border-top: 1px solid var(--black, #000);
-        border-bottom: 1px solid var(--black, #000);
-        // box-shadow: inset 0px -4px 8px 0px rgba(0, 0, 0, 0.10);
-        // box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.10);
-  
-        .menu-title {
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          gap: 10px;
-          font-weight: 600;
-          color: var(--black, #000);
-        }
-  
-        #title {
-          font-size: 22px;
-          margin-top: -0.1em;
-          display: block;
-          height: fit-content;
-          line-height: 1;
-        }
-  
+      },
+      { once: true }
+    );
+  });
+</script>
+
+<style lang="scss">
+  header {
+    position: sticky;
+    z-index: 99;
+    width: 100%;
+    background-color: var(--white, #fff);
+    top: 0;
+    .menu {
+      padding-block: 8px;
+      &.active {
+        padding-block: 21px;
+        align-items: start;
+
         .menu-right {
-          align-self: center;
-          display: flex;
-          gap: 40px;
-  
-          .links {
-            display: grid;
-            width: 450px;
-            transition: all 0.3s var(--ease);
-            grid-template-rows: 0fr;
-  
-            &[data-close="true"] {
-              pointer-events: none;
-              animation: fadeOut 0.3s var(--ease) forwards;
-            }
-  
-            &[data-close="false"] {
-              grid-template-rows: 1fr;
-              animation: fadeIn 0.3s var(--ease) forwards;
-            }
-  
-            .links-wrapper {
-              overflow: hidden;
+          align-items: start;
+        }
+      }
+      display: flex;
+      padding-inline: 22px;
+      justify-content: space-between;
+      align-items: center;
+      // height: 45px;
+      // border-top: 1px solid var(--black, #000);
+      border-bottom: 1px solid var(--black, #000);
+      // box-shadow: inset 0px -4px 8px 0px rgba(0, 0, 0, 0.10);
+      // box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.10);
+
+      .menu-title {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        font-weight: 600;
+        color: var(--black, #000);
+      }
+
+      #title {
+        font-size: 22px;
+        margin-top: -0.1em;
+        display: block;
+        height: fit-content;
+        line-height: 1;
+      }
+
+      .menu-right {
+        align-self: center;
+        display: flex;
+        gap: 40px;
+
+        .links {
+          display: grid;
+          width: 450px;
+          transition: all 0.3s var(--ease);
+          grid-template-rows: 0fr;
+
+          &[data-close="true"] {
+            pointer-events: none;
+            animation: fadeOut 0.3s var(--ease) forwards;
+          }
+
+          &[data-close="false"] {
+            grid-template-rows: 1fr;
+            animation: fadeIn 0.3s var(--ease) forwards;
+          }
+
+          .links-wrapper {
+            overflow: visible;
               display: flex;
-              flex-wrap: wrap;
+              flex-direction: column;
+              gap: 24px;
+            .line {
+              overflow: visible;
+              display: flex;
               gap: 24px;
               justify-content: flex-end;
               .link {
@@ -184,40 +193,40 @@
               }
             }
           }
-          .menu-icons {
+        }
+        .menu-icons {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          gap: 20px;
+
+          .icon {
+            cursor: pointer;
+            background-color: transparent;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            gap: 20px;
-  
-            .icon {
-              cursor: pointer;
-              background-color: transparent;
-              display: flex;
-              align-items: center;
-              justify-content: space-between;
-  
-              border: none;
-  
-              .hamburger {
+
+            border: none;
+
+            .hamburger {
+              transition: transform 0.3s ease-in;
+              .line {
                 transition: transform 0.3s ease-in;
-                .line {
-                  transition: transform 0.3s ease-in;
-                  transform-origin: center;
-                }
+                transform-origin: center;
               }
-              &[aria-expanded="true"] {
-                .hamburger {
-                  scale: 1.1;
-                  .line:nth-child(1) {
-                    transform: rotate(45deg) translate(0, 45%);
-                  }
-                  .line:nth-child(2) {
-                    opacity: 0;
-                  }
-                  .line:nth-child(3) {
-                    transform: rotate(-45deg) translate(0, -45%);
-                  }
+            }
+            &[aria-expanded="true"] {
+              .hamburger {
+                scale: 1.1;
+                .line:nth-child(1) {
+                  transform: rotate(45deg) translate(0, 45%);
+                }
+                .line:nth-child(2) {
+                  opacity: 0;
+                }
+                .line:nth-child(3) {
+                  transform: rotate(-45deg) translate(0, -45%);
                 }
               }
             }
@@ -225,4 +234,5 @@
         }
       }
     }
-  </style>
+  }
+</style>

@@ -18,6 +18,7 @@ import type {
   Person,
   News,
   Opportunities,
+  Partnerships,
   Venue,
   Home,
   Banner,
@@ -158,6 +159,12 @@ export async function getOpportunities(): Promise<Opportunities> {
   const query = groq`*[_type == "opportunities" && _id == "opportunities"][0]`;
   const opportunities = await useSanityClient().fetch(query);
   return opportunities
+}
+
+export async function getPartnerships(): Promise<Partnerships> {
+  const query = groq`*[_type == "partnerships" && _id == "partnerships"][0]`;
+  const partnerships = await useSanityClient().fetch(query);
+  return partnerships
 }
 
 export async function getFileLink(fileRef: string): Promise<string | null> {

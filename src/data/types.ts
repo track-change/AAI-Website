@@ -302,6 +302,18 @@ export interface Opportunities {
   body: PortableTextBlock[];
 }
 
+export interface Partnerships {
+  _type: string;
+  _id: string;
+  name: string;
+  title: string;
+  coverImage: {
+    asset: ImageAsset | undefined;
+    alt: string;
+  };
+  body: PortableTextBlock[];
+}
+
 export interface Home {
   _type: string;
   _id: string;
