@@ -1,0 +1,35 @@
+---
+import SecHeader from "../../components/SecHeader.astro";
+import SectionLayout from "../../layouts/SectionLayout.astro";
+import { getOpportunities } from "../../data/api";
+import { urlFor } from "../../utils/image";
+import { PortableText } from "astro-portabletext";
+import AboutLayout from "../../layouts/AboutLayout.astro";
+const opportunities = await getOpportunities();
+---
+<AboutLayout
+pageTitle={opportunities.title}
+currentIndex={3}
+>  
+<SectionLayout
+  backGround="var(--peach)"
+  textColor="var(--black)"
+  className="opportunities"
+>
+  <div class="title">
+    <h1>{opportunities.title}</h1>
+  </div>
+  <div class="banner">
+    {
+        opportunities.coverImage.asset && (
+          <img
+            class="cover-image"
+            src={urlFor(opportunities.coverImage.asset).url()}
+            alt={opportunities.coverImage.alt}
+          />
+        )
+      }
+      <PortableText value={opportunities.body} />
+  </div>
+</SectionLayout>
+</AboutLayout>

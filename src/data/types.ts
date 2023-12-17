@@ -37,7 +37,7 @@ export interface Artist {
   _id: string;
   name: string;
   slug: Slug;
-  coverImage: {
+  image: {
     asset: ImageAsset;
     alt: string;
     _type: string;
@@ -230,7 +230,7 @@ export interface Funder {
   _id: string;
   title: string;
   coverImage: {
-    asset: ImageAsset | undefined;
+    asset: ImageAsset;
     alt: string;
     _ref: string;
     _type: string;

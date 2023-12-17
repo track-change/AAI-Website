@@ -1,0 +1,64 @@
+---
+import { getMedia } from "../../data/api";
+import { urlFor } from "../../utils/image";
+import Tag from "../../components/Tag.astro";
+import SectionLayout from "../../layouts/SectionLayout.astro";
+import MediaCard from "../../components/MediaCard.astro";
+const medias = await getMedia();
+---
+    <SectionLayout
+      backGround="var(--gray)"
+      className={["media-library", "hello"]}
+    >
+      <div class="title">
+        <h2>Media Library</h2>
+      </div>
+
+      <ul class="media-list">
+        {
+          medias.map((media) => (
+            <li class="media-list-item">
+              <MediaCard media={media} />
+            </li>
+          ))
+        }
+      </ul>
+    </SectionLayout>
+<style lang="scss">
+  html {
+    font-family: system-ui, sans-serif;
+    background: var(--white);
+    background-size: 224px;
+  }
+  code {
+    font-family:
+      Menlo,
+      Monaco,
+      Lucida Console,
+      Liberation Mono,
+      DejaVu Sans Mono,
+      Bitstream Vera Sans Mono,
+      Courier New,
+      monospace;
+  }
+  .title,
+  section {
+    max-width: 1080px;
+
+    @media screen and (max-width: 64rem) {
+      max-width: 40rem;
+    }
+    @media screen and (max-width: 48rem) {
+      max-width: 30rem;
+    }
+  }
+  .media-list {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--l-margin);
+    min-height: 100vh;
+    @media screen and (max-width: 48rem) {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+</style>
