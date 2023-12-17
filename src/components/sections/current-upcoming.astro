@@ -1,0 +1,190 @@
+---
+import SectionLayout from "../../layouts/SectionLayout.astro";
+import BasicLayout from "../../layouts/Layout.astro";
+
+import SideTab from "../../components/SideTab.astro";
+import { getPrograms } from "../../data/api.js";
+import { urlFor } from "../../utils/image.js";
+import SecHeader from "../../components/SecHeader.astro";
+import { formatDateRange } from "../../utils/dateFormatting.js";
+import Calendar from "../../components/Calendar.astro";
+
+const programs = await getPrograms();
+const currentDate = new Date();
+
+const currentPrograms = programs.filter(
+  (program) => new Date(program.endDateTime) >= currentDate
+);
+---
+
+<SectionLayout backGround="var(--white)">
+  <section data-exhibits>
+    <h2 class="title">On View</h2>
+    <ul class="list">
+      {
+        currentPrograms.map((program) => (
+          <Fragment key={program._id}>
+            {program.type === "exhibition" && (
+              <li class="list-item">
+                <a data-link href={`/programs/${program.slug.current}`}>
+                  {program.coverImage && (
+                    <img
+                      src={urlFor(program.coverImage).url()}
+                      alt={program.name}
+                    />
+                  )}
+                  <h4>{program.name}</h4>
+
+                  <ul>
+                    <li class="caption">{program.type}</li>
+                    <li class="caption">
+                      {formatDateRange(
+                        `${program.startDateTime}—${program.endDateTime}`
+                      )}
+                    </li>
+                  </ul>
+                </a>
+              </li>
+            )}
+          </Fragment>
+        ))
+      }
+    </ul>
+  </section>
+  <section data-events>
+    <!-- <SecHeader /> -->
+    <br /><br /><br />
+    <h2>Upcoming Events</h2>
+    <div id="calendar-wrapper">
+      <p>Calendar</p>
+      <Calendar />
+    </div>
+    <ul class="list">
+      {
+        currentPrograms.map((program) => (
+          <Fragment key={program._id}>
+            {program.type === "event" && (
+              <li class="list-item">
+                <a data-link href={`/programs/${program.slug.current}`}>
+                  {program.coverImage && (
+                    <img
+                      src={urlFor(program.coverImage).url()}
+                      alt={program.name}
+                    />
+                  )}
+                  <h4>{program.name}</h4>
+                  <ul class="caption">
+                    <li class="caption">
+                      {program.eventTypes &&
+                        program.eventTypes.map((eventType) => (
+                          <span>{eventType}</span>
+                        ))}
+                    </li>
+                    <li class="caption">
+                      {formatDateRange(
+                        `${program.startDateTime}—${program.endDateTime}`
+                      )}
+                    </li>
+                  </ul>
+                </a>
+              </li>
+            )}
+          </Fragment>
+        ))
+      }
+    </ul>
+  </section>
+</SectionLayout>
+
+<style lang="scss">
+  main {
+    padding-left: 0 !important;
+  }
+  section {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: var(--l-margin);
+    h2 {
+      padding-bottom: var(--l-margin);
+      line-height: 0.75;
+    }
+
+    .filters,
+    .filters > * > * > * {
+      display: flex;
+      justify-content: space-between;
+      gap: 1rem;
+      color: var(--darkGray);
+    }
+    .list {
+      padding: 0;
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      justify-content: flex-start;
+      align-items: flex-start;
+      gap: var(--s-margin);
+
+      .list-item {
+        max-width: 480px;
+        h4 {
+          line-height: 1;
+        }
+
+        [data-link] {
+          display: flex;
+          flex-direction: column;
+          gap: 0.5rem;
+          // text-align: center;
+          transition: color 100ms var(--ease);
+          &:hover {
+            img {
+              transform: translateY(-5px);
+            }
+            img {
+              transition: transform 100ms var(--ease);
+            }
+          }
+          .caption {
+            text-transform: capitalize;
+          }
+        }
+      }
+    }
+  }
+  #calendar-wrapper {
+    border: 1px solid black;
+    line-height: 1;
+    padding: 2px 8px;
+    margin: var(--l-margin) 0;
+    transition: all 100ms;
+    background-color: var(--white);
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 2px 2px 0 2px black;
+    }
+    &.expanded {
+      height: fit-content;
+    }
+
+    // .hidden {
+    //   display: none !important;
+    // }
+  }
+</style>
+<script async>
+let calendar = document.querySelector("#calendar-wrapper");
+let calendarContainer = document.querySelector("#calendar-container");
+
+calendarContainer.style.display = "none";
+calendar.addEventListener("click", function () {
+  if (calendar.classList.contains("expanded")) {
+    calendar.classList.remove("expanded");
+    // calendarContainer.style.display = "none";
+  } else {
+    calendar.classList.add("expanded");
+    calendarContainer.style.display = "block";
+  }
+});
+</script>
