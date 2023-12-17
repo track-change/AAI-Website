@@ -1,0 +1,140 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import SectionLayout from "../../layouts/SectionLayout.astro";
+import SideTab from "../../components/SideTab.astro";
+import SecHeader from "../../components/SecHeader.astro";
+import { urlFor } from "../../utils/image";
+import { getVenuePage } from "../../data/api"
+const venue = await getVenuePage();
+---
+
+<Layout title="Venue">
+  <div data-top>
+    <SideTab text="Venue" href="#" style="department" classes="is-major" />
+      <SectionLayout backGround="black" textColor="white" className="venue">
+        <div class="body-copy">
+        {
+          venue.content.map(
+            (entry) =>
+              entry._type === "body" ? (
+                <p class="text">{entry.value}</p>
+                // <PortableText value={entry.value}></PortableText>
+              ) : entry._type === "subheading" ? (
+                <SecHeader color="white" title={entry.value} />
+              ) : entry._type === "image" ? (
+                <div>
+                  <img
+                    class="inline-img"
+                    src={entry.asset ? urlFor(entry.asset).url() : ""}
+                    alt={entry?.alt}
+                  />
+                  <captio class="small-caption">{entry?.caption}</captio>
+                </div>
+              ) : null // You might want to handle other cases or return null for unrecognized types
+          )
+        }
+        </div>
+      </SectionLayout>
+      <SideTab
+        text="Rental"
+        href="/venue/rental"
+        style="subpage"
+        shadow="right"
+        classes="current-tab"
+      />
+  </div>
+</Layout>
+<style lang="scss">
+    [data-wrapper] {
+      width: 100%;
+      display: flex;
+      flex-direction: row;
+
+      .body-copy {
+        max-width: var(--inner-max-width);
+      }
+
+      .list {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        white-space: nowrap;
+        position: relative;
+        width: 100%;
+
+        .list-item {
+          writing-mode: vertical-rl;
+          text-orientation: mixed;
+          width: 100%;
+          box-shadow: -10px 0px 14px 0px rgba(0, 0, 0, 0.2);
+          display: flex;
+          align-items: flex-end;
+          padding: 40px;
+        }
+      }
+
+      .hidden {
+        display: none;
+      }
+
+      .department,
+    .subpage {
+      flex-shrink: 0;
+      position: sticky;
+      top: 44px;
+      cursor: pointer;
+      z-index: 10;
+    }
+    .subpage a {
+      // transition: visibility 0.4s linear;
+      // display: none;
+    }
+
+    .is-shown {
+      visibility: visible;
+      animation: fadeIn 0.4s linear forwards;
+    }
+
+    .is-hidden
+    {
+      animation: fadeOut 0.1s linear forwards;
+    }
+    }
+  
+
+  main.venue {
+    padding-right: 0 !important;
+  }
+</style>
+
+<script async>
+//const venueTab = document.querySelector(".department");
+//const venueSec = document.querySelector(".rentalSec");
+//const subTab = document.querySelector(".subpage");
+
+//function showRental() {
+//  venueTab.classList.remove("is-major");
+//  document.querySelector(".venue").style.display = "none";
+//  subTab.querySelector("a").classList.remove("is-shown");
+//  subTab.querySelector("a").classList.add("is-hidden");
+
+//  venueSec.classList.remove("hidden");
+//  venueSec.style.animation =
+//    "slideIn 0.4s linear forwards";
+//}
+
+//function backToVenue() {
+//  window.scrollTo(0, 0);
+//  venueTab.classList.add("is-major");
+//  if (subTab.querySelector("a").classList.contains("is-hidden")) {
+//    subTab.querySelector("a").classList.remove("is-hidden");
+//    subTab.querySelector("a").classList.add("is-shown");
+//  }
+//  venueSec.classList.add("hidden");
+//  // document.querySelector(".content").classList.add("hidden");
+//  // document.querySelector("ul").classList.remove("hidden");
+//  document.querySelector(".venue").style.display = "flex";
+//}
+
+//subTab.addEventListener("click", showRental)
+// venueTab.addEventListener("click", backToVenue)
+</script>

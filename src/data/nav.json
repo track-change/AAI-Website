@@ -12,12 +12,12 @@
                         {
                                 "page": "current & upcoming",
                                 "title": "Current & Upcoming",
-                                "slug": "/programs/#current-upcoming"
+                                "slug": "/programs/current-upcoming"
                         },
                         {
                                 "page": "past season",
                                 "title": "Past Season",
-                                "slug": "/programs/#past-season"
+                                "slug": "/programs/past"
                         }
                 ]
         },

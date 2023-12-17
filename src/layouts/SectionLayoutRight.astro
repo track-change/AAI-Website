@@ -12,26 +12,26 @@ const { backGround, textColor, className } = Astro.props as Prop;
 
 const anim = {
   old: {
-    name: "slideOut",
+    name: "slideOutToLeft",
     duration: "0.4s",
     easing: "linear",
     fillMode: "forwards",
   },
   new: {
-    name: "slideInFromLeft",
+    name: "slideIn",
     duration: "0.4s",
     easing: "linear",
     fillMode: "backwards",
   },
 };
 
-const mySlideInFromLeft = {
+const mySlideIn = {
   forwards: anim,
   backwards: anim,
 };
 ---
 
-<main class:list={className} transition:animate={mySlideInFromLeft}>
+<main class:list={className} transition:animate={mySlideIn}>
   <slot />
 </main>
 

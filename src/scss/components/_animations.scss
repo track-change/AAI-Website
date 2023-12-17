@@ -17,19 +17,57 @@
 }
 
 @keyframes slideIn {
+  from{
+    left: 100%;
+    opacity: 0;
+  }
   to {
     left: 0%;
+    opacity: 1;
+  }
+}
+
+@keyframes slideInFromLeft {
+  from{
+    left: -100%;
+    opacity: 0;
+  }
+  to {
+    left: 0%;
+    opacity: 1;
   }
 }
 
 @keyframes slideOut {
+  from{
+    left: 0;
+    opacity: 1;
+  }
   to {
     left: 100%;
+    opacity: 0;
+  }
+}
+
+@keyframes slideOutToLeft {
+  from{
+    left: 0;
+    opacity: 1;
+  }
+  to {
+    left: -100%;
+    opacity: 0;
   }
 }
 
 @keyframes slideHalf {
   to {
     left: 70%;
+  }
+}
+
+@keyframes red {
+  to {
+    background-color: red;
   }
 }

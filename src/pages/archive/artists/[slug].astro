@@ -1,10 +1,10 @@
 ---
 import type { InferGetStaticParamsType } from "astro";
 import { PortableText } from "astro-portabletext";
-import ArtistLayout from "../../layouts/ArtistLayout.astro";
-import { getArtistBySlug, getArtists } from "../../data/api";
-import { urlFor } from "../../utils/image";
-import FrontCaption from "../../components/FrontCaption.astro";
+import ArtistLayout from "../../../layouts/ArtistLayout.astro";
+import { getArtistBySlug, getArtists } from "../../../data/api";
+import { urlFor } from "../../../utils/image";
+import FrontCaption from "../../../components/FrontCaption.astro";
 
 export async function getStaticPaths() {
   const artists = await getArtists();

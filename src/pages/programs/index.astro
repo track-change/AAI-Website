@@ -1,10 +1,9 @@
 ---
 import Layout from "../../layouts/Layout.astro";
 import SideTab from "../../components/SideTab.astro";
-import CurrentPrograms from "../../components/sections/CurrentPrograms.astro";
-import PastPrograms from "../../components/sections/PastPrograms.astro";
+import CurrentPrograms from "../../components/sections/current-upcoming.astro";
+import PastPrograms from "../../components/sections/past.astro";
 ---
-
 <Layout title="Programs">
   <div data-top>
     <SideTab
@@ -12,12 +11,6 @@ import PastPrograms from "../../components/sections/PastPrograms.astro";
       href="/programs"
       style="department"
       classes="is-major"
-    />
-    <SideTab
-      text="Current and Upcoming"
-      style="subpage"
-      shadow="none"
-      classes="current-tab"
     />
     <article class="wrapper">
       <div class="left-col">
@@ -27,12 +20,6 @@ import PastPrograms from "../../components/sections/PastPrograms.astro";
         <PastPrograms />
       </div>
     </article>
-    <SideTab
-      text="Past seasons"
-      style="subpage"
-      shadow="right"
-      classes="past-tab"
-    />
   </div>
 </Layout>
 
@@ -43,7 +30,6 @@ import PastPrograms from "../../components/sections/PastPrograms.astro";
     left: 0;
     display: flex;
     flex-direction: column;
-    overflow-y: auto;
     overflow-x: hidden;
   }
 
@@ -51,27 +37,8 @@ import PastPrograms from "../../components/sections/PastPrograms.astro";
     position: relative;
     display: flex;
     flex-grow: 1;
-
-    .hidden {
-      height: 100vh;
-    }
-
-    .department,
-    .subpage {
-      flex-shrink: 0;
-      position: sticky;
-      top: 44px;
-      cursor: pointer;
-      z-index: 10;
-    }
-    .subpage {
-      visibility: hidden;
-      background-color: var(--white);
-    }
-    .is-shown {
-      visibility: visible;
-      animation: fadeIn 0.4s linear forwards;
-    }
+    height: fit-content;
+    // overflow-y: hidden !important;
 
     .wrapper {
       width: 100%;
@@ -79,15 +46,20 @@ import PastPrograms from "../../components/sections/PastPrograms.astro";
       display: flex;
       flex-direction: row;
       align-items: flex-start;
-      min-height: fit-content;
+      height: fit-content;
+      overflow-y: hidden !important;
 
       .left-col,
       .right-col {
+        cursor: pointer;
         flex: 1;
         width: 100%;
         display: flex;
+        transition: transform 200ms;
       }
-
+      .left-col:hover + .right-col {
+        transform: translateX(10px);
+      }
       .right-col {
         position: absolute;
         top: 0;
@@ -95,116 +67,20 @@ import PastPrograms from "../../components/sections/PastPrograms.astro";
         height: fit-content;
         box-shadow: -10px 0px 14px 0px rgba(0, 0, 0, 0.1);
         z-index: 9;
+        &:hover {
+          transform: translateX(-10px);
+        }
       }
-    }
-    .past {
-      flex-grow: 1;
-      overflow: auto;
     }
   }
 </style>
-
 <script async>
-const currentTab = document.querySelector(".current-tab");
-const pastTab = document.querySelector(".past-tab");
-const wrapper = document.querySelector(".wrapper");
-const leftCol = document.querySelector(".left-col");
-const rightCol = document.querySelector(".right-col");
-const department = document.querySelector(".department");
-
-function updateWrapperHeight() {
-  const maxHeight = Math.max(leftCol.offsetHeight, rightCol.offsetHeight);
-  wrapper.style.height = `${maxHeight}px`;
-}
-
-function handleAnimationEnd(displayElement, hideElement) {
-  return () => {
-    // hideElement.style.boxShadow = "none";
-    // displayElement.style.display = "flex";
-    hideElement.classList.add("hidden");
-    displayElement.classList.remove("hidden");
-    updateWrapperHeight();
-  };
-}
-
-function showLeft() {
-  // leftCol.querySelector(".current").style.display = "flex";
-  window.removeEventListener("scroll", showLeft);
-  // window.scroll(0, 0);
-  leftCol.querySelector(".current").classList.remove("hidden");
-  rightCol.style.animation = "slideOut 0.4s linear forwards";
-  pastTab.classList.add("is-shown");
-  currentTab.classList.remove("is-shown");
-  department.classList.remove("is-major");
-  window.history.pushState({}, "", "#current-upcoming");
-
-  rightCol.addEventListener(
-    "animationend",
-    handleAnimationEnd(
-      leftCol.querySelector(".current"),
-      rightCol.querySelector(".past")
-    ),
-    { once: true }
-  );
-
-  pastTab.addEventListener("click", showRight);
-
-  setTimeout(() => {
-    window.addEventListener("scroll", showLeft);
-  }, "1200");
-}
-
-function showRight() {
-  window.removeEventListener("scroll", showLeft);
-  // window.scroll(0, 0);
-  // rightCol.querySelector(".past").style.display = "flex";
-  rightCol.querySelector(".past").classList.remove("hidden");
-  rightCol.style.animation = "slideIn 0.4s linear forwards";
-  currentTab.classList.add("is-shown");
-  pastTab.classList.remove("is-shown");
-  currentTab.style.zIndex = 0;
-  department.classList.remove("is-major");
-  window.history.pushState({}, "", "#past-season");
-
-  rightCol.addEventListener(
-    "animationend",
-    handleAnimationEnd(
-      rightCol.querySelector(".past"),
-      leftCol.querySelector(".current")
-    ),
-    { once: true }
-  );
-
-  currentTab.addEventListener("click", showLeft);
-}
-
-//back function WIP!!!
-
-function backToProgram() {
-  window.removeEventListener("scroll", showLeft);
-  window.scroll(0, 0);
-
-  rightCol.style.animation = "slideHalf 0.4s linear forwards";
-
-  leftCol.querySelector(".current").classList.remove("hidden");
-  rightCol.querySelector(".past").classList.remove("hidden");
-
-  currentTab.classList.remove("is-shown");
-  pastTab.classList.remove("is-shown");
-  department.classList.add("is-major");
-  updateWrapperHeight();
-
-  setTimeout(() => {
-    window.addEventListener("scroll", showLeft);
-  }, "1200");
-
-  window.history.pushState({}, "", "/programs");
-}
-
-// Event listeners
-leftCol.addEventListener("click", showLeft);
-rightCol.addEventListener("click", showRight);
-window.addEventListener("scroll", showLeft);
-department.addEventListener("click", backToProgram);
-calendar.addEventListener("click", updateWrapperHeight);
+  const currentSec = document.querySelector(".left-col")
+  const pastSec = document.querySelector(".right-col")
+  currentSec.addEventListener("click", ()=>{
+    location.assign("/programs/current-upcoming")
+  })
+  pastSec.addEventListener("click", ()=>{
+    location.assign("/programs/past")
+  })
 </script>

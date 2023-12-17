@@ -1,20 +1,35 @@
 ---
-import Layout from "../../layouts/Layout.astro";
-import SectionLayout from "../../layouts/SectionLayout.astro";
-import { getArtists } from "../../data/api";
-import Collapsible from "../Collapsible.astro";
-import SideTab from "../SideTab.astro";
-import SecHeader from "../SecHeader.astro";
-import CTA from "../CTA.astro";
-import { urlFor } from "../../utils/image";
+import BasicLayout from "../../../layouts/Layout.astro";
+import SectionLayout from "../../../layouts/SectionLayout.astro";
+import { getArtists } from "../../../data/api";
+// import Collapsible from "../../../components/Collapsible.astro";
+import SideTab from "../../../components/SideTab.astro";
+import SecHeader from "../../../components/SecHeader.astro";
+// import CTA from "../../../components/CTA.astro";
+import { urlFor } from "../../../utils/image";
 
 let artists = await getArtists();
 artists = artists.map((artist) => ({
   ...artist,
   imageUrl: artist.image ? urlFor(artist.image).url() : null,
 }));
----
 
+---
+<BasicLayout title="Artist Directory">
+  <div data-top >
+    <SideTab
+    text="Archive"
+    href="/archive"
+    style="department"
+  />
+  <SideTab
+  text="Media Library"
+  style="subpage"
+  href="/archive/media/"
+  shadow="left"
+  classes="media-tab"
+  backGround="var(--gray)"
+/>
 <SectionLayout className="artist-directory" backGround="var(--white)">
   <h2 class="title">Artists Directory</h2>
 
@@ -65,7 +80,7 @@ artists = artists.map((artist) => ({
           @mouseleave="handleMouseLeave(artist._id)"
           class="artist-list-item"
         >
-          <a :href="`/artists/${artist.slug.current}`">
+          <a :href="`artists/${artist.slug.current}`">
             <h2 x-text="artist.name"></h2>
           </a>
           <img
@@ -97,8 +112,10 @@ artists = artists.map((artist) => ({
       Frequently Asked Questions (FAQ).
     </div>
   </div>
-  <Collapsible />
+  <!-- <Collapsible /> -->
 </SectionLayout>
+</div>
+</BasicLayout>
 
 <style lang="scss">
   .filters,

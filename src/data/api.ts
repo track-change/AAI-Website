@@ -10,6 +10,8 @@ import type {
   Ticket,
   Visit,
   About,
+  VenuePage,
+  EducationPage,
   Contact,
   Funder,
   People,
@@ -70,6 +72,12 @@ export async function getNewsBySlug(slug: string): Promise<News> {
   return fetchData("news", slug);
 }
 
+export async function getEducationPage(): Promise<EducationPage> {
+  const query = groq`*[_type == "educationPage" && _id == "educationPage"][0]`;
+  const educationPage = await useSanityClient().fetch(query);
+  return educationPage;
+}
+
 export async function getEducations(): Promise<Education[]> {
   return fetchData("education");
 }
@@ -82,6 +90,12 @@ export async function getEducationByRef(ref: string): Promise<Education> {
   const query = groq`*[_type == "education" && _id == $ref][0]`;
   const education = await useSanityClient().fetch(query, { ref });
   return education;
+}
+
+export async function getVenuePage(): Promise<VenuePage> {
+  const query = groq`*[_type == "venuePage" && _id == "venuePage"][0]`;
+  const venue = await useSanityClient().fetch(query);
+  return venue;
 }
 
 export async function getVenue(): Promise<Venue[]> {

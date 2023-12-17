@@ -1,0 +1,134 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import SideTab from "../../components/SideTab.astro";
+import MediaSec from "./media/index.astro";
+import ArtistSec from "./artists/index.astro";
+---
+
+<Layout title="Archive">
+  <div data-top>
+    <SideTab
+      text="Archive"
+      href="/archive/"
+      style="department"
+      classes="is-major"
+    />
+    <SideTab
+      text="Media Library"
+      style="subpage"
+      href="/archive/media"
+      shadow="none"
+      backGround="var(--gray)"
+      classes="left-tab"
+    />
+    <!-- <article class="wrapper">
+      <div class="left-col">
+        <MediaSec />
+      </div>
+      <div class="right-col">
+        <ArtistSec />
+      </div>
+    </article> -->
+    <SideTab
+      text="Artist Directory"
+      style="subpage"
+      href="/archive/artists"
+      shadow="right"
+      backGround="var(--white)"
+      classes="right-tab"
+    />
+  </div>
+</Layout>
+
+<style type="scss" is:global>
+  html {
+    font-family: system-ui, sans-serif;
+    background: var(--white);
+  }
+  code {
+    font-family:
+      Menlo,
+      Monaco,
+      Lucida Console,
+      Liberation Mono,
+      DejaVu Sans Mono,
+      Bitstream Vera Sans Mono,
+      Courier New,
+      monospace;
+    font-family:
+      Menlo,
+      Monaco,
+      Lucida Console,
+      Liberation Mono,
+      DejaVu Sans Mono,
+      Bitstream Vera Sans Mono,
+      Courier New,
+      monospace;
+  }
+
+  body {
+    position: sticky;
+    top: 0;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    overflow-x: hidden;
+
+    background-color: var(--gray);
+  }
+
+  [data-top] {
+    position: relative;
+    display: flex;
+    flex-grow: 1;
+
+    .department,
+    .subpage {
+      flex-shrink: 0;
+      position: sticky;
+      top: 44px;
+      cursor: pointer;
+    }
+    .subpage {
+      visibility: hidden;
+    }
+    .is-shown {
+      visibility: visible;
+      animation: fadeIn 0.4s linear forwards;
+    }
+
+    .wrapper {
+      width: 100%;
+      position: relative;
+      display: flex;
+      flex-direction: row;
+      align-items: flex-start;
+      min-height: fit-content;
+
+      .left-col,
+      .right-col {
+        flex: 1;
+        width: 100%;
+        display: flex;
+      }
+
+      .right-col {
+        position: absolute;
+        top: 0;
+        left: 70%;
+        height: fit-content;
+        box-shadow: -10px 0px 14px 0px rgba(0, 0, 0, 0.1);
+        z-index: 9;
+      }
+    }
+    .artist-directory {
+      flex-grow: 1;
+      overflow: auto;
+    }
+
+    .hidden {
+      height: 100vh;
+    }
+  }
+</style>

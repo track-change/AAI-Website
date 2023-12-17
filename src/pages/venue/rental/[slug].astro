@@ -1,10 +1,10 @@
 ---
 import type { InferGetStaticParamsType } from "astro";
-import SecHeader from "../../components/SecHeader.astro";
+import SecHeader from "../../../components/SecHeader.astro";
 import { PortableText } from "astro-portabletext";
-import VenueLayout from "../../layouts/VenueLayout.astro";
-import { getVenue, getVenueBySlug } from "../../data/api";
-import { urlFor } from "../../utils/image";
+import VenueLayout from "../../../layouts/VenueLayout.astro";
+import { getVenue, getVenueBySlug } from "../../../data/api";
+import { urlFor } from "../../../utils/image";
 
 export async function getStaticPaths() {
   const education = await getVenue();
