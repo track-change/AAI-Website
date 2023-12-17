@@ -22,7 +22,6 @@
     color: whitesmoke;
     background-color: rgb(22, 22, 22);
   }
-
 }
 
 h1,
@@ -31,6 +30,8 @@ h3,
 h4,
 h5,
 h6 {
+  font-family: 'founders_groteskregular', Helvetica, sans-serif;
+
   margin: 0;
   padding: 0;
   font-weight: 400;
@@ -43,7 +44,7 @@ input,
 select,
 textarea {
   overflow-wrap: break-word;
-  font-family:   'founders_groteskregular', Helvetica, sans-serif;
+  font-family: 'founders_groteskregular', Helvetica, sans-serif;
   /* 1920/Body */
   font-size: 27px;
   font-weight: 400;
@@ -85,7 +86,7 @@ ul {
 
 b,
 strong {
-  font-family: "Founders Grotesk Medium", Arial, sans-serif;
+  // font-family: "Founders Grotesk Medium", Arial, sans-serif;
   font-weight: bold;
 }
 
@@ -148,7 +149,6 @@ h4 {
 
 h6 {
   /* 1920/H6 */
-  font-family: Founders Grotesk;
   font-size: 27px;
   font-style: normal;
   font-weight: 400;

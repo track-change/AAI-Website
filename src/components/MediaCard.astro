@@ -1,8 +1,10 @@
 ---
+import "../scss/main.scss";
 import type { ImageAsset } from "@sanity/types";
 import { urlFor } from "../utils/image";
 import Tag from "./Tag.astro";
 import type { Media } from "../data/types";
+import { manifest } from "astro:ssr-manifest";
 
 interface Props {
   media: Media;
@@ -22,7 +24,8 @@ const { media } = Astro.props as Props;
         />
       )
     }
-    <h6 class="media-item-title">{media.title}</h6>
+    <div class="media-item-title"> 
+    <h6 >{media.title}</h6></div>
 
     <div class="small-caption">
       {media.mediaType}, {media.date}

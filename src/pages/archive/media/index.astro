@@ -4,6 +4,7 @@ import { urlFor } from "../../../utils/image";
 import Tag from "../../../components/Tag.astro";
 import SideTab from "../../../components/SideTab.astro";
 import SectionLayoutRight from "../../../layouts/SectionLayoutRight.astro";
+import SectionLayout from "../../../layouts/SectionLayout.astro";
 import MediaCard from "../../../components/MediaCard.astro";
 import BasicLayout from "../../../layouts/Layout.astro";
 const medias = await getMedia();
@@ -13,7 +14,7 @@ const medias = await getMedia();
   <div data-top>
     <SideTab text="Archive" href="/archive" style="department" />
 
-    <SectionLayoutRight
+    <SectionLayout
       backGround="var(--gray)"
       className={["media-library", "hello"]}
     >
@@ -30,7 +31,7 @@ const medias = await getMedia();
           ))
         }
       </ul>
-    </SectionLayoutRight>
+    </SectionLayout>
     <SideTab
       text="Artist Directory"
       style="subpage"

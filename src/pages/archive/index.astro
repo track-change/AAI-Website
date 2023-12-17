@@ -9,13 +9,14 @@ import ArtistSec from "./artists/index.astro";
   <div data-top>
     <SideTab
       text="Archive"
-      href="/archive"
+      href="/archive/"
       style="department"
       classes="is-major"
     />
     <SideTab
       text="Media Library"
       style="subpage"
+      href="/archive/media"
       shadow="none"
       backGround="var(--gray)"
       classes="left-tab"
@@ -31,6 +32,7 @@ import ArtistSec from "./artists/index.astro";
     <SideTab
       text="Artist Directory"
       style="subpage"
+      href="/archive/artists"
       shadow="right"
       backGround="var(--white)"
       classes="right-tab"
@@ -130,84 +132,3 @@ import ArtistSec from "./artists/index.astro";
     }
   }
 </style>
-
-<script async>
-  const leftTab = document.querySelector(".left-tab");
-  const rightTab = document.querySelector(".right-tab");
-  const wrapper = document.querySelector(".wrapper");
-  const leftCol = document.querySelector(".left-col");
-  const rightCol = document.querySelector(".right-col");
-  const department = document.querySelector(".department");
-
-  function updateWrapperHeight() {
-    const maxHeight = Math.max(leftCol.offsetHeight, rightCol.offsetHeight);
-    wrapper.style.height = `${maxHeight}px`;
-  }
-
-  function handleAnimationEnd(displayElement, hideElement) {
-    return () => {
-      hideElement.style.display = "none";
-      displayElement.style.display = "flex";
-      updateWrapperHeight();
-    };
-  }
-
-  function showLeft() {
-    document.querySelector("body").style.backgroundColor = "var(--gray)";
-
-    leftCol.querySelector(".media-library").style.display = "flex";
-    rightCol.style.animation = "slideOut 0.4s linear forwards";
-    rightTab.classList.add("is-shown");
-    leftTab.classList.remove("is-shown");
-    department.classList.remove("is-major");
-    window.history.pushState({}, "", "#media-library");
-
-    rightCol.addEventListener(
-      "animationend",
-      handleAnimationEnd(
-        leftCol.querySelector(".media-library"),
-        rightCol.querySelector(".artist-directory")
-      ),
-      { once: true }
-    );
-
-    rightTab.addEventListener("click", showRight);
-  }
-
-  function showRight() {
-    window.removeEventListener("scroll", showLeft);
-
-    rightCol.querySelector(".artist-directory").style.display = "flex";
-    rightCol.style.animation = "slideIn 0.4s linear forwards";
-    leftTab.classList.add("is-shown");
-    rightTab.classList.remove("is-shown");
-    department.classList.remove("is-major");
-    window.history.pushState({}, "", "#artist-directory");
-
-    rightCol.addEventListener(
-      "animationend",
-      handleAnimationEnd(
-        rightCol.querySelector(".artist-directory"),
-        leftCol.querySelector(".media-library"),
-        (document.querySelector("body").style.backgroundColor = "var(--white)")
-      ),
-      { once: true }
-    );
-
-    leftTab.addEventListener("click", showLeft);
-  }
-
-  // Event listeners
-  leftCol.addEventListener("click", showLeft);
-  rightCol.addEventListener("click", showRight);
-  window.addEventListener("scroll", showLeft);
-
-  // Check the URL hash when the page loads
-  window.addEventListener("load", () => {
-    if (window.location.hash === "#media-library") {
-      showLeft();
-    } else if (window.location.hash === "#artist-directory") {
-      showRight();
-    }
-  });
-</script>

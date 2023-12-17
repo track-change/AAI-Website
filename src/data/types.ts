@@ -95,6 +95,7 @@ export interface Education {
   _type: string;
   _id: string;
   title: string;
+  order: string;
   slug: Slug;
   coverImage: ImageAsset;
   images: Array<ImageAsset>;
