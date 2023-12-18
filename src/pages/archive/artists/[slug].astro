@@ -19,7 +19,7 @@ const artist = await getArtistBySlug(slug);
 
 <ArtistLayout
   pageTitle={artist.name}
-  bannerSrc={artist.image ? (urlFor(artist.image).url()) : undefined}
+  bannerSrc={artist.image ? (urlFor(artist.image.asset).url()) : undefined}
   credits={artist.imageCredit}
   ctas={artist.links}
 >

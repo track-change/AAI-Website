@@ -1,6 +1,5 @@
 ---
 import "../scss/main.scss";
-import { slide } from "astro:transitions";
 
 interface Prop {
   backGround?: string;
@@ -10,29 +9,8 @@ interface Prop {
 }
 
 const { backGround, textColor, className, barbaName } = Astro.props as Prop;
-
-const anim = {
-  old: {
-    name: "slideOut",
-    duration: "0.4s",
-    easing: "linear",
-    fillMode: "forwards",
-  },
-  new: {
-    name: "slideInFromLeft",
-    duration: "0.4s",
-    easing: "linear",
-    fillMode: "backwards",
-  },
-};
-
-const mySlideInFromLeft = {
-  forwards: anim,
-  backwards: anim,
-};
 ---
-
-<main class:list={[{className}, {barbaName}]} data-barba-namespace={barbaName}  transition:animate={mySlideInFromLeft}>
+<main class:list={className} data-barba-namespace={barbaName}>
   <slot />
 </main>
 
