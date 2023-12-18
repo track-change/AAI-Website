@@ -5,6 +5,7 @@ export interface Entry {
   _type: string;
   _key: string;
   displayTitle: string;
+  coverImage: ImageAsset;
   value: string;
   url: string;
   chooseFile?: {
@@ -36,7 +37,7 @@ export interface Artist {
   _id: string;
   name: string;
   slug: Slug;
-  coverImage: {
+  image: {
     asset: ImageAsset;
     alt: string;
     _type: string;
@@ -103,6 +104,7 @@ export interface Education {
   _type: string;
   _id: string;
   title: string;
+  order: string;
   slug: Slug;
   coverImage: ImageAsset;
   images: Array<ImageAsset>;
@@ -228,7 +230,7 @@ export interface Funder {
   _id: string;
   title: string;
   coverImage: {
-    asset: ImageAsset | undefined;
+    asset: ImageAsset;
     alt: string;
     _ref: string;
     _type: string;
@@ -300,6 +302,18 @@ export interface Opportunities {
   body: PortableTextBlock[];
 }
 
+export interface Partnerships {
+  _type: string;
+  _id: string;
+  name: string;
+  title: string;
+  coverImage: {
+    asset: ImageAsset | undefined;
+    alt: string;
+  };
+  body: PortableTextBlock[];
+}
+
 export interface Home {
   _type: string;
   _id: string;
@@ -321,6 +335,41 @@ export interface Home {
     _ref: string;
     _type: string;
   }[];
+}
+
+export interface VenuePage {
+  _key: string;
+  _ref: string;
+  _type: string;
+  _id: string;
+  title: string;
+  content: Array<{
+    _key: string;
+    _type: string;
+    value?: PortableTextBlock[];
+    asset?: ImageAsset;
+    alt?: string;
+    caption?: string;
+  }>;
+}
+
+export interface EducationPage {
+  _key: string;
+  _ref: string;
+  _type: string;
+  _id: string;
+  content: Array<{
+    _key: string;
+    _type: string;
+    value?: PortableTextBlock[];
+    asset?: ImageAsset;
+    alt?: string;
+    caption?: string;
+  }>;
+  educations: {
+    _ref: string;
+  }[];
+
 }
 
 export interface AboutUsElement {

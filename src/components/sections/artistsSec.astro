@@ -1,0 +1,202 @@
+---
+import BasicLayout from "../../layouts/Layout.astro";
+import SectionLayout from "../../layouts/SectionLayout.astro";
+import { getArtists } from "../../data/api";
+// import Collapsible from "../../../components/Collapsible.astro";
+import SideTab from "../SideTab.astro";
+import SecHeader from "../SecHeader.astro";
+// import CTA from "../../../components/CTA.astro";
+import { urlFor } from "../../utils/image";
+
+let artists = await getArtists();
+artists = artists.map((artist) => ({
+  ...artist,
+  imageUrl: artist.image ? urlFor(artist.image.asset).url() : null,
+}));
+
+---
+<SectionLayout className="artist-directory" backGround="var(--white)">
+  <h2 class="title">Artists Directory</h2>
+
+  <div class="filters caption">
+    <ul>
+      <li>Sort by</li>
+      <li>
+        <ul>
+          <li>Most recent to oldest</li>
+          <li>Oldest to most recent</li>
+          <li>Alphabetical</li>
+        </ul>
+      </li>
+    </ul>
+    <ul>
+      <li>Filter by year of participation</li>
+      <li>
+        <ul>
+          <li>All</li>
+          <li>2023</li>
+          <li>2022</li>
+          <li>2021</li>
+        </ul>
+      </li>
+    </ul>
+
+    <ul>
+      <li>Filter by last name initials</li>
+      <li>
+        <ul>
+          <li>A</li>
+          <li>B</li>
+          <li>C</li>
+          <li>D</li>
+          <li>E</li>
+          <li>F</li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+
+  <div x-data="pagination">
+    <ul class="list-artist">
+      <template x-for="artist in paginatedData" :key="artist._id">
+        <li
+          @mouseenter="handleMouseEnter($event, artist._id)"
+          @mousemove="handleMouseMove($event, artist._id)"
+          @mouseleave="handleMouseLeave(artist._id)"
+          class="artist-list-item"
+        >
+          <a :href="`artists/${artist.slug.current}`">
+            <h2 x-text="artist.name"></h2>
+          </a>
+          <img
+            :id="`thumbnail${artist._id}`"
+            class="artist-thumbnail"
+            :src="artist.imageUrl"
+            alt=""
+          />
+        </li>
+      </template>
+    </ul>
+
+    <div class="pagination-controls caption">
+      <button @click="prevPage()" :disabled="currentPage === 1">Previous</button
+      >
+      <span x-text="currentPage"></span>
+      <button @click="nextPage()" :disabled="disableNext">Next</button>
+    </div>
+  </div>
+
+  <!-- <SecHeader title="Artists FAQ" /> -->
+  <div class="banner">
+    <div class="caption FAQ">
+      Asian Arts Initiative has supported hundreds of budding, emergent and
+      mid-career artists into local and global prominence. We publish Calls for
+      Artists for thematic seasons several times a year, and provide
+      opportunities for community-based artist residencies, as well as low and
+      no cost studio and performance rental spaces. Here are some common and
+      Frequently Asked Questions (FAQ).
+    </div>
+  </div>
+  <!-- <Collapsible /> -->
+</SectionLayout>
+
+
+<style lang="scss">
+  .filters,
+  .filters > *,
+  .filters > * > *,
+  .filters > * > * > *,
+  .filters > * > * > * > * {
+    display: flex;
+    gap: 1rem;
+    color: var(--darkGray);
+    font-size: var(--caption-font-size);
+  }
+  .filters {
+    justify-content: space-between;
+  }
+  .filters > * {
+    flex-direction: column;
+  }
+  .list-artist {
+    padding: 4rem 0;
+    display: flex;
+    flex-direction: column;
+  }
+  .artist-list-item:last-child {
+    border-bottom: 1px solid var(--black);
+  }
+  .artist-list-item {
+    border-top: 1px solid var(--black);
+    padding: 0.5rem 0;
+    cursor: pointer;
+
+    .artist-thumbnail {
+      position: absolute;
+      display: none;
+      width: 300px;
+      height: auto;
+      pointer-events: none;
+    }
+  }
+
+  .FAQ {
+    max-width: 800px;
+  }
+  .pagination-controls {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 4rem;
+
+    button {
+      border: none;
+      cursor: pointer;
+      background-color: white;
+    }
+  }
+</style>
+
+<script async define:vars={{ artists }}>
+  document.addEventListener("alpine:init", () => {
+    Alpine.data("pagination", () => ({
+      currentPage: 1,
+      itemsPerPage: 10,
+      disableNext: false,
+      get paginatedData() {
+        const start = (this.currentPage - 1) * this.itemsPerPage;
+        const end = start + this.itemsPerPage;
+        return artists.slice(start, end);
+      },
+      nextPage() {
+        this.currentPage++;
+        this.disableNext =
+          this.currentPage * this.itemsPerPage >= artists.length;
+      },
+      prevPage() {
+        if (this.currentPage > 1) this.currentPage--;
+      },
+      handleMouseEnter(event, id) {
+        const thumbnail = document.getElementById(`thumbnail${id}`);
+        if (thumbnail) {
+          thumbnail.style.display = "block";
+          thumbnail.style.left = `${event.clientX}px`;
+          thumbnail.style.top = `${event.clientY + window.scrollY}px`;
+        }
+      },
+      handleMouseMove(event, id) {
+        const thumbnail = document.getElementById(`thumbnail${id}`);
+        if (thumbnail) {
+          thumbnail.style.left = `${event.clientX}px`;
+          thumbnail.style.top = `${event.clientY + window.scrollY}px`;
+        }
+      },
+      handleMouseLeave(id) {
+        const thumbnail = document.getElementById(`thumbnail${id}`);
+        if (thumbnail) {
+          thumbnail.style.display = "none";
+        }
+      },
+    }));
+  });
+</script>

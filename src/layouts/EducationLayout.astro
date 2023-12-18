@@ -11,49 +11,68 @@ import type { Education } from "../data/types";
 
 const educations = await getEducations();
 
-
 interface Props {
   pageTitle: string;
   bannerSrc: string;
   ctas: Entry[];
   frontCaptions: Entry[];
+  currentIndex: string;
 }
 
-const { pageTitle, bannerSrc, ctas, frontCaptions } = Astro.props as Props;
+const { pageTitle, bannerSrc, ctas, frontCaptions, currentIndex } = Astro.props as Props;
 ---
 
 <BasicLayout title={pageTitle}>
   <div class="top">
     <SideTab text="Education" href="/education/" style="department" />
 
-      {
-        educations.map((education: Education) => (
-          <SideTab 
-          text={education.title}
-          style="subpage"
-          shadow="left"
-          backGround="var(--white)"
-          href={`/education/${education.slug.current}`} />
+    {
+      educations
+        .filter((education) => education.order < currentIndex)
+        .sort((a, b) => (Number(a.order) - Number(b.order))) // Sort based on education.order
+        .map((education: Education) => (
+          <SideTab
+            text={education.title}
+            style="subpage"
+            shadow="left"
+            backGround="var(--white)"
+            href={`/education/${education.slug.current}`}
+          />
         ))
-      }
-
+    }
+  
     <main>
       <h1 class="title">{pageTitle}</h1>
       <div class="banner">
         <img src={bannerSrc} alt="Banner image" />
       </div>
-
+  
       <div class="CTA-wrapper">
-      {
-        ctas?.map((cta: Entry) => (
-          <CTA type='default' text={cta.displayTitle} value={cta.value} />
-        ))
-      }
+        {
+          ctas?.map((cta: Entry) => (
+            <CTA type="default" text={cta.displayTitle} value={cta.value} key={cta.value} />
+          ))
+        }
       </div>
       <FrontCaption frontCaptions={frontCaptions} />
       <slot />
-
     </main>
+
+  <!-- Render SideTabs after <main> for education.order > currentIndex  -->
+    {
+      educations
+        .filter((education) => education.order > currentIndex)
+        .sort((a, b) => (Number(a.order) - Number(b.order))) // Sort based on education.order
+        .map((education: Education) => (
+          <SideTab
+            text={education.title}
+            style="subpage"
+            shadow="right"
+            backGround="var(--white)"
+            href={`/education/${education.slug.current}`}
+          />
+        ))
+    }
   </div>
 </BasicLayout>
 
@@ -64,8 +83,15 @@ const { pageTitle, bannerSrc, ctas, frontCaptions } = Astro.props as Props;
     background-size: 224px;
   }
   code {
-    font-family: Menlo, Monaco, Lucida Console, Liberation Mono,
-      DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace;
+    font-family:
+      Menlo,
+      Monaco,
+      Lucida Console,
+      Liberation Mono,
+      DejaVu Sans Mono,
+      Bitstream Vera Sans Mono,
+      Courier New,
+      monospace;
   }
 
   // Side Tab Area
@@ -80,26 +106,7 @@ const { pageTitle, bannerSrc, ctas, frontCaptions } = Astro.props as Props;
   .banner,
   .body-copy {
     width: 100%;
-    max-width: 800px;
-
-    @media screen and (max-width: 64rem) {
-      max-width: 40rem;
-    }
-    @media screen and (max-width: 48rem) {
-      max-width: 30rem;
-      margin: 0 16px;
-    }
-
-    @media screen and (max-width: 35.5rem) {
-      background-color: red;
-      width: calc(100% - 4.4rem);
-      margin: 0 16px;
-    }
-    @media screen and (max-width: 24.375rem) {
-      width: calc(100% - 32px);
-      margin: 0 16px;
-    }
-
+    max-width: var(--inner-max-width);
     display: flex;
     flex-direction: column;
   }
@@ -122,25 +129,7 @@ const { pageTitle, bannerSrc, ctas, frontCaptions } = Astro.props as Props;
 
   .CTA-wrapper {
     width: 100%;
-    max-width: 800px;
-
-    @media screen and (max-width: 64rem) {
-      max-width: 40rem;
-    }
-    @media screen and (max-width: 48rem) {
-      max-width: 30rem;
-      // margin: 0 16px;
-    }
-
-    @media screen and (max-width: 35.5rem) {
-      background-color: red;
-      width: calc(100% - 4.4rem);
-      // margin: 0 16px;
-    }
-    @media screen and (max-width: 24.375rem) {
-      width: calc(100% - 32px);
-      // margin: 0 16px;
-    }
+    max-width: var(--inner-max-width);
 
     display: grid;
     grid-template-columns: 1fr 1fr;

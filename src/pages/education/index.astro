@@ -1,52 +1,57 @@
 ---
 import Layout from "../../layouts/Layout.astro";
 import SideTab from "../../components/SideTab.astro";
-import { getEducations } from "../../data/api";
+import SecHeader from "../../components/SecHeader.astro";
+import { urlFor } from "../../utils/image";
+import { getEducations, getEducationPage } from "../../data/api";
 import type { Education } from "../../data/types";
 
 const educations = await getEducations();
+const educationIntro = await getEducationPage()
 ---
-
 <Layout title="Education">
   <div data-top>
     <article data-wrapper>
       <SideTab text="Education" href="#" style="department" classes="is-major"/>
       <main data-main>
         <div class="intro-sec" style="background-color:black; color:white">
-          <p class="body-copy">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-          </p>
+          <div class="body-copy">
+            {
+              educationIntro.content.map(
+                (entry) =>
+                  entry._type === "body" ? (
+                    <p class="text">{entry.value}</p>
+                    // <PortableText value={entry.value}></PortableText>
+                  ) : entry._type === "subheading" ? (
+                    <SecHeader color="white" title={entry.value} />
+                  ) : entry._type === "image" ? (
+                    <div>
+                      <img
+                        class="inline-img"
+                        src={entry.asset ? urlFor(entry.asset).url() : ""}
+                        alt={entry?.alt}
+                      />
+                      <captio class="small-caption">{entry?.caption}</captio>
+                    </div>
+                  ) : null // You might want to handle other cases or return null for unrecognized types
+              )
+            }
+            </div>
         </div>
       </main>
-        {
-          educations.map((education: Education) => (
-            <SideTab 
-            text={education.title}
-            style="subpage"
-            shadow="right"
-            backGround="var(--white)"
-            href={`/education/${education.slug.current}`} />
-          ))
-        }
-
-      <!-- <SideTab
-          text="Camp Bruce Lee"
-          style="subpage"
-          shadow="none"
-          classes="CBLTab"
-        />
-        <SideTab
-          text="Youth Arts Workshop"
-          style="subpage"
-          shadow="right"
-          classes="YAWTab"
-        />
-        <SideTab
-          text="Youth Leadership Workshop"
-          style="subpage"
-          shadow="right"
-          classes="YLWTab"
-        /> -->
+{
+  educations
+    .sort((a, b) => (Number(a.order) - Number(b.order))) // Sort based on education.order
+    .map((education: Education) => (
+      <SideTab
+        text={education.title}
+        style="subpage"
+        shadow="right"
+        backGround="var(--white)"
+        href={`/education/${education.slug.current}`}
+      />
+    ))
+}
     </article>
   </div>
 </Layout>

@@ -1,9 +1,13 @@
 ---
 import SectionLayout from "../../layouts/SectionLayout.astro";
-import { getPrograms } from "../../data/api";
-import { urlFor } from "../../utils/image";
+import SideTab from "../../components/SideTab.astro";
+
+import BasicLayout from "../../layouts/Layout.astro";
+import { getPrograms } from "../../data/api.js";
+import { urlFor } from "../../utils/image.js";
 import { formatDateRange } from "../../utils/dateFormatting.js";
-import type { Program } from "../../data/types";
+import type { Program } from "../../data/types.js";
+import SectionLayoutRight from "../../layouts/SectionLayoutRight.astro";
 
 const programs = await getPrograms();
 const currentDate = new Date();
@@ -27,9 +31,9 @@ const sortedYears = Object.entries(programsByYear).sort(
 );
 ---
 
-<SectionLayout className="past" backGround="var(--white)">
-  <h1 class="title">Past Seasons</h1>
-  <!-- <div class="filters">
+    <SectionLayoutRight backGround="var(--white)">
+      <h2 class="title">Past Seasons</h2>
+      <!-- <div class="filters">
     <ul>
       <li>Sort by</li>
       <li>
@@ -66,47 +70,50 @@ const sortedYears = Object.entries(programsByYear).sort(
       </li>
     </ul>
   </div> -->
-  <div class="seasons-wrapper">
-    <ul class="list-season-title">
-      {
-        sortedYears.map(([season, programs]) => (
-          <li class="season-title gray-out">
-            <h3>{season.split(" ").pop()}</h3>
-          </li>
-        ))
-      }
-    </ul>
-
-    {
-      sortedYears.map(([season, programs]) => (
-        <ul id={season.split(" ").pop()} class="list-past-programs is-hidden">
-          {programs.map((program) => (
-            <li class="list-item">
-              <a data-link href={`/programs/${program.slug.current}`}>
-                {program.coverImage && (
-                  <img
-                    src={urlFor(program.coverImage).url()}
-                    alt={program.name}
-                  />
-                )}
-                <h4>{program.name}</h4>
-
-                <ul>
-                  <li class="caption gray-out">{program.type}</li>
-                  <li class="caption">
-                    {formatDateRange(
-                      `${program.startDateTime}—${program.endDateTime}`
-                    )}
-                  </li>
-                </ul>
-              </a>
-            </li>
-          ))}
+      <div class="seasons-wrapper">
+        <ul class="list-season-title">
+          {
+            sortedYears.map(([season, programs]) => (
+              <li class="season-title gray-out">
+                <h3>{season.split(" ").pop()}</h3>
+              </li>
+            ))
+          }
         </ul>
-      ))
-    }
-  </div>
-</SectionLayout>
+
+        {
+          sortedYears.map(([season, programs]) => (
+            <ul
+              id={season.split(" ").pop()}
+              class="list-past-programs is-hidden"
+            >
+              {programs.map((program) => (
+                <li class="list-item">
+                  <a data-link href={`/programs/${program.slug.current}`}>
+                    {program.coverImage && (
+                      <img
+                        src={urlFor(program.coverImage).url()}
+                        alt={program.name}
+                      />
+                    )}
+                    <h4>{program.name}</h4>
+
+                    <ul>
+                      <li class="caption gray-out">{program.type}</li>
+                      <li class="caption">
+                        {formatDateRange(
+                          `${program.startDateTime}—${program.endDateTime}`
+                        )}
+                      </li>
+                    </ul>
+                  </a>
+                </li>
+              ))}
+            </ul>
+          ))
+        }
+      </div>
+    </SectionLayoutRight>
 
 <style lang="scss">
   .seasons-wrapper {
@@ -190,35 +197,35 @@ const sortedYears = Object.entries(programsByYear).sort(
   }
 </style>
 <script async>
-  const seasonTitle = document.querySelectorAll(".season-title");
-  const seasonList = document.querySelectorAll(".list-past-programs");
+const seasonTitle = document.querySelectorAll(".season-title");
+const seasonList = document.querySelectorAll(".list-past-programs");
 
-  // Hide all lists
-  seasonList.forEach((list) => {
-    list.classList.add("is-hidden");
-  });
+// Hide all lists
+seasonList.forEach((list) => {
+  list.classList.add("is-hidden");
+});
 
-  // Show the first season list by default
-  seasonList[0].classList.remove("is-hidden");
-  seasonTitle[0].classList.remove("gray-out");
+// Show the first season list by default
+seasonList[0].classList.remove("is-hidden");
+seasonTitle[0].classList.remove("gray-out");
 
-  seasonTitle.forEach((title, i) => {
-    title.addEventListener("click", () => {
-      // Hide all lists
-      seasonList.forEach((list) => {
-        list.classList.add("is-hidden");
-      });
-
-      // Show the clicked list
-      seasonList[i].classList.remove("is-hidden");
-
-      // Remove 'gray-out' class from all titles
-      seasonTitle.forEach((title) => {
-        title.classList.add("gray-out");
-      });
-
-      // Remove 'gray-out' class from clicked title
-      title.classList.remove("gray-out");
+seasonTitle.forEach((title, i) => {
+  title.addEventListener("click", () => {
+    // Hide all lists
+    seasonList.forEach((list) => {
+      list.classList.add("is-hidden");
     });
+
+    // Show the clicked list
+    seasonList[i].classList.remove("is-hidden");
+
+    // Remove 'gray-out' class from all titles
+    seasonTitle.forEach((title) => {
+      title.classList.add("gray-out");
+    });
+
+    // Remove 'gray-out' class from clicked title
+    title.classList.remove("gray-out");
   });
+});
 </script>

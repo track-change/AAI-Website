@@ -31,7 +31,7 @@ function toTitleCase(str: string) {
         <p class="caption event-type">
           {type}
           {
-            eventTypes?.length > 0 &&
+            eventTypes &&
               eventTypes.map((eventType, index) => (
                 <span>
                   {index === 0 && <span> | </span>}

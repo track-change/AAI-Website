@@ -24,7 +24,7 @@ import Layout from "../layouts/Layout.astro";
     <div class="calendar" id="calendar-body">
     </div>
 
-    <p><span id="start-date"></span><span id="end-date"></span></p>
+    <p class="hidden"><span id="start-date"></span><span id="end-date"></span></p>
   </div>
 <!-- </Layout> -->
 
@@ -126,6 +126,10 @@ import Layout from "../layouts/Layout.astro";
         display: inline;
       }
     }
+  }
+
+  .hidden{
+    display: none;
   }
 </style>
 

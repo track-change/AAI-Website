@@ -1,0 +1,36 @@
+---
+import SectionLayout from "../../layouts/SectionLayout.astro";
+import { getOpportunities, getPartnerships } from "../../data/api";
+import { urlFor } from "../../utils/image";
+import { PortableText } from "astro-portabletext";
+import AboutLayout from "../../layouts/AboutLayout.astro";
+const partnerships = await getPartnerships();
+
+---
+<AboutLayout
+pageTitle={partnerships.title}
+currentIndex={4}
+>  
+<SectionLayout
+  backGround="var(--mint)"
+  textColor="var(--black)"
+  className="partnerships"
+  barbaName={partnerships.title} 
+>
+  <div class="title">
+    <h1>{partnerships.title}</h1>
+  </div>
+  <div class="banner">
+    {
+        partnerships.coverImage.asset && (
+          <img
+            class="cover-image"
+            src={urlFor(partnerships.coverImage.asset).url()}
+            alt={partnerships.coverImage.alt}
+          />
+        )
+      }
+      <PortableText value={partnerships.body} />
+  </div>
+</SectionLayout>
+</AboutLayout>

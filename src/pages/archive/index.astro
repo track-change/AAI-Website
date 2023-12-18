@@ -1,24 +1,24 @@
 ---
 import Layout from "../../layouts/Layout.astro";
 import SideTab from "../../components/SideTab.astro";
-import CurrentPrograms from "../../components/sections/current-upcoming.astro";
-import PastPrograms from "../../components/sections/past.astro";
+import MediaSec from "../../components/sections/MediaSec.astro";
+import ArtistSec from "../../components/sections/artistsSec.astro";
 ---
 
-<Layout title="Programs">
+<Layout title="Archive">
   <div data-top>
     <SideTab
-      text="Programs"
-      href="/programs"
+      text="Archive"
+      href="/archive/"
       style="department"
       classes="is-major"
     />
     <article class="wrapper">
       <div class="left-col">
-        <CurrentPrograms />
+        <MediaSec />
       </div>
       <div class="right-col">
-        <PastPrograms />
+        <ArtistSec />
       </div>
     </article>
   </div>
@@ -47,7 +47,7 @@ import PastPrograms from "../../components/sections/past.astro";
       display: flex;
       flex-direction: row;
       align-items: flex-start;
-      height: fit-content;
+      height: min-content;
       overflow-y: hidden !important;
 
       .left-col,
@@ -57,6 +57,9 @@ import PastPrograms from "../../components/sections/past.astro";
         width: 100%;
         display: flex;
         transition: transform 200ms;
+        height: min-content;
+        max-height: 150vh;
+        overflow-y: hidden !important;
       }
       .left-col:hover + .right-col {
         transform: translateX(10px);
@@ -79,9 +82,9 @@ import PastPrograms from "../../components/sections/past.astro";
 const currentSec = document.querySelector(".left-col");
 const pastSec = document.querySelector(".right-col");
 currentSec.addEventListener("click", () => {
-  location.assign("/programs/current-upcoming");
+  location.assign("/archive/media");
 });
 pastSec.addEventListener("click", () => {
-  location.assign("/programs/past");
+  location.assign("/archive/artists");
 });
 </script>
