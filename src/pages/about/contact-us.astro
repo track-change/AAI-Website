@@ -4,32 +4,33 @@ import { getContactUs } from "../../data/api";
 import { urlFor } from "../../utils/image";
 import { PortableText } from "astro-portabletext";
 import AboutLayout from "../../layouts/AboutLayout.astro";
+
 const contact = await getContactUs();
 ---
-<AboutLayout
-pageTitle={contact.title}
-currentIndex={0}
->  
-<SectionLayout
-  backGround="var(--yellow)"
-  textColor="var(--black)"
-  className="contact-us"
-  barbaName={contact.title}
->
-  <div class="title">
-    <h1>{contact.title}</h1>
-  </div>
-  <div class="banner">
-    <div class="list-contact">
-      {
-        contact.content.map((entry) => (
-            <p> {entry.sectionTitle} </p>
-            <PortableText value={entry.value} class="caption" />
-        ))
-      }
+
+<AboutLayout pageTitle={contact.title} currentIndex={0}>
+  <SectionLayout
+    backGround="var(--yellow)"
+    textColor="var(--black)"
+    className="contact-us"
+    barbaName={contact.title}
+  >
+    <div class="title">
+      <h1>{contact.title}</h1>
     </div>
-  </div>
-</SectionLayout>
+    <div class="banner">
+      <div class="list-contact">
+        {
+          contact.content.map((entry) => (
+            <>
+              <p> {entry.sectionTitle} </p>
+              <PortableText value={entry.value} class="caption" />
+            </>
+          ))
+        }
+      </div>
+    </div>
+  </SectionLayout>
 </AboutLayout>
 <style lang="scss">
   .list-contact {
@@ -38,3 +39,21 @@ currentIndex={0}
     gap: 100px;
   }
 </style>
+<script>
+  import barba from "@barba/core";
+  import barbaCss from "@barba/css";
+
+  barba.use(barbaCss);
+  barba.init({
+    transitions: [
+      {
+        name: "fade",
+        to: {
+          namespace: ["Support"],
+        },
+        leave() {},
+        enter() {},
+      },
+    ],
+  });
+</script>

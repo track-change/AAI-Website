@@ -11,7 +11,8 @@ const funder = await getFunder();
 <AboutLayout
 pageTitle={funder.title}
 currentIndex={1}
->  
+> 
+<div class="wrapper" data-barba="wrapper">
 <SectionLayout
   backGround="var(--purple)"
   textColor="var(--black)"
@@ -56,11 +57,29 @@ currentIndex={1}
      }
   </div>
 </SectionLayout>
+</div> 
 </AboutLayout>
 <style lang="scss">
+  .wrapper{
+    width:100%;
+  }
   .list-funders {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 100px;
   }
 </style>
+<script async>
+barba.init({
+  transitions: [
+    {
+      name: "fade",
+      to: {
+        namespace: ["People"],
+      },
+      leave() { },
+      enter() { },
+    },
+  ],
+});
+</script>

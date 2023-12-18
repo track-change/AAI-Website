@@ -5,6 +5,9 @@ import Meta from "../components/Meta.astro";
 import HeaderOld from "../components/HeaderOld.astro";
 import Footer from "../components/Footer.astro";
 import { getSiteSettings } from "../data/api";
+// import barba from "@barba/core";
+// import barbaCss from "@barba/css";
+// import parse from "html-dom-parser";
 
 const settings = await getSiteSettings();
 
@@ -13,46 +16,60 @@ interface Props {
 }
 
 const { title } = Astro.props;
+
+// barba.use(barbaCss);
+// barba.init({
+//   transitions: [
+//     {
+//       name: "slide",
+//       to: {
+//         namespace: ["support"],
+//       },
+//       leave() {},
+//       enter() {},
+//     },
+//   ],
+// });
 ---
 
 <!doctype html>
 <html lang="en" transition:animate="none">
-<head>
-  <Meta title={title} settings={settings} />
-  <!-- <ViewTransitions /> -->
-</head>
+  <head>
+    <Meta title={title} settings={settings} />
+    <!-- <ViewTransitions /> -->
+  </head>
 
-<body>
-  <HeaderOld />
-  <slot />
-  <style lang="scss" is:global>
-    html {
-      font-family: system-ui, sans-serif;
-      background: var(--white);
-      background-size: 224px;
-    }
-    code {
-      font-family:
-        Menlo,
-        Monaco,
-        Lucida Console,
-        Liberation Mono,
-        DejaVu Sans Mono,
-        Bitstream Vera Sans Mono,
-        Courier New,
-        monospace;
-    }
-  </style>
-  <Footer />
-  <script>
-    import "../ts/main.ts";
-  </script>
-</body>
-
-<style is:global>
-  [data-top] {
-    position: relative;
-    display: flex;
-    flex-grow: 1;
-  }
-</style>
+  <body>
+    <HeaderOld />
+    <slot />
+    <style lang="scss" is:global>
+      html {
+        font-family: system-ui, sans-serif;
+        background: var(--white);
+        background-size: 224px;
+      }
+      code {
+        font-family:
+          Menlo,
+          Monaco,
+          Lucida Console,
+          Liberation Mono,
+          DejaVu Sans Mono,
+          Bitstream Vera Sans Mono,
+          Courier New,
+          monospace;
+      }
+    </style>
+    <Footer />
+    <script>
+      import "../ts/main.ts";
+    </script>
+    <style is:global>
+      [data-top] {
+        position: relative;
+        display: flex;
+        flex-grow: 1;
+      }
+    </style>
+  </body>
+</html>

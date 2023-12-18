@@ -32,7 +32,11 @@ const mySlideInFromLeft = {
 };
 ---
 
-<main class:list={[{className}, {barbaName}]} data-barba-namespace={barbaName}  transition:animate={mySlideInFromLeft}>
+<main
+  class:list={className}
+  data-barba-namespace={barbaName}
+  data-barba="container"
+>
   <slot />
 </main>
 

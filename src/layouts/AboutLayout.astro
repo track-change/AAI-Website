@@ -7,15 +7,16 @@ const aboutSec = [
   { text: "Support", color: "var(--purple)" },
   { text: "People", color: "var(--white)" },
   { text: "Opportunities", color: "var(--peach)" },
-  { text: "Partnerships", color: "var(--mint)"}
+  { text: "Partnerships", color: "var(--mint)" },
 ];
 
 interface Props {
   pageTitle: string;
   currentIndex: number;
+  barbaName?: string;
 }
 
-const { pageTitle, currentIndex } = Astro.props as Props;
+const { pageTitle, currentIndex, barbaName } = Astro.props as Props;
 
 const generateAboutPath = (item: string) => {
   const lowercasedItem = item.toLowerCase();
@@ -24,6 +25,7 @@ const generateAboutPath = (item: string) => {
     .replace(/[^a-z0-9-]/g, "")}`;
 };
 ---
+
 <BasicLayout title={pageTitle}>
   <div class="top">
     <SideTab text="About" href="/about/" style="department" />
@@ -41,22 +43,22 @@ const generateAboutPath = (item: string) => {
           />
         ))
     }
-      <slot />
+    <slot />
 
     <!-- Render SideTabs after <main> for education.order > currentIndex  -->
-      {
-        aboutSec
-          .filter((_, index) => index > currentIndex)
-          .map((item, index) => (
-            <SideTab
-              text={item.text}
-              style="subpage"
-              shadow="right"
-              backGround={item.color}
-              href={generateAboutPath(item.text)}
-            />
-          ))
-      }
+    {
+      aboutSec
+        .filter((_, index) => index > currentIndex)
+        .map((item, index) => (
+          <SideTab
+            text={item.text}
+            style="subpage"
+            shadow="right"
+            backGround={item.color}
+            href={generateAboutPath(item.text)}
+          />
+        ))
+    }
   </div>
 </BasicLayout>
 
@@ -86,3 +88,6 @@ const generateAboutPath = (item: string) => {
     flex: 1;
   }
 </style>
+<script>
+  import "../ts/main.ts";
+</script>
