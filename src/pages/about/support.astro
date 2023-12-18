@@ -16,6 +16,7 @@ currentIndex={1}
   backGround="var(--purple)"
   textColor="var(--black)"
   className="funder"
+  barbaName={funder.title}
 >
 <h1 class="title">{funder.title}</h1>
 
@@ -45,8 +46,6 @@ currentIndex={1}
         </div>
       )
      }
-     
-      
       {
         funder.funders && (
         <SecHeader title="Funders" />
@@ -55,7 +54,6 @@ currentIndex={1}
             </div>
         )
      }
-    
   </div>
 </SectionLayout>
 </AboutLayout>

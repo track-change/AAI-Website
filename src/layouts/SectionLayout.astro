@@ -6,9 +6,10 @@ interface Prop {
   backGround?: string;
   textColor?: string;
   className?: [];
+  barbaName?: string;
 }
 
-const { backGround, textColor, className } = Astro.props as Prop;
+const { backGround, textColor, className, barbaName } = Astro.props as Prop;
 
 const anim = {
   old: {
@@ -31,7 +32,7 @@ const mySlideInFromLeft = {
 };
 ---
 
-<main class:list={className} transition:animate={mySlideInFromLeft}>
+<main class:list={[{className}, {barbaName}]} data-barba-namespace={barbaName}  transition:animate={mySlideInFromLeft}>
   <slot />
 </main>
 
