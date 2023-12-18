@@ -19,6 +19,7 @@ const { slug } = Astro.params as Params;
 
 const education = await getEducationBySlug(slug);
 ---
+
 <EducationLayout
   pageTitle={education.title}
   bannerSrc={education.coverImage ? urlFor(education.coverImage).url() : ""}
@@ -29,15 +30,131 @@ const education = await getEducationBySlug(slug);
   <div class="banner">
     <PortableText value={education.body} />
   </div>
-  
-{education.images && (
-    <SecHeader title = "Archive" />
-  <Carousel
-  images={education.images}
-  alt={education.images.map((image) => image.alt)}
-  >
-  </Carousel>
-)}
 
+  {
+    education.images && (
+      <>
+        <SecHeader title="Archive" />
+        <Carousel
+          images={education.images}
+          alt={education.images.map((image) => image.alt)}
+        />
+      </>
+    )
+  }
 </EducationLayout>
+<div class="idle"></div>
 
+<style lang="scss" is:global>
+  .idle {
+    width: 100vw;
+    height: 100vh;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 99;
+
+    .logo {
+      width: 120px;
+      height: 120px;
+      position: absolute;
+      display: none;
+
+      svg {
+        width: 80%;
+      }
+    }
+  }
+</style>
+<script async>
+let timeoutId;
+let intervalId;
+const logos = [];
+const colors = [
+  "#b8c4f0",
+  "#ffd0b4",
+  "#bbe2da",
+  "#ff6105",
+  "#005454",
+  "#fff200",
+]; // Array of predefined colors
+
+function createRandomLogo() {
+  const logo = document.createElement("div");
+  logo.classList.add("logo");
+  logo.insertAdjacentHTML(
+    "beforeend",
+    `<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="276"
+    height="276"
+    viewBox="0 0 276 276"
+    fill="none"
+  >
+    <path d="M0 0C0 50.729 41.271 92 92 92H184V184V276H276V0H0Z" fill="white"
+    ></path>
+    <path
+      d="M92 92C41.271 92 0 133.271 0 184C0 234.729 41.271 276 92 276C142.729 276 184 234.729 184 184L92 184L92 92Z"
+      fill="white"></path>
+  </svg>`
+  );
+
+  const maxX = window.innerWidth - 120;
+  const maxY = window.innerHeight - 120;
+
+  const randomX = Math.floor(Math.random() * maxX);
+  const randomY = Math.floor(Math.random() * maxY);
+  const randomAngle = Math.floor(Math.random() * 180);
+
+  logo.style.left = `${randomX}px`;
+  logo.style.top = `${randomY}px`;
+
+  const randomColorIndex = Math.floor(Math.random() * colors.length);
+  let paths = logo.querySelector("svg").querySelectorAll("path");
+  paths.forEach((path) => {
+    path.style.fill = colors[randomColorIndex];
+  });
+
+  logo.style.transform = `rotate(${randomAngle}deg)`;
+
+  document.querySelector(".idle").appendChild(logo);
+  logos.push(logo);
+  logo.style.display = "block";
+
+  return logo;
+}
+
+function addLogoEverySecond() {
+  intervalId = setInterval(() => {
+    const newLogo = createRandomLogo();
+    newLogo.style.display = "block";
+  }, 1200);
+}
+
+function clearLogos() {
+  logos.forEach((logo) => {
+    logo.remove();
+  });
+  logos.length = 0;
+  clearInterval(intervalId);
+}
+
+function handleInactive() {
+  timeoutId = setTimeout(() => {
+    addLogoEverySecond();
+  }, 15000);
+}
+
+function handleMouseActivity() {
+  clearTimeout(timeoutId);
+  clearLogos();
+  handleInactive();
+}
+
+window.addEventListener("mousemove", handleMouseActivity);
+window.addEventListener("click", handleMouseActivity);
+window.addEventListener("scroll", handleMouseActivity);
+
+// Start checking for inactivity initially
+handleInactive();
+</script>
