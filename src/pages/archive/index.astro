@@ -4,6 +4,7 @@ import SideTab from "../../components/SideTab.astro";
 import MediaSec from "../../components/sections/MediaSec.astro";
 import ArtistSec from "../../components/sections/artistsSec.astro";
 ---
+
 <Layout title="Archive">
   <div data-top>
     <SideTab
@@ -66,7 +67,7 @@ import ArtistSec from "../../components/sections/artistsSec.astro";
       .right-col {
         position: absolute;
         top: 0;
-        left: 50%;
+        left: 65%;
         height: fit-content;
         box-shadow: -10px 0px 14px 0px rgba(0, 0, 0, 0.1);
         z-index: 9;
@@ -78,12 +79,12 @@ import ArtistSec from "../../components/sections/artistsSec.astro";
   }
 </style>
 <script async>
-  const currentSec = document.querySelector(".left-col")
-  const pastSec = document.querySelector(".right-col")
-  currentSec.addEventListener("click", ()=>{
-    location.assign("/archive/media")
-  })
-  pastSec.addEventListener("click", ()=>{
-    location.assign("/archive/artists")
-  })
+const currentSec = document.querySelector(".left-col");
+const pastSec = document.querySelector(".right-col");
+currentSec.addEventListener("click", () => {
+  location.assign("/archive/media");
+});
+pastSec.addEventListener("click", () => {
+  location.assign("/archive/artists");
+});
 </script>
