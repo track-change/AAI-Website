@@ -121,10 +121,12 @@
     background-color: var(--white, #fff);
     top: 0;
     .menu {
+      transition: background-color 0.4s var(--ease);
       padding-block: 8px;
       &.active {
         padding-block: 21px;
         align-items: start;
+        background-color: var(--orange);
 
         .menu-right {
           align-items: start;
