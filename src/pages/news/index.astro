@@ -8,7 +8,6 @@ import NewsCard from "../../components/NewsCard.astro";
 
 const news = await getNews();
 ---
-
 <Layout title="News">
   <SectionLayout>
     <div class="title">
@@ -17,6 +16,7 @@ const news = await getNews();
     <ul class="news-list">
       {
         news.map((news: News) => (
+          news.slug &&
           <li class="news-list-item">
             <NewsCard news={news} />
           </li>
