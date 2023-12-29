@@ -49,43 +49,37 @@ const sortedYears = Object.entries(programsByYear).sort(
     />
     <SectionLayoutRight>
       <h2 class="title">Past Seasons</h2>
-      <!-- <div class="filters">
+      <div class="filters caption">
     <ul>
-      <li>Sort by</li>
+      <li>Filter by Event Types</li>
       <li>
         <ul>
-          <li>Most recent to oldest</li>
-          <li>Oldest to most recent</li>
-          <li>Alphabetical</li>
+          <li>Screening</li>
+          <li>Performance</li>
+          <li>Workshop</li>
+          <li>Concert</li>
+          <li>Book Talk</li>
+          <li>Conversation</li>
+          <li>Fundraiser</li>
+          <li>Community Event</li>
         </ul>
       </li>
     </ul>
+<!-- TODO: Map out all tags from Programs -->
     <ul>
-      <li>Filter by year of participation</li>
+      <li>Filter by Tags</li>
       <li>
         <ul>
-          <li>All</li>
-          <li>2023</li>
-          <li>2022</li>
-          <li>2021</li>
+          <li></li>
+          <li></li>
+          <li></li>
+          <li></li>
+          <li></li>
+          <li></li>
         </ul>
       </li>
     </ul>
-
-    <ul>
-      <li>Filter by last name initials</li>
-      <li>
-        <ul>
-          <li>A</li>
-          <li>B</li>
-          <li>C</li>
-          <li>D</li>
-          <li>E</li>
-          <li>F</li>
-        </ul>
-      </li>
-    </ul>
-  </div> -->
+  </div>
       <div class="seasons-wrapper" x-data="past">
         <ul class="list-season-title">
           <template
@@ -207,7 +201,8 @@ const sortedYears = Object.entries(programsByYear).sort(
   .filters > * > * > * > * {
     display: flex;
     column-gap: 1rem;
-    font-size: var(--small-caption-font-size);
+    color: var(--darkGray);
+    font-size: var(--caption-font-size);
   }
   .filters {
     justify-content: space-between;

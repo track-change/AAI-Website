@@ -21,6 +21,43 @@ const medias = await getMedia();
       <div class="title">
         <h2>Media Library</h2>
       </div>
+      <div class="filters caption">
+        <ul>
+          <li>Filter by</li>
+          <li>
+            <ul>
+              <li>All</li>
+              <li>Video</li>
+              <li>Audio</li>
+            </ul>
+          </li>
+        </ul>
+        <!-- TODO: Map out all years from the media cards -->
+        <ul>
+          <li>From the year of</li>
+          <li>
+            <ul>
+              <li>All</li>
+              <li>2023</li>
+              <li>2022</li>
+            </ul>
+          </li>
+        </ul>
+        <!-- TODO: Map out all tags from Programs -->
+        <ul>
+          <li>Filter by Tags</li>
+          <li>
+            <ul>
+              <li></li>
+              <li></li>
+              <li></li>
+              <li></li>
+              <li></li>
+              <li></li>
+            </ul>
+          </li>
+        </ul>
+      </div>
 
       <ul class="media-list">
         {
@@ -58,6 +95,23 @@ const medias = await getMedia();
       Bitstream Vera Sans Mono,
       Courier New,
       monospace;
+  }
+  .filters,
+  .filters > *,
+  .filters > * > *,
+  .filters > * > * > *,
+  .filters > * > * > * > * {
+    display: flex;
+    gap: 1rem;
+    color: var(--darkGray);
+    font-size: var(--caption-font-size);
+    cursor: pointer;
+  }
+  .filters {
+    justify-content: space-between;
+  }
+  .filters > * {
+    flex-direction: column;
   }
   .title,
   section {
