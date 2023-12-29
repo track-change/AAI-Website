@@ -1,0 +1,88 @@
+---
+import BasicLayout from "./Layout.astro";
+import SideTab from "../components/SideTab.astro";
+
+const aboutSec = [
+  { text: "Contact Us", color: "var(--yellow)" },
+  { text: "Support", color: "var(--purple)" },
+  { text: "People", color: "var(--white)" },
+  { text: "Opportunities", color: "var(--peach)" },
+  { text: "Partnerships", color: "var(--mint)"}
+];
+
+interface Props {
+  pageTitle: string;
+  currentIndex: number;
+}
+
+const { pageTitle, currentIndex } = Astro.props as Props;
+
+const generateAboutPath = (item: string) => {
+  const lowercasedItem = item.toLowerCase();
+  return `/about/${lowercasedItem
+    .replace(/\s+/g, "-")
+    .replace(/[^a-z0-9-]/g, "")}`;
+};
+---
+<BasicLayout title={pageTitle}>
+  <div class="top">
+    <SideTab text="About" href="/about/" style="department" />
+
+    {
+      aboutSec
+        .filter((_, index) => index < currentIndex)
+        .map((item, index) => (
+          <SideTab
+            text={item.text}
+            style="subpage"
+            shadow="left"
+            backGround={item.color}
+            href={generateAboutPath(item.text)}
+          />
+        ))
+    }
+      <slot />
+
+    <!-- Render SideTabs after <main> for education.order > currentIndex  -->
+      {
+        aboutSec
+          .filter((_, index) => index > currentIndex)
+          .map((item, index) => (
+            <SideTab
+              text={item.text}
+              style="subpage"
+              shadow="right"
+              backGround={item.color}
+              href={generateAboutPath(item.text)}
+            />
+          ))
+      }
+  </div>
+</BasicLayout>
+
+<style lang="scss" is:global>
+  html {
+    font-family: system-ui, sans-serif;
+    background: var(--white);
+    background-size: 224px;
+  }
+  code {
+    font-family:
+      Menlo,
+      Monaco,
+      Lucida Console,
+      Liberation Mono,
+      DejaVu Sans Mono,
+      Bitstream Vera Sans Mono,
+      Courier New,
+      monospace;
+  }
+
+  // Side Tab Area
+  .top {
+    display: flex;
+  }
+  main {
+    flex: 1;
+  }
+</style>

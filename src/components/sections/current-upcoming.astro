@@ -1,10 +1,13 @@
 ---
 import SectionLayout from "../../layouts/SectionLayout.astro";
-import { getPrograms } from "../../data/api";
-import { urlFor } from "../../utils/image";
-import SecHeader from "../SecHeader.astro";
+import BasicLayout from "../../layouts/Layout.astro";
+
+import SideTab from "../../components/SideTab.astro";
+import { getPrograms } from "../../data/api.js";
+import { urlFor } from "../../utils/image.js";
+import SecHeader from "../../components/SecHeader.astro";
 import { formatDateRange } from "../../utils/dateFormatting.js";
-import Calendar from "../Calendar.astro";
+import Calendar from "../../components/Calendar.astro";
 
 const programs = await getPrograms();
 const currentDate = new Date();
@@ -14,7 +17,7 @@ const currentPrograms = programs.filter(
 );
 ---
 
-<SectionLayout className="current">
+<SectionLayout backGround="var(--white)">
   <section data-exhibits>
     <h2 class="title">On View</h2>
     <ul class="list">

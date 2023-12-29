@@ -1,10 +1,10 @@
 ---
 import type { InferGetStaticParamsType } from "astro";
 import { PortableText } from "astro-portabletext";
-import MediaLayout from "../../layouts/MediaLayout.astro";
-import { getMedia, getMediaBySlug } from "../../data/api";
-import { urlFor } from "../../utils/image";
-import FrontCaption from "../../components/FrontCaption.astro";
+import MediaLayout from "../../../layouts/MediaLayout.astro";
+import { getMedia, getMediaBySlug } from "../../../data/api";
+import { urlFor } from "../../../utils/image";
+import FrontCaption from "../../../components/FrontCaption.astro";
 
 
 export async function getStaticPaths() {

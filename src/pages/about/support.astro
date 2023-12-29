@@ -1,5 +1,6 @@
 ---
-import SecHeader from "../SecHeader.astro";
+import SecHeader from "../../components/SecHeader.astro";
+import AboutLayout from "../../layouts/AboutLayout.astro";
 import SectionLayout from "../../layouts/SectionLayout.astro";
 import { getFunder } from "../../data/api";
 import { urlFor } from "../../utils/image";
@@ -7,16 +8,17 @@ import { PortableText } from "astro-portabletext";
 
 const funder = await getFunder();
 ---
-
+<AboutLayout
+pageTitle={funder.title}
+currentIndex={1}
+>  
 <SectionLayout
   backGround="var(--purple)"
   textColor="var(--black)"
   className="funder"
+  barbaName={funder.title}
 >
-  <div class="title">
-    <!-- <h1>{funder.title}</h1> -->
-    <h1>Partnership</h1>
-  </div>
+<h1 class="title">{funder.title}</h1>
 
   <div class="banner">
     {
@@ -29,8 +31,6 @@ const funder = await getFunder();
       )
     }
     <PortableText value={funder.body} />
-
-
     {
       funder.funders && (
         <SecHeader title="Major Funders" />
@@ -46,8 +46,6 @@ const funder = await getFunder();
         </div>
       )
      }
-     
-      
       {
         funder.funders && (
         <SecHeader title="Funders" />
@@ -56,14 +54,13 @@ const funder = await getFunder();
             </div>
         )
      }
-    
   </div>
 </SectionLayout>
+</AboutLayout>
 <style lang="scss">
   .list-funders {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 100px;
-
   }
 </style>

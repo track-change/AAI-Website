@@ -1,0 +1,90 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import SideTab from "../../components/SideTab.astro";
+import AboutSec from "./AboutSec.astro";
+
+const aboutSec = [
+  { text: "Contact Us", color: "var(--yellow)" },
+  { text: "Support", color: "var(--purple)" },
+  { text: "People", color: "var(--white)" },
+  { text: "Opportunities", color: "var(--peach)" },
+  { text: "Partnerships", color: "var(--mint)"}
+];
+
+const generateAboutPath = (item: string) => {
+  const lowercasedItem = item.toLowerCase();
+  return `/about/${lowercasedItem
+    .replace(/\s+/g, "-")
+    .replace(/[^a-z0-9-]/g, "")}`;
+};
+---
+<Layout title="About">
+  <div data-top>
+    <SideTab text="About" href="/about" style="department" classes="is-major" />
+      <div class="content">
+        <AboutSec />
+        {
+          aboutSec.map((item, index) => (
+              <SideTab
+                text={item.text}
+                style="subpage"
+                shadow="left"
+                backGround={item.color}
+                href={generateAboutPath(item.text)}
+              />
+            ))
+        }
+      </div>
+  </div>
+</Layout>
+
+<style lang="scss">
+  .about-sec {
+    position: absolute;
+    top: 0;
+  }
+  [data-top] {
+    width: 100vw;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: row;
+    left: 0;
+    .list {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr 1fr;
+      white-space: nowrap;
+      position: relative;
+      width: 100%;
+
+      .list-item {
+        writing-mode: vertical-rl;
+        text-orientation: mixed;
+        width: 100%;
+        box-shadow: -10px 0px 14px 0px rgba(0, 0, 0, 0.2);
+        display: flex;
+        align-items: flex-end;
+        padding: 40px;
+        cursor: pointer;
+
+        h1 {
+          text-transform: capitalize;
+        }
+      }
+    }
+
+    .content {
+      position: relative;
+      display: flex;
+      flex-grow: 1;
+    }
+
+    .department,
+    .subpage {
+      flex-shrink: 0;
+      position: sticky;
+      top: 44px;
+      cursor: pointer;
+      z-index: 10;
+    }
+  }
+</style>

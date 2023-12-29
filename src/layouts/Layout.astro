@@ -1,7 +1,7 @@
 ---
 import "../scss/main.scss";
 import Meta from "../components/Meta.astro";
-import Header from "../components/Header.astro";
+import HeaderOld from "../components/HeaderOld.astro";
 import Footer from "../components/Footer.astro";
 import { getSiteSettings } from "../data/api";
 
@@ -15,33 +15,42 @@ const { title } = Astro.props;
 ---
 
 <!doctype html>
-<Fragment lang="en">
+<html lang="en" transition:animate="none">
+<head>
   <Meta title={title} settings={settings} />
+</head>
 
-  <body>
-    <Header />
-    <slot />
-    <style lang="scss" is:global>
-      html {
-        font-family: system-ui, sans-serif;
-        background: var(--white);
-        background-size: 224px;
-      }
-      code {
-        font-family:
-          Menlo,
-          Monaco,
-          Lucida Console,
-          Liberation Mono,
-          DejaVu Sans Mono,
-          Bitstream Vera Sans Mono,
-          Courier New,
-          monospace;
-      }
-    </style>
-    <Footer />
-    <script>
-      import "../ts/main.ts";
-    </script>
-  </body>
-</Fragment>
+<body>
+  <HeaderOld />
+  <slot />
+  <style lang="scss" is:global>
+    html {
+      font-family: system-ui, sans-serif;
+      background: var(--white);
+      background-size: 224px;
+    }
+    code {
+      font-family:
+        Menlo,
+        Monaco,
+        Lucida Console,
+        Liberation Mono,
+        DejaVu Sans Mono,
+        Bitstream Vera Sans Mono,
+        Courier New,
+        monospace;
+    }
+  </style>
+  <Footer />
+  <script>
+    import "../ts/main.ts";
+  </script>
+</body>
+
+<style is:global>
+  [data-top] {
+    position: relative;
+    display: flex;
+    flex-grow: 1;
+  }
+</style>

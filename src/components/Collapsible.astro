@@ -49,10 +49,10 @@ import faqData from "../data/faq.js";
 </style>
 
 <script is:inline>
-const CTA = document.querySelector(".CTA-outstanding");
+const collapsed = document.querySelector(".CTA-outstanding");
 const text = document.querySelector("div.text");
 
-CTA.addEventListener("click", () => {
+collapsed.addEventListener("click", () => {
     text.classList.toggle("is-hidden")
     updateWrapperHeight();
     });

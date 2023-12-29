@@ -1,10 +1,10 @@
 ---
-import SecHeader from "../SecHeader.astro";
+import SecHeader from "../../components/SecHeader.astro";
 import SectionLayout from "../../layouts/SectionLayout.astro";
 import { getPeople, getPersonByRef } from "../../data/api";
 import { urlFor } from "../../utils/image";
 import { PortableText } from "astro-portabletext";
-
+import AboutLayout from "../../layouts/AboutLayout.astro";
 const people = await getPeople();
 
 const board = await Promise.all(
@@ -14,11 +14,15 @@ const staff = await Promise.all(
   people.staff.map((block) => getPersonByRef(block._ref))
 );
 ---
-
+<AboutLayout
+pageTitle={people.title}
+currentIndex={2}
+>  
 <SectionLayout
   backGround="var(--white)"
   textColor="var(--black)"
   className="people"
+  barbaName={people.title}
 >
   <div class="title">
     <h1>{people.title}</h1>
@@ -86,6 +90,8 @@ const staff = await Promise.all(
     }
   </div>
 </SectionLayout>
+</AboutLayout>
+
 <style lang="scss">
   .list-profile {
     display: grid;
