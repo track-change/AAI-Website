@@ -13,108 +13,107 @@ artists = artists.map((artist) => ({
   ...artist,
   imageUrl: artist.image ? urlFor(artist.image.asset).url() : null,
 }));
-
 ---
+
 <BasicLayout title="Artist Directory">
-  <div data-top >
+  <div data-top>
+    <SideTab text="Archive" href="/archive" style="department" />
     <SideTab
-    text="Archive"
-    href="/archive"
-    style="department"
-  />
-  <SideTab
-  text="Media Library"
-  style="subpage"
-  href="/archive/media/"
-  shadow="left"
-  classes="media-tab"
-  backGround="var(--gray)"
-/>
-<SectionLayout className="artist-directory" backGround="var(--white)">
-  <h2 class="title">Artists Directory</h2>
+      text="Media Library"
+      style="subpage"
+      href="/archive/media/"
+      shadow="left"
+      classes="media-tab"
+      backGround="var(--gray)"
+    />
+    <SectionLayout className="artist-directory" backGround="var(--white)">
+      <h2 class="title">Artists Directory</h2>
 
-  <div class="filters caption">
-    <ul>
-      <li>Sort by</li>
-      <li>
-        <ul>
-          <li>Most recent to oldest</li>
-          <li>Oldest to most recent</li>
-          <li>Alphabetical</li>
-        </ul>
-      </li>
-    </ul>
-    <ul>
-      <li>Filter by year of participation</li>
-      <li>
-        <ul>
-          <li>All</li>
-          <li>2023</li>
-          <li>2022</li>
-          <li>2021</li>
-        </ul>
-      </li>
-    </ul>
+      <div class="alpine" x-data="pagination">
+        <div class="filters caption">
+          <ul>
+            <li>Sort by</li>
+            <li>
+              <ul>
+                <li @click="sortOption = 'recent'">Most recent to oldest</li>
+                <li @click="sortOption = 'oldest'">Oldest to most recent</li>
+                <li @click="sortOption = 'alphabetical'">Alphabetical</li>
+              </ul>
+            </li>
+          </ul>
+          <ul>
+            <li>Filter by year of participation</li>
+            <li>
+              <ul>
+                <li @click="filterYear = ''">All</li>
+                <li @click="filterYear = '2023'">2023</li>
+                <li @click="filterYear = '2022'">2022</li>
+                <li @click="filterYear = '2021'">2021</li>
+              </ul>
+            </li>
+          </ul>
 
-    <ul>
-      <li>Filter by last name initials</li>
-      <li>
-        <ul>
-          <li>A</li>
-          <li>B</li>
-          <li>C</li>
-          <li>D</li>
-          <li>E</li>
-          <li>F</li>
-        </ul>
-      </li>
-    </ul>
+          <ul>
+            <li>Filter by last name initials</li>
+            <li>
+              <ul>
+                <li @click="filterInitial = 'A'">A</li>
+                <li @click="filterInitial = 'B'">B</li>
+                <li @click="filterInitial = 'C'">C</li>
+                <li @click="filterInitial = 'D'">D</li>
+                <li @click="filterInitial = 'E'">E</li>
+                <li @click="filterInitial = 'F'">F</li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+
+        <div>
+          <ul class="list-artist">
+            <template x-for="artist in paginatedData" :key="artist._id">
+              <li
+                @mouseenter="handleMouseEnter($event, artist._id)"
+                @mousemove="handleMouseMove($event, artist._id)"
+                @mouseleave="handleMouseLeave(artist._id)"
+                class="artist-list-item"
+              >
+                <a :href="`artists/${artist.slug.current}`">
+                  <h2 x-text="artist.name"></h2>
+                </a>
+                <img
+                  :id="`thumbnail${artist._id}`"
+                  class="artist-thumbnail"
+                  :src="artist.imageUrl"
+                  alt=""
+                />
+              </li>
+            </template>
+          </ul>
+
+          <div class="pagination-controls caption">
+            <button @click="prevPage()" :disabled="currentPage === 1"
+              >Previous</button
+            >
+            <span x-text="currentPage"></span>
+            <button @click="nextPage()" :disabled="disableNext">Next</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- <SecHeader title="Artists FAQ" /> -->
+      <div class="banner">
+        <div class="caption FAQ">
+          Asian Arts Initiative has supported hundreds of budding, emergent and
+          mid-career artists into local and global prominence. We publish Calls
+          for Artists for thematic seasons several times a year, and provide
+          opportunities for community-based artist residencies, as well as low
+          and no cost studio and performance rental spaces. Here are some common
+          and Frequently Asked Questions (FAQ).
+        </div>
+      </div>
+      <!-- <Collapsible /> -->
+    </SectionLayout>
   </div>
-
-  <div x-data="pagination">
-    <ul class="list-artist">
-      <template x-for="artist in paginatedData" :key="artist._id">
-        <li
-          @mouseenter="handleMouseEnter($event, artist._id)"
-          @mousemove="handleMouseMove($event, artist._id)"
-          @mouseleave="handleMouseLeave(artist._id)"
-          class="artist-list-item"
-        >
-          <a :href="`artists/${artist.slug.current}`">
-            <h2 x-text="artist.name"></h2>
-          </a>
-          <img
-            :id="`thumbnail${artist._id}`"
-            class="artist-thumbnail"
-            :src="artist.imageUrl"
-            alt=""
-          />
-        </li>
-      </template>
-    </ul>
-
-    <div class="pagination-controls caption">
-      <button @click="prevPage()" :disabled="currentPage === 1">Previous</button
-      >
-      <span x-text="currentPage"></span>
-      <button @click="nextPage()" :disabled="disableNext">Next</button>
-    </div>
-  </div>
-
-  <!-- <SecHeader title="Artists FAQ" /> -->
-  <div class="banner">
-    <div class="caption FAQ">
-      Asian Arts Initiative has supported hundreds of budding, emergent and
-      mid-career artists into local and global prominence. We publish Calls for
-      Artists for thematic seasons several times a year, and provide
-      opportunities for community-based artist residencies, as well as low and
-      no cost studio and performance rental spaces. Here are some common and
-      Frequently Asked Questions (FAQ).
-    </div>
-  </div>
-  <!-- <Collapsible /> -->
-</SectionLayout>
-</div>
 </BasicLayout>
 
 <style lang="scss">
@@ -127,6 +126,7 @@ artists = artists.map((artist) => ({
     gap: 1rem;
     color: var(--darkGray);
     font-size: var(--caption-font-size);
+    cursor: pointer;
   }
   .filters {
     justify-content: space-between;
@@ -179,10 +179,54 @@ artists = artists.map((artist) => ({
       currentPage: 1,
       itemsPerPage: 10,
       disableNext: false,
+      sortOption: "recent",
+      filterYear: "",
+      filterInitial: "",
+      sortArtists() {
+        switch (this.sortOption) {
+          case "recent":
+            return artists.sort(
+              (a, b) => new Date(b._createdAt) - new Date(a._createdAt)
+            );
+          case "oldest":
+            return artists.sort(
+              (a, b) => new Date(a._createdAt) - new Date(b._createdAt)
+            );
+          case "alphabetical":
+            return artists.sort((a, b) => {
+              const nameA = a.name.trim().split(" ")[0];
+              const nameB = b.name.trim().split(" ")[0];
+              if (nameA < nameB) return -1;
+              if (nameA > nameB) return 1;
+              return 0;
+            });
+          default:
+            return artists;
+        }
+      },
+      filterArtists() {
+        return this.sortArtists().filter((artist) => {
+          const matchesYear = this.filterYear
+            ? artist._createdAt.startsWith(this.filterYear) ||
+              artist._createdAt.startsWith(`${this.filterYear - 1}`)
+            : true;
+
+          const matchesInitial = this.filterInitial
+            ? artist.name
+                .trim()
+                .split(" ")
+                .at(-1)
+                .startsWith(this.filterInitial)
+            : true;
+
+          return matchesYear && matchesInitial;
+        });
+      },
       get paginatedData() {
+        const filteredArtists = this.filterArtists();
         const start = (this.currentPage - 1) * this.itemsPerPage;
         const end = start + this.itemsPerPage;
-        return artists.slice(start, end);
+        return filteredArtists.slice(start, end);
       },
       nextPage() {
         this.currentPage++;
