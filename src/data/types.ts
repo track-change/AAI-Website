@@ -75,6 +75,8 @@ export interface Program {
   season: string;
   cta: Array<Entry>;
   frontCaptions: Array<Entry>;
+  coverImageUrl?: string;
+  formattedDate?: string;
 }
 export interface Tag {
   _type: string;
@@ -246,7 +248,7 @@ export interface Funder {
       alt?: string;
       asset: ImageAsset | undefined;
     };
-  }>
+  }>;
 }
 
 export interface People {
@@ -273,7 +275,6 @@ export interface People {
     _type: string;
   }[];
 }
-
 
 export interface Person {
   name: string;
@@ -369,7 +370,6 @@ export interface EducationPage {
   educations: {
     _ref: string;
   }[];
-
 }
 
 export interface AboutUsElement {

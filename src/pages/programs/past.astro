@@ -1,7 +1,6 @@
 ---
 import SectionLayout from "../../layouts/SectionLayout.astro";
 import SideTab from "../../components/SideTab.astro";
-
 import BasicLayout from "../../layouts/Layout.astro";
 import { getPrograms } from "../../data/api.js";
 import { urlFor } from "../../utils/image.js";
@@ -23,7 +22,13 @@ pastPrograms.forEach((program) => {
   if (!programsByYear[year]) {
     programsByYear[year] = [];
   }
-  programsByYear[year].push(program);
+  programsByYear[year].push({
+    ...program,
+    coverImageUrl: program.coverImage ? urlFor(program.coverImage).url() : "",
+    formattedDate: formatDateRange(
+      `${program.startDateTime}—${program.endDateTime}`
+    ),
+  });
 });
 
 const sortedYears = Object.entries(programsByYear).sort(
@@ -81,48 +86,50 @@ const sortedYears = Object.entries(programsByYear).sort(
       </li>
     </ul>
   </div> -->
-      <div class="seasons-wrapper">
+      <div class="seasons-wrapper" x-data="past">
         <ul class="list-season-title">
-          {
-            sortedYears.map(([season, programs]) => (
-              <li class="season-title gray-out">
-                <h3>{season.split(" ").pop()}</h3>
-              </li>
-            ))
-          }
+          <template
+            x-for="[season, programs], index in sortedYears"
+            :key="season"
+          >
+            <li
+              class="season-title gray-out"
+              :class="{'gray-out': selectedSeason !== index}"
+              @click="selectSeason(index)"
+            >
+              <h3 x-text="season.split(' ').pop()"></h3>
+            </li>
+          </template>
         </ul>
 
-        {
-          sortedYears.map(([season, programs]) => (
-            <ul
-              id={season.split(" ").pop()}
-              class="list-past-programs is-hidden"
-            >
-              {programs.map((program) => (
-                <li class="list-item">
-                  <a data-link href={`/programs/${program.slug.current}`}>
-                    {program.coverImage && (
-                      <img
-                        src={urlFor(program.coverImage).url()}
-                        alt={program.name}
-                      />
-                    )}
-                    <h4>{program.name}</h4>
+        <template
+          x-for="[season, programs], index in sortedYears"
+          :key="season"
+        >
+          <ul
+            :id="season.split(' ').pop()"
+            class="list-past-programs"
+            x-show="selectedSeason === index"
+          >
+            <template x-for="program in programs" :key="program._id">
+              <li class="list-item">
+                <a data-link :href="`/programs/${program.slug.current}`">
+                  <img
+                    :src="program.coverImageUrl"
+                    :alt="program.name"
+                    x-show="program.coverImage"
+                  />
+                  <h4 x-text="program.name"></h4>
 
-                    <ul>
-                      <li class="caption gray-out">{program.type}</li>
-                      <li class="caption">
-                        {formatDateRange(
-                          `${program.startDateTime}—${program.endDateTime}`
-                        )}
-                      </li>
-                    </ul>
-                  </a>
-                </li>
-              ))}
-            </ul>
-          ))
-        }
+                  <ul>
+                    <li class="caption gray-out" x-text="program.type"></li>
+                    <li class="caption" x-text="program.formattedDate"></li>
+                  </ul>
+                </a>
+              </li>
+            </template>
+          </ul>
+        </template>
       </div>
     </SectionLayoutRight>
   </div>
@@ -209,36 +216,48 @@ const sortedYears = Object.entries(programsByYear).sort(
     flex-direction: column;
   }
 </style>
-<script async>
-const seasonTitle = document.querySelectorAll(".season-title");
-const seasonList = document.querySelectorAll(".list-past-programs");
 
-// Hide all lists
-seasonList.forEach((list) => {
-  list.classList.add("is-hidden");
-});
+<script async define:vars={{ sortedYears }}>
+  // const seasonTitle = document.querySelectorAll(".season-title");
+  // const seasonList = document.querySelectorAll(".list-past-programs");
 
-// Show the first season list by default
-seasonList[0].classList.remove("is-hidden");
-seasonTitle[0].classList.remove("gray-out");
+  // // Hide all lists
+  // seasonList.forEach((list) => {
+  //   list.classList.add("is-hidden");
+  // });
 
-seasonTitle.forEach((title, i) => {
-  title.addEventListener("click", () => {
-    // Hide all lists
-    seasonList.forEach((list) => {
-      list.classList.add("is-hidden");
-    });
+  // // Show the first season list by default
+  // seasonList[0].classList.remove("is-hidden");
+  // seasonTitle[0].classList.remove("gray-out");
 
-    // Show the clicked list
-    seasonList[i].classList.remove("is-hidden");
+  // seasonTitle.forEach((title, i) => {
+  //   title.addEventListener("click", () => {
+  //     // Hide all lists
+  //     seasonList.forEach((list) => {
+  //       list.classList.add("is-hidden");
+  //     });
 
-    // Remove 'gray-out' class from all titles
-    seasonTitle.forEach((title) => {
-      title.classList.add("gray-out");
-    });
+  //     // Show the clicked list
+  //     seasonList[i].classList.remove("is-hidden");
 
-    // Remove 'gray-out' class from clicked title
-    title.classList.remove("gray-out");
+  //     // Remove 'gray-out' class from all titles
+  //     seasonTitle.forEach((title) => {
+  //       title.classList.add("gray-out");
+  //     });
+
+  //     // Remove 'gray-out' class from clicked title
+  //     title.classList.remove("gray-out");
+  //   });
+  // });
+  document.addEventListener("alpine:init", () => {
+    Alpine.data("past", () => ({
+      selectedSeason: 0,
+      get sortedYears() {
+        return sortedYears;
+      },
+      selectSeason(index) {
+        this.selectedSeason = index;
+      },
+    }));
   });
-});
 </script>
