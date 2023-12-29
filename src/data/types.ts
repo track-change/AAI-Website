@@ -125,6 +125,20 @@ export interface Venue {
   matterport: string;
 }
 
+export interface VenuePage {
+  _type: string;
+  _id: string;
+  title: string;
+  content: Array<{
+    _key: string;
+    _type: string;
+    value?: PortableTextBlock[];
+    asset?: ImageAsset;
+    alt?: string;
+    caption?: string;
+  }>;
+}
+
 export interface Media {
   _type: string;
   _id: string;

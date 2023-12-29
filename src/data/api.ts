@@ -17,6 +17,7 @@ import type {
   News,
   Opportunities,
   Venue,
+  VenuePage,
   Home,
   Banner,
   Donate,
@@ -87,6 +88,16 @@ export async function getEducationByRef(ref: string): Promise<Education> {
 export async function getVenue(): Promise<Venue[]> {
   return fetchData("venue");
 }
+
+
+export async function getVenuePage(): Promise<VenuePage> {
+  const query = groq`*[_type == "venuePage" && _id == "venuePage"][0]`;
+  const venuePage = await useSanityClient().fetch(query);
+  return venuePage
+  console.log(venuePage)
+}
+
+
 
 export async function getVenueBySlug(slug: string): Promise<Venue> {
   return fetchData("venue", slug);
