@@ -185,15 +185,15 @@ artists = artists.map((artist) => ({
       sortArtists() {
         switch (this.sortOption) {
           case "recent":
-            return artists.sort(
+            return [...artists].sort(
               (a, b) => new Date(b._createdAt) - new Date(a._createdAt)
             );
           case "oldest":
-            return artists.sort(
+            return [...artists].sort(
               (a, b) => new Date(a._createdAt) - new Date(b._createdAt)
             );
           case "alphabetical":
-            return artists.sort((a, b) => {
+            return [...artists].sort((a, b) => {
               const nameA = a.name.trim().split(" ")[0];
               const nameB = b.name.trim().split(" ")[0];
               if (nameA < nameB) return -1;
