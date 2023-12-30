@@ -149,6 +149,7 @@ export interface Media {
   title: string;
   slug: Slug;
   thumbnail: ImageAsset;
+  thumbnailUrl?: string;
   frontCaptions: Array<Entry>;
   mediaType: string;
   media: string;

@@ -8,6 +8,9 @@ import SectionLayout from "../../../layouts/SectionLayout.astro";
 import MediaCard from "../../../components/MediaCard.astro";
 import BasicLayout from "../../../layouts/Layout.astro";
 const medias = await getMedia();
+medias.forEach((media) => {
+  media.thumbnailUrl = urlFor(media.thumbnail).url();
+});
 ---
 
 <BasicLayout title="Media Library">
@@ -21,116 +24,249 @@ const medias = await getMedia();
       <div class="title">
         <h2>Media Library</h2>
       </div>
-      <div class="filters caption">
-        <ul>
-          <li>Filter by</li>
-          <li>
-            <ul>
-              <li>All</li>
-              <li>Video</li>
-              <li>Audio</li>
-            </ul>
-          </li>
-        </ul>
-        <!-- TODO: Map out all years from the media cards -->
-        <ul>
-          <li>From the year of</li>
-          <li>
-            <ul>
-              <li>All</li>
-              <li>2023</li>
-              <li>2022</li>
-            </ul>
-          </li>
-        </ul>
-        <!-- TODO: Map out all tags from Programs -->
-        <ul>
-          <li>Filter by Tags</li>
-          <li>
-            <ul>
-              <li></li>
-              <li></li>
-              <li></li>
-              <li></li>
-              <li></li>
-              <li></li>
-            </ul>
-          </li>
+      <div class="alpine" x-data="media">
+        <div class="filters caption">
+          <ul>
+            <li>Filter by</li>
+            <li>
+              <ul>
+                <li
+                  :class="{'active': filterType === 'All'}"
+                  @click="setFilterType('All')"
+                >
+                  All
+                </li>
+                <li
+                  :class="{'active': filterType === 'Video'}"
+                  @click="setFilterType('Video')"
+                >
+                  Video
+                </li>
+                <li
+                  :class="{'active': filterType === 'Audio'}"
+                  @click="setFilterType('Audio')"
+                >
+                  Audio
+                </li>
+              </ul>
+            </li>
+          </ul>
+          <!-- TODO: Map out all years from the media cards -->
+          <ul>
+            <li>From the year of</li>
+            <li>
+              <ul>
+                <li
+                  :class="{'active': filterYear === 'All'}"
+                  @click="setFilterYear('All')"
+                >
+                  All
+                </li>
+                <li
+                  :class="{'active': filterYear === '2023'}"
+                  @click="setFilterYear('2023')"
+                >
+                  2023
+                </li>
+                <li
+                  :class="{'active': filterYear === '2022'}"
+                  @click="setFilterYear('2022')"
+                >
+                  2022
+                </li>
+                <li
+                  :class="{'active': filterYear === '2021'}"
+                  @click="setFilterYear('2021')"
+                >
+                  2021
+                </li>
+                <li
+                  :class="{'active': filterYear === '2020'}"
+                  @click="setFilterYear('2020')"
+                >
+                  2020
+                </li>
+                <!-- Add more years as needed -->
+              </ul>
+            </li>
+          </ul>
+          <!-- TODO: Map out all tags from Programs -->
+          <ul>
+            <li>Filter by Tags</li>
+            <li>
+              <ul>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+
+        <ul class="media-list">
+          <template x-for="media in filteredMedias" :key="media._id">
+            <li class="media-list-item">
+              <div class="media__card">
+                <a :href="`/archive/media/${media.slug.current}`">
+                  <img
+                    x-show="media.thumbnail"
+                    :src="media.thumbnailUrl"
+                    class="media-thumbnail"
+                    :alt="media.title"
+                  />
+                  <div class="media-item-title">
+                    <h6 x-text="media.title"></h6>
+                  </div>
+                  <div
+                    class="small-caption"
+                    x-text="`${media.mediaType}, ${media.date}`"
+                  >
+                  </div>
+                  <!-- Tags rendering can be added here if needed -->
+                </a>
+              </div>
+            </li>
+          </template>
         </ul>
       </div>
-
-      <ul class="media-list">
-        {
-          medias.map((media) => (
-            <li class="media-list-item">
-              <MediaCard media={media} />
-            </li>
-          ))
-        }
-      </ul>
+      <SideTab
+        text="Artist Directory"
+        style="subpage"
+        href="/archive/artists"
+        shadow="right"
+        classes="artists-tab"
+      />
     </SectionLayout>
-    <SideTab
-      text="Artist Directory"
-      style="subpage"
-      href="/archive/artists"
-      shadow="right"
-      classes="artists-tab"
-    />
   </div>
+
+  <style lang="scss">
+    html {
+      font-family: system-ui, sans-serif;
+      background: var(--white);
+      background-size: 224px;
+    }
+    code {
+      font-family:
+        Menlo,
+        Monaco,
+        Lucida Console,
+        Liberation Mono,
+        DejaVu Sans Mono,
+        Bitstream Vera Sans Mono,
+        Courier New,
+        monospace;
+    }
+    .filters,
+    .filters > *,
+    .filters > * > *,
+    .filters > * > * > *,
+    .filters > * > * > * > * {
+      display: flex;
+      gap: 1rem;
+      color: var(--darkGray);
+      font-size: var(--caption-font-size);
+      cursor: pointer;
+    }
+    .filters {
+      justify-content: space-between;
+    }
+    .filters > * {
+      flex-direction: column;
+    }
+    .title,
+    section {
+      max-width: 1080px;
+
+      @media screen and (max-width: 64rem) {
+        max-width: 40rem;
+      }
+      @media screen and (max-width: 48rem) {
+        max-width: 30rem;
+      }
+    }
+    .media-list {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--l-margin);
+
+      @media screen and (max-width: 48rem) {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .media__card {
+        &:hover .media-thumbnail {
+          transform: translateY(-2%);
+        }
+
+        .small-caption {
+          text-transform: capitalize;
+          line-height: 1;
+        }
+      }
+
+      .media-thumbnail {
+        height: fit-content;
+        object-fit: cover;
+        aspect-ratio: 3 / 2;
+        width: 100%;
+        transition: transform 100ms var(--ease);
+
+        // box-shadow: 0 0 10px 10px rgba(255, 255, 255, 0.3);
+      }
+
+      .media-item-title {
+        margin: 0.5em 0;
+        display: flex;
+        gap: 0.25em;
+      }
+    }
+  </style>
+
+  <script async define:vars={{ medias }}>
+    document.addEventListener("alpine:init", () => {
+      Alpine.data("media", () => ({
+        medias: [], // Initially empty, will be populated from Astro
+        filterType: "All",
+        filterYear: "All",
+        filterTags: [],
+
+        init() {
+          this.medias = medias;
+          console.log(this.medias[0].mediaType);
+        },
+
+        get filteredMedias() {
+          return this.medias.filter((media) => {
+            const matchesType =
+              this.filterType === "All" ||
+              media.mediaType.toLowerCase() === this.filterType.toLowerCase();
+            const matchesYear =
+              this.filterYear === "All" ||
+              media.date.toString() == this.filterYear;
+            const matchesTags =
+              this.filterTags.length === 0 ||
+              this.filterTags.some((tag) => media.tags.includes(tag));
+            return matchesType && matchesYear && matchesTags;
+          });
+        },
+        setFilterType(type) {
+          this.filterType = type;
+        },
+        setFilterYear(year) {
+          this.filterYear = year;
+        },
+        toggleTag(tag) {
+          const index = this.filterTags.indexOf(tag);
+          if (index > -1) {
+            this.filterTags.splice(index, 1);
+          } else {
+            this.filterTags.push(tag);
+          }
+        },
+      }));
+    });
+  </script>
 </BasicLayout>
-
-<style lang="scss">
-  html {
-    font-family: system-ui, sans-serif;
-    background: var(--white);
-    background-size: 224px;
-  }
-  code {
-    font-family:
-      Menlo,
-      Monaco,
-      Lucida Console,
-      Liberation Mono,
-      DejaVu Sans Mono,
-      Bitstream Vera Sans Mono,
-      Courier New,
-      monospace;
-  }
-  .filters,
-  .filters > *,
-  .filters > * > *,
-  .filters > * > * > *,
-  .filters > * > * > * > * {
-    display: flex;
-    gap: 1rem;
-    color: var(--darkGray);
-    font-size: var(--caption-font-size);
-    cursor: pointer;
-  }
-  .filters {
-    justify-content: space-between;
-  }
-  .filters > * {
-    flex-direction: column;
-  }
-  .title,
-  section {
-    max-width: 1080px;
-
-    @media screen and (max-width: 64rem) {
-      max-width: 40rem;
-    }
-    @media screen and (max-width: 48rem) {
-      max-width: 30rem;
-    }
-  }
-  .media-list {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: var(--l-margin);
-
-    @media screen and (max-width: 48rem) {
-      grid-template-columns: repeat(2, 1fr);
-    }
-  }
-</style>

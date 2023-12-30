@@ -1,5 +1,6 @@
 import sanity from "@sanity/astro";
 import { defineConfig } from "astro/config";
+import alpine from "@astrojs/alpinejs";
 
 // https://astro.build/config
 export default defineConfig({
@@ -10,5 +11,6 @@ export default defineConfig({
       apiVersion: "2021-03-25",
       useCdn: true,
     }),
+    alpine(),
   ],
 });

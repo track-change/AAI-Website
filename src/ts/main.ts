@@ -1,10 +1,10 @@
-import Alpine from "alpinejs";
+// import Alpine from "alpinejs";
 
-declare global {
-  interface Window {
-    Alpine: typeof Alpine;
-  }
-}
+// declare global {
+//   interface Window {
+//     Alpine: typeof Alpine;
+//   }
+// }
 
-window.Alpine = Alpine;
-Alpine.start();
+// window.Alpine = Alpine;
+// Alpine.start();
