@@ -49,81 +49,123 @@ const sortedYears = Object.entries(programsByYear).sort(
     />
     <SectionLayoutRight>
       <h2 class="title">Past Seasons</h2>
-      <div class="filters caption">
-    <ul>
-      <li>Filter by Event Types</li>
-      <li>
-        <ul>
-          <li>Screening</li>
-          <li>Performance</li>
-          <li>Workshop</li>
-          <li>Concert</li>
-          <li>Book Talk</li>
-          <li>Conversation</li>
-          <li>Fundraiser</li>
-          <li>Community Event</li>
-        </ul>
-      </li>
-    </ul>
-<!-- TODO: Map out all tags from Programs -->
-    <ul>
-      <li>Filter by Tags</li>
-      <li>
-        <ul>
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
-        </ul>
-      </li>
-    </ul>
-  </div>
-      <div class="seasons-wrapper" x-data="past">
-        <ul class="list-season-title">
-          <template
-            x-for="[season, programs], index in sortedYears"
-            :key="season"
-          >
-            <li
-              class="season-title gray-out"
-              :class="{'gray-out': selectedSeason !== index}"
-              @click="selectSeason(index)"
-            >
-              <h3 x-text="season.split(' ').pop()"></h3>
+      <div class="alpine" x-data="past">
+        <div class="filters caption">
+          <ul>
+            <li>Filter by Event Types</li>
+            <li>
+              <ul>
+                <li
+                  :class="{ active: filterEventTypes.includes('screening') }"
+                  @click="toggleEventType('screening')"
+                >
+                  Screening
+                </li>
+                <li
+                  :class="{ active: filterEventTypes.includes('performance') }"
+                  @click="toggleEventType('performance')"
+                >
+                  Performance
+                </li>
+                <li
+                  :class="{ active: filterEventTypes.includes('workshop') }"
+                  @click="toggleEventType('workshop')"
+                >
+                  Workshop
+                </li>
+                <li
+                  :class="{ active: filterEventTypes.includes('concert') }"
+                  @click="toggleEventType('concert')"
+                >
+                  Concert
+                </li>
+                <li
+                  :class="{ active: filterEventTypes.includes('book talk') }"
+                  @click="toggleEventType('book talk')"
+                >
+                  Book Talk
+                </li>
+                <li
+                  :class="{ active: filterEventTypes.includes('conversation') }"
+                  @click="toggleEventType('conversation')"
+                >
+                  Conversation
+                </li>
+                <li
+                  :class="{ active: filterEventTypes.includes('fundraiser') }"
+                  @click="toggleEventType('fundraiser')"
+                >
+                  Fundraiser
+                </li>
+                <li
+                  :class="{ active: filterEventTypes.includes('community event') }"
+                  @click="toggleEventType('community event')"
+                >
+                  Community Event
+                </li>
+              </ul>
             </li>
-          </template>
-        </ul>
-
-        <template
-          x-for="[season, programs], index in sortedYears"
-          :key="season"
-        >
-          <ul
-            :id="season.split(' ').pop()"
-            class="list-past-programs"
-            x-show="selectedSeason === index"
-          >
-            <template x-for="program in programs" :key="program._id">
-              <li class="list-item">
-                <a data-link :href="`/programs/${program.slug.current}`">
-                  <img
-                    :src="program.coverImageUrl"
-                    :alt="program.name"
-                    x-show="program.coverImage"
-                  />
-                  <h4 x-text="program.name"></h4>
-
-                  <ul>
-                    <li class="caption gray-out" x-text="program.type"></li>
-                    <li class="caption" x-text="program.formattedDate"></li>
-                  </ul>
-                </a>
+          </ul>
+          <!-- TODO: Map out all tags from Programs -->
+          <ul>
+            <li>Filter by Tags</li>
+            <li>
+              <ul>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+        <div class="seasons-wrapper">
+          <ul class="list-season-title">
+            <template
+              x-for="[season, programs], index in filteredSortedYears"
+              :key="season"
+            >
+              <li
+                class="season-title gray-out"
+                :class="{'gray-out': selectedSeason !== index}"
+                @click="selectSeason(index)"
+              >
+                <h3 x-text="season.split(' ').pop()"></h3>
               </li>
             </template>
           </ul>
-        </template>
+
+          <template
+            x-for="[season, programs], index in filteredSortedYears"
+            :key="season"
+          >
+            <ul
+              :id="season.split(' ').pop()"
+              class="list-past-programs"
+              x-show="selectedSeason === index"
+            >
+              <template x-for="program in programs" :key="program._id">
+                <li class="list-item">
+                  <a data-link :href="`/programs/${program.slug.current}`">
+                    <img
+                      :src="program.coverImageUrl"
+                      :alt="program.name"
+                      x-show="program.coverImage"
+                    />
+                    <h4 x-text="program.name"></h4>
+
+                    <ul>
+                      <li class="caption gray-out" x-text="program.type"></li>
+                      <li class="caption" x-text="program.formattedDate"></li>
+                    </ul>
+                  </a>
+                </li>
+              </template>
+            </ul>
+          </template>
+        </div>
       </div>
     </SectionLayoutRight>
   </div>
@@ -210,6 +252,15 @@ const sortedYears = Object.entries(programsByYear).sort(
   .filters > * {
     flex-direction: column;
   }
+
+  .filters ul {
+    li {
+      cursor: pointer;
+      &.active {
+        color: black !important;
+      }
+    }
+  }
 </style>
 
 <script async define:vars={{ sortedYears }}>
@@ -247,11 +298,40 @@ const sortedYears = Object.entries(programsByYear).sort(
   document.addEventListener("alpine:init", () => {
     Alpine.data("past", () => ({
       selectedSeason: 0,
-      get sortedYears() {
-        return sortedYears;
+      filterEventTypes: [],
+      filterTags: [],
+      get filteredSortedYears() {
+        return [...sortedYears].map(([season, programs]) => [
+          season,
+          programs.filter(
+            (program) =>
+              (this.filterEventTypes.length === 0 ||
+                program.eventTypes?.some((eventType) =>
+                  this.filterEventTypes.includes(eventType)
+                )) &&
+              (this.filterTags.length === 0 ||
+                this.filterTags.some((tag) => program.tags.includes(tag)))
+          ),
+        ]);
       },
       selectSeason(index) {
         this.selectedSeason = index;
+      },
+      toggleEventType(eventType) {
+        const index = this.filterEventTypes.indexOf(eventType);
+        if (index > -1) {
+          this.filterEventTypes.splice(index, 1);
+        } else {
+          this.filterEventTypes.push(eventType);
+        }
+      },
+      toggleTag(tag) {
+        const index = this.filterTags.indexOf(tag);
+        if (index > -1) {
+          this.filterTags.splice(index, 1);
+        } else {
+          this.filterTags.push(tag);
+        }
       },
     }));
   });
