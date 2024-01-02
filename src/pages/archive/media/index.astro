@@ -179,18 +179,20 @@ medias.forEach((media) => {
     .title,
     section {
       max-width: 1080px;
+    margin: 0 var(--l-margin);
 
-      @media screen and (max-width: 64rem) {
-        max-width: 40rem;
-      }
-      @media screen and (max-width: 48rem) {
-        max-width: 30rem;
-      }
+    @media screen and (max-width: 64rem) {
+      max-width: 40rem;
     }
-    .media-list {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: var(--l-margin);
+    @media screen and (max-width: 48rem) {
+      max-width: 30rem;
+    }
+  }
+  .media-list {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: calc(2 * var(--l-margin));
+    margin: var(--l-margin);
 
       @media screen and (max-width: 48rem) {
         grid-template-columns: repeat(2, 1fr);

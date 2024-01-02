@@ -6,6 +6,7 @@ import { getNews } from "../../data/api";
 import type { News } from "../../data/types";
 import NewsCard from "../../components/NewsCard.astro";
 
+
 const news = await getNews();
 ---
 
@@ -14,6 +15,15 @@ const news = await getNews();
     <div class="title">
       <h1>News</h1>
     </div>
+    <div class="filter">
+      <input type="checkbox" id="2022" name="year" value="2022">
+      <label for="2022">2022</label><br>
+      <input type="checkbox" id="2023" name="year" value="2023">
+      <label for="2023">2023</label><br>
+      <input type="checkbox" id="2021" name="year" value="2021">
+      <label for="2021">2021</label><br>
+     </div>
+     
     <ul class="news-list">
       {
         news
@@ -54,10 +64,34 @@ const news = await getNews();
   .news-list {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: var(--l-margin);
+    gap: calc(2 * var(--l-margin));
+    margin: var(--l-margin);
+
 
     @media screen and (max-width: 48rem) {
       grid-template-columns: repeat(2, 1fr);
     }
   }
+  .title, .filter {
+    display: flex;
+    margin: 0 var(--l-margin);
+  }
 </style>
+<script async>
+document.querySelectorAll('input[name="year"]').forEach(checkbox => {
+ checkbox.addEventListener('change', (event) => {
+  const year = event.target.value;
+  const isChecked = event.target.checked;
+
+  filteredNews = news.filter(article => {
+    const articleYear = new Date(article.publishedAt).getFullYear();
+    return isChecked ? articleYear === parseInt(year) : true;
+  });
+ });
+});
+
+
+   // Update the news list with the filtered news articles
+   // ...
+
+</script>

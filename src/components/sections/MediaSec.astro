@@ -16,13 +16,14 @@ const medias = await getMedia();
 
       <ul class="media-list">
         {
-          medias.map((media) => (
-            <li class="media-list-item">
-              <MediaCard media={media} />
-            </li>
-          ))
+        medias.sort((a, b) => b.date - a.date)
+            .map((media) => (
+              <li class="media-list-item">
+                <MediaCard media={media} />
+              </li>
+            ))
         }
-      </ul>
+       </ul>       
     </SectionLayout>
 <style lang="scss">
   html {
@@ -44,6 +45,7 @@ const medias = await getMedia();
   .title,
   section {
     max-width: 1080px;
+    margin: 0 var(--l-margin);
 
     @media screen and (max-width: 64rem) {
       max-width: 40rem;
@@ -55,8 +57,9 @@ const medias = await getMedia();
   .media-list {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: var(--l-margin);
-    min-height: 100vh;
+    gap: calc(2 * var(--l-margin));
+    margin: var(--l-margin);
+
     @media screen and (max-width: 48rem) {
       grid-template-columns: repeat(2, 1fr);
     }
