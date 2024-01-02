@@ -1,6 +1,5 @@
 ---
 import type { InferGetStaticParamsType } from "astro";
-
 import { PortableText } from "astro-portabletext";
 import NewsLayout from "../../layouts/NewsLayout.astro";
 import { getNews, getNewsBySlug } from "../../data/api";
@@ -10,7 +9,7 @@ import { formatDate } from "../../utils/dateFormatting.js";
 export async function getStaticPaths() {
  const newsArray = await getNews();
  return newsArray
-   .filter(news => news.slug && news.slug.current) // Filter out news items without a slug.current property
+   .filter(news => news.slug && news.slug.current && news.coverImage) // Filter out news items without a slug.current property
    .map((news) => ({
      params: { slug: news.slug.current },
    }));
@@ -23,10 +22,11 @@ const { slug } = Astro.params as Params;
 const news = await getNewsBySlug(slug);
 ---
 <NewsLayout
-pageTitle={news.title} 
-coverImage={urlFor(news.coverImage.asset).url()}
-coverAlt={news.coverImage.alt} 
+ pageTitle={news.title} 
+ coverImage={news.coverImage && news.coverImage.asset ? urlFor(news.coverImage.asset).url() : ''}
+ coverAlt={news.coverImage ? news.coverImage.alt : ''} 
 >
+
 <div  class="caption">
     {formatDate(news.publishedAt)}
 </div>

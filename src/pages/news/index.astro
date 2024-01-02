@@ -34,11 +34,11 @@ const news = await getNews();
           )
           .map(
             (news: News) =>
-              news.slug && (
+              news.slug ? (
                 <li class="news-list-item">
                   <NewsCard news={news} />
                 </li>
-              )
+              ): null
           )
       }
     </ul>
