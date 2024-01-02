@@ -13,27 +13,30 @@ const { news } = Astro.props as Props;
 ---
 
 <div class="news__card">
+  { news.slug ? (
   <a href={`/news/${news.slug.current}`}>
     {
-      news.coverImage && (
+      news.coverImage ? (
         <img
           class="news-coverImage"
-          src={urlFor(news.coverImage.asset).url()}
+          src={news.coverImage.asset? urlFor(news.coverImage.asset).url():null}
           alt=""
         />
-      )
+      ): null
     }
     <h6 class="news-item-title">{news.title}</h6>
 
     <div class="small-caption">
       {formatDate(news.publishedAt)}
     </div>
+  </a>
+  ):null}
+</div>
+
+
     <!-- <div class="tag-wrapper caption">
       {news.tags && news.tags.map((tag) => <Tag tagRef={tag._ref} />)}
     </div> -->
-  </a>
-</div>
-
 <style lang="scss" is:global>
 .news__card {
     &:hover .news-coverImage {

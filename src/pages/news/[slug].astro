@@ -8,10 +8,12 @@ import { urlFor } from "../../utils/image";
 import { formatDate } from "../../utils/dateFormatting.js";
 
 export async function getStaticPaths() {
-  const newsArray = await getNews();
-  return newsArray.map((news) => ({
-    params: { slug: news.slug.current },
-  }));
+ const newsArray = await getNews();
+ return newsArray
+   .filter(news => news.slug && news.slug.current) // Filter out news items without a slug.current property
+   .map((news) => ({
+     params: { slug: news.slug.current },
+   }));
 }
 
 type Params = InferGetStaticParamsType<typeof getStaticPaths>;
