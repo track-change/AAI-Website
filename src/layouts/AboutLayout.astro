@@ -143,6 +143,27 @@ const generateAboutPath = (item: string) => {
     .mobile {
       display: flex !important;
     }
+    .top {
+      display: flex;
+      flex-direction: row;
+    }
+    .tabBar {
+      display: flex;
+      flex-direction: column;
+      position: sticky;
+      top: 44px;
+      height: 100vh;
+
+      a {
+        flex: 1;
+        overflow: hidden;
+        flex-grow: 1;
+
+        div {
+          height: 100% !important;
+        }
+      }
+    }
   }
 
   @media screen and (max-width: 48rem) {
