@@ -7,7 +7,7 @@ const aboutSec = [
   { text: "Support", color: "var(--purple)" },
   { text: "People", color: "var(--white)" },
   { text: "Opportunities", color: "var(--peach)" },
-  { text: "Partnerships", color: "var(--mint)"}
+  { text: "Partnerships", color: "var(--mint)" },
 ];
 
 interface Props {
@@ -24,8 +24,9 @@ const generateAboutPath = (item: string) => {
     .replace(/[^a-z0-9-]/g, "")}`;
 };
 ---
+
 <BasicLayout title={pageTitle}>
-  <div class="top">
+  <div class="top desktop">
     <SideTab text="About" href="/about/" style="department" />
 
     {
@@ -41,9 +42,54 @@ const generateAboutPath = (item: string) => {
           />
         ))
     }
-      <slot />
+    <slot />
 
     <!-- Render SideTabs after <main> for education.order > currentIndex  -->
+    {
+      aboutSec
+        .filter((_, index) => index > currentIndex)
+        .map((item, index) => (
+          <SideTab
+            text={item.text}
+            style="subpage"
+            shadow="right"
+            backGround={item.color}
+            href={generateAboutPath(item.text)}
+          />
+        ))
+    }
+  </div>
+  <div class="top mobile">
+    <SideTab text="About" href="/about/" style="department" />
+    <slot />
+    <div class="tabBar">
+      {
+        aboutSec
+          .filter((_, index) => index < currentIndex)
+          .map((item, index) => (
+            <SideTab
+              text={item.text}
+              style="subpage"
+              shadow="bottomleft"
+              backGround={item.color}
+              href={generateAboutPath(item.text)}
+            />
+          ))
+      }
+      {
+        aboutSec
+          .filter((_, index) => index == currentIndex)
+          .map((item, index) => (
+            <SideTab
+              text={item.text}
+              style="subpage"
+              shadow="none"
+              backGround={item.color}
+              textColor={item.color}
+              href={generateAboutPath(item.text)}
+            />
+          ))
+      }
       {
         aboutSec
           .filter((_, index) => index > currentIndex)
@@ -51,12 +97,13 @@ const generateAboutPath = (item: string) => {
             <SideTab
               text={item.text}
               style="subpage"
-              shadow="right"
+              shadow="topleft"
               backGround={item.color}
               href={generateAboutPath(item.text)}
             />
           ))
       }
+    </div>
   </div>
 </BasicLayout>
 
@@ -84,5 +131,47 @@ const generateAboutPath = (item: string) => {
   }
   main {
     flex: 1;
+  }
+  .mobile {
+    display: none !important;
+  }
+
+  @media screen and (max-width: 64rem) {
+    .desktop {
+      display: none !important;
+    }
+    .mobile {
+      display: flex !important;
+    }
+  }
+
+  @media screen and (max-width: 48rem) {
+    .desktop {
+      display: none !important;
+    }
+    .mobile {
+      display: flex !important;
+    }
+    .top {
+      display: flex;
+      flex-direction: row;
+    }
+    .tabBar {
+      display: flex;
+      flex-direction: column;
+      position: sticky;
+      top: 44px;
+      height: 100vh;
+
+      a {
+        flex: 1;
+        overflow: hidden;
+        flex-grow: 1;
+
+        div {
+          height: 100% !important;
+        }
+      }
+    }
   }
 </style>
