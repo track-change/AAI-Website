@@ -1,15 +1,8 @@
 ---
 import Layout from "../../layouts/Layout.astro";
 import SideTab from "../../components/SideTab.astro";
+import AboutLayout from "../../layouts/AboutLayout.astro";
 import AboutSec from "./AboutSec.astro";
-
-const aboutSec = [
-  { text: "Contact Us", color: "var(--yellow)" },
-  { text: "Support", color: "var(--purple)" },
-  { text: "People", color: "var(--white)" },
-  { text: "Opportunities", color: "var(--peach)" },
-  { text: "Partnerships", color: "var(--mint)"}
-];
 
 const generateAboutPath = (item: string) => {
   const lowercasedItem = item.toLowerCase();
@@ -18,32 +11,16 @@ const generateAboutPath = (item: string) => {
     .replace(/[^a-z0-9-]/g, "")}`;
 };
 ---
-<Layout title="About">
-  <div data-top>
-    <SideTab text="About" href="/about" style="department" classes="is-major" />
-      <div class="content">
-        <AboutSec />
-        {
-          aboutSec.map((item, index) => (
-              <SideTab
-                text={item.text}
-                style="subpage"
-                shadow="left"
-                backGround={item.color}
-                href={generateAboutPath(item.text)}
-              />
-            ))
-        }
-      </div>
-  </div>
-</Layout>
+<AboutLayout pageTitle="About" currentIndex={-1} isMajor>
+  <AboutSec />
+</AboutLayout>
 
 <style lang="scss">
   .about-sec {
     position: absolute;
     top: 0;
   }
-  [data-top] {
+  .top {
     width: 100vw;
     min-height: 100vh;
     display: flex;

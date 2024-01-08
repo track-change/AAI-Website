@@ -39,7 +39,7 @@ const { text, href, style, classes, shadow, backGround, textColor } =
     z-index: 9;
 
     @media screen and (max-width: 64rem) {
-      padding: 2rem 0;
+      padding: 1rem 0;
       --side-tab-width: 3rem;
       --side-tab-padding: 2rem;
     }
@@ -52,6 +52,8 @@ const { text, href, style, classes, shadow, backGround, textColor } =
     .vert-text {
       writing-mode: vertical-rl;
       text-orientation: mixed;
+      word-break: keep-all;
+      height: max-content;
     }
   }
 

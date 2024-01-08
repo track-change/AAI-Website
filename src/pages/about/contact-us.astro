@@ -23,7 +23,7 @@ currentIndex={0}
     <div class="list-contact">
       {
         contact.content.map((entry) => (
-            <p> {entry.sectionTitle} </p>
+            <h4> {entry.sectionTitle} </h4>
             <PortableText value={entry.value} class="caption" />
         ))
       }
@@ -35,6 +35,11 @@ currentIndex={0}
   .list-contact {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 100px;
+    gap: calc(2 * var(--l-margin));
+
+    @media screen and (max-width:768px){
+      grid-template-columns: 1fr;
+
+    }
   }
 </style>

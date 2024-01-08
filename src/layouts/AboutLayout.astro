@@ -11,11 +11,12 @@ const aboutSec = [
 ];
 
 interface Props {
+  isMajor?: boolean;
   pageTitle: string;
   currentIndex: number;
 }
 
-const { pageTitle, currentIndex } = Astro.props as Props;
+const { isMajor, pageTitle, currentIndex } = Astro.props as Props;
 
 const generateAboutPath = (item: string) => {
   const lowercasedItem = item.toLowerCase();
@@ -27,7 +28,7 @@ const generateAboutPath = (item: string) => {
 
 <BasicLayout title={pageTitle}>
   <div class="top desktop">
-    <SideTab text="About" href="/about/" style="department" />
+<SideTab text="About" href="/about/" style="department" classes={isMajor ? "is-major": ""}/>
 
     {
       aboutSec
@@ -59,8 +60,9 @@ const generateAboutPath = (item: string) => {
         ))
     }
   </div>
+
   <div class="top mobile">
-    <SideTab text="About" href="/about/" style="department" />
+    <SideTab text="About" href="/about/" style="department" classes={isMajor ? "is-major": ""}/>
     <slot />
     <div class="tabBar">
       {
@@ -135,7 +137,7 @@ const generateAboutPath = (item: string) => {
   .mobile {
     display: none !important;
   }
-
+// 1024 px
   @media screen and (max-width: 64rem) {
     .desktop {
       display: none !important;
@@ -152,7 +154,7 @@ const generateAboutPath = (item: string) => {
       flex-direction: column;
       position: sticky;
       top: 44px;
-      height: 100vh;
+      height: calc(100vh - 44px);
 
       a {
         flex: 1;
@@ -182,7 +184,7 @@ const generateAboutPath = (item: string) => {
       flex-direction: column;
       position: sticky;
       top: 44px;
-      height: 100vh;
+      height: calc(100vh - 44px);
 
       a {
         flex: 1;
